@@ -1,0 +1,48 @@
+Reductio Ad Absurdum (RAA) from inner subproof of ex 6.9  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+True
+RAA, Consequent is not F  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|T                        (3)  Top rule
+|~~a                      (4)  Reductio Ad Absurdum (2) (3)
+Fail: T does not match F with { m1:~a }
+False
+RAA, conclusion is not negation of assumption  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+|~a                       (4)  Reductio Ad Absurdum (2) (3)
+Fail: ~a does not match ~m1 with { m1:~a }
+False
+RAA, conclusion argument is not assumption argument  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+|~~b                      (4)  Reductio Ad Absurdum (2) (3)
+Fail: ~~b does not match ~m1 with { m1:~a }
+False
+RAA, premise indices reversed  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+|~~a                      (4)  Reductio Ad Absurdum (3) (2)
+Fail: premise at index 0, line 3 not an assumption
+False
+RAA, conclusion argument wrong BUT premises missing  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+|~~b                      (4)  Reductio Ad Absurdum (2) (3)
+Fail: ~~b does not match ~m1 with { m1:~a }
+False
+RAA: steps correct except RAA step premises missing  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+|~~a                      (4)  Reductio Ad Absurdum
+Fail: requires 2 premises, found 0
+False

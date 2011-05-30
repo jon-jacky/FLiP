@@ -1,0 +1,68 @@
+Example 6.4  ~a v b |- ~(a & ~b)  (0)  Comment
+|a & ~b                   (1)  Assumption
+|a                        (2)  And-Elimination (Right) (1)
+||~a                      (3)  Assumption
+||F                       (4)  Contradiction (2) (3)
+|~~a                      (5)  Reductio Ad Absurdum (3) (4)
+|~b                       (6)  And-Elimination (Left) (1)
+|~a v b                   (7)  Given
+|b                        (8)  Or-Elimination (Left) (7) (5)
+|F                        (9)  Contradiction (8) (6)
+~(a & ~b)                (10)  Reductio Ad Absurdum (1) (9)
+True
+Example 6.5  |- ((a & ~b) v ~a) v b  (0)  Comment
+|~(((a & ~b) v ~a) v b)   (1)  Assumption
+||b                       (2)  Assumption
+||((a & ~b) v ~a) v b     (3)  Or-Introduction (Left) (2)
+||F                       (4)  Contradiction (3) (1)
+|~b                       (5)  Reductio Ad Absurdum (2) (4)
+||~a                      (6)  Assumption
+||(a & ~b) v ~a           (7)  Or-Introduction (Left) (6)
+||((a & ~b) v ~a) v b     (8)  Or-Introduction (Right) (7)
+||F                       (9)  Contradiction (8) (1)
+|~~a                     (10)  Reductio Ad Absurdum (6) (9)
+|a                       (11)  Not-Elimination (10)
+|a & ~b                  (12)  And-Introduction (11) (5)
+|(a & ~b) v ~a           (13)  Or-Introduction (Right) (12)
+|((a & ~b) v ~a) v b     (14)  Or-Introduction (Right) (13)
+|F                       (15)  Contradiction (14) (1)
+~~(((a & ~b) v ~a) v b)  (16)  Reductio Ad Absurdum (1) (15)
+((a & ~b) v ~a) v b      (17)  Not-Elimination (16)
+True
+Example 6.7  erroneous a v b |- b, undischarged assumption  (0)  Comment
+a v b                     (1)  Given
+|~b                       (2)  Assumption
+||~a                      (3)  Assumption
+||b                       (4)  Or-Elimination (Left) (1) (3)
+||F                       (5)  Contradiction (4) (2)
+||~~b                     (6)  Reductio Ad Absurdum (2) (5)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+False
+Example 6.7a  dead end a v b |- b, can't discharge assumption  (0)  Comment
+a v b                     (1)  Given
+|~b                       (2)  Assumption
+||~a                      (3)  Assumption
+||b                       (4)  Or-Elimination (Left) (1) (3)
+||F                       (5)  Contradiction (4) (2)
+|~~a                      (6)  Reductio Ad Absurdum (3) (5)
+|...                      (7)  Comment
+True
+Example 6.8  erroneous a v b |- b, confusion about brackets  (0)  Comment
+a v b                     (1)  Given
+|~a                       (2)  Assumption
+|~a v b                   (3)  Or-Introduction (Right) (2)
+|F                        (4)  Contradiction (1) (3)
+Fail: ~a v b does not match ~m1 with { m1:a v b }
+False
+Example 6.9  a & b |- ~(~a v ~b)  (0)  Comment
+a & b                     (1)  Given
+a                         (2)  And-Elimination (Right) (1)
+b                         (3)  And-Elimination (Left) (1)
+|~a v ~b                  (4)  Assumption
+||~a                      (5)  Assumption
+||F                       (6)  Contradiction (2) (5)
+|~~a                      (7)  Reductio Ad Absurdum (5) (6)
+|~b                       (8)  Or-Elimination (Left) (4) (7)
+|F                        (9)  Contradiction (3) (8)
+~(~a v ~b)               (10)  Reductio Ad Absurdum (4) (9)
+True

@@ -1,0 +1,85 @@
+P(t), Ax.(P(x) -> ~Q(x)) |- ~Q(t) using Ae from H&R p. 111  (0)  Comment
+P(t)                      (1)  Given
+Ax.(P(x) -> ~Q(x))        (2)  Given
+P(t) -> ~Q(t)             (3)  A-Elimination (2)
+~Q(t)                     (4)  Implication-Elimination (Modus Ponens) (3) (1)
+True
+H&R p. 111 Ae, Ai: Ax.(P(x) -> Q(x)), Ax.P(x) |- Ax.Q(x)  (0)  Comment
+Ax.(P(x) -> Q(x))         (1)  Given
+Ax.P(x)                   (2)  Given
+|Let x be arbitrary       (3)  New variable for subproof
+|P(x) -> Q(x)             (4)  A-Elimination (1)
+|P(x)                     (5)  A-Elimination (2)
+|Q(x)                     (6)  Implication-Elimination (Modus Ponens) (4) (5)
+Ax.Q(x)                   (7)  A-Introduction (3) (6)
+True
+Ax.P(x) -> Ex.P(x) using Ae, Ei from H&R p. 114  (0)  Comment
+Ax.P(x)                   (1)  Given
+P(x)                      (2)  A-Elimination (1)
+Ex.P(x)                   (3)  E-Introduction (2)
+True
+H&R p. 114, valid Ae,Ei,Ee: Ax.(P(x) -> Q(x)), Ex.P(x) |- Ex.Q(x)  (0)  Comment
+Ax.(P(x) -> Q(x))         (1)  Given
+Ex.P(x)                   (2)  Given
+|Let x satisfy P(x)       (3)  Assumption, with new variable
+|P(x) -> Q(x)             (4)  A-Elimination (1)
+|Q(x)                     (5)  Implication-Elimination (Modus Ponens) (4) (3)
+|Ex.Q(x)                  (6)  E-Introduction (5)
+Ex.Q(x)                   (7)  E-Elimination (2) (3) (6)
+True
+H&R p. 114, erroneous Ae,Ee,Ei: Ax.(P(x) -> Q(x)), Ex.P(x) |- Ex.Q(x)  (0)  Comment
+Ax.(P(x) -> Q(x))         (1)  Given
+Ex.P(x)                   (2)  Given
+|Let x satisfy P(x)       (3)  Assumption, with new variable
+|P(x) -> Q(x)             (4)  A-Elimination (1)
+|Q(x)                     (5)  Implication-Elimination (Modus Ponens) (4) (3)
+|Q(x)                     (6)  E-Elimination (2) (3) (5)
+Fail: variable x appears free in formula among ['x']
+False
+H&R p.119: ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||P(x)                    (7)  Proof By Contradiction (4) (6)
+|Ax.P(x)                  (8)  A-Introduction (3) (7)
+|F                        (9)  Contradiction (8) (1)
+Ex.~P(x)                 (10)  Proof By Contradiction (2) (9)
+True
+H&R p. 121: Ex.p v Ex.q |- Ex.(p v q)  (0)  Comment
+Ex.p v Ex.q               (1)  Given
+|Ex.p                     (2)  Assumption
+||Let x satisfy p         (3)  Assumption, with new variable
+||p v q                   (4)  Or-Introduction (Right) (3)
+||Ex.(p v q)              (5)  E-Introduction (4)
+|Ex.(p v q)               (6)  E-Elimination (2) (3) (5)
+|Ex.q                     (7)  Assumption (next case)
+||Let x satisfy q         (8)  Assumption, with new variable
+||p v q                   (9)  Or-Introduction (Left) (8)
+||Ex.(p v q)             (10)  E-Introduction (9)
+|Ex.(p v q)              (11)  E-Elimination (7) (8) (10)
+Ex.(p v q)               (12)  Or-Elimination (1) (2) (6) (7) (11)
+True
+H&R p. 121: Ex.(p v q) |- Ex.p v Ex.q  (0)  Comment
+Ex.(p v q)                (1)  Given
+|Let x satisfy p v q      (2)  Assumption, with new variable
+||p                       (3)  Assumption
+||Ex.p                    (4)  E-Introduction (3)
+||Ex.p v Ex.q             (5)  Or-Introduction (Right) (4)
+||q                       (6)  Assumption (next case)
+||Ex.q                    (7)  E-Introduction (6)
+||Ex.p v Ex.q             (8)  Or-Introduction (Left) (7)
+|Ex.p v Ex.q              (9)  Or-Elimination (2) (3) (5) (6) (8)
+Ex.p v Ex.q              (10)  E-Elimination (1) (2) (9)
+True
+H&R p. 122: Ex.Ey.p |- Ey.Ex.p  (0)  Comment
+Ex.Ey.p                   (1)  Given
+|Let x satisfy Ey.p       (2)  Assumption, with new variable
+||Let y satisfy p         (3)  Assumption, with new variable
+||Ex.p                    (4)  E-Introduction (3)
+||Ey.Ex.p                 (5)  E-Introduction (4)
+|Ey.Ex.p                  (6)  E-Elimination (2) (3) (5)
+Ey.Ex.p                   (7)  E-Elimination (1) (2) (6)
+True

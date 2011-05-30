@@ -1,0 +1,174 @@
+Notes on the nd module
+
+Introduction
+Natural deduction
+Proof state
+Processing a step
+Proof automation
+Integration, modular structure
+Alternatives
+
+Introduction 
+
+This document discusses the nd module in the Flip logical framework.
+Before reading this, it would be helpful to look over the Flip web pages and
+the overall design document.
+
+The nd module provides proof checking and editing.  It manages proof
+state, provides prover commands, print/display, and save.
+
+
+Natural deduction
+
+The nd module checks and edits proofs expressed in natural deduction
+style.  Here is an example:
+
+Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+
+Each line shows a proof step with a formula and justification.  The
+justification always includes the name of an inference rule and often
+includes premises, other formulas in the proof.  Premises are
+indicated by their line numbers.
+
+Making an assumption begins a subproof, indicated here by indentation.
+Discharging an assumption closes the subproof.  A step in a subproof
+can only be justified by premises in the same subproof or in enclosing
+subproofs (including the main proof).
+
+The prover only provides commands (functions) to add a
+step at end, or delete steps from the end.
+
+
+Proof state
+
+The proof state is stored in the steps attribute, a list of tuples,
+one for each step in the proof.  It can be displayed by the state()
+command:
+
+>>> state()
+(0, 'xr', (), ((),), "Text('Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)')", 'comment')
+(1, 'xr', (), ((),), 'Not(A(x, P(x)))', 'given')
+(2, 'ar', (2,), ((), ()), 'Not(E(x, Not(P(x))))', 'assume')
+(3, 'ar', (3, 2), (('x',), (), ()), 'New(x)', 'new')
+(4, 'ar', (4, 3, 2), ((), ('x',), (), ()), 'Not(P(x))', 'assume')
+(5, 'xr', (4, 3, 2), ((), ('x',), (), ()), 'E(x, Not(P(x)))', 'Ei', 4)
+(6, 'xr', (4, 3, 2), ((), ('x',), (), ()), 'F', 'contra', 5, 2)
+(7, 'dr', (3, 2), (('x',), (), ()), 'Not(Not(P(x)))', 'raa', 4, 6)
+(8, 'xr', (3, 2), (('x',), (), ()), 'P(x)', 'ne', 7)
+(9, 'dr', (2,), ((), ()), 'A(x, P(x))', 'Ai', 3, 8)
+(10, 'xr', (2,), ((), ()), 'F', 'contra', 9, 1)
+(11, 'dr', (), ((),), 'Not(Not(E(x, Not(P(x)))))', 'raa', 2, 10)
+(12, 'xr', (), ((),), 'E(x, Not(P(x)))', 'ne', 11)
+
+That the proof state stores the same information as is shown by the
+pp() command, plus some additional information.  In each step:
+
+- The second item is the rule category: 'ar' (assumer), 'dr'
+(discharger), or 'xr' (other).  
+
+- The third item is the subproof stack, with the step number of the
+assumption that begins the current subproof first, then the step
+number of the beginning of the enclosing subproof, etc.  
+
+- The fourth item is the free variable stack.  Each entry in the
+stack is the tuple of variables that are free in that subproof.
+
+The subproof stack is necessary to print the indentation, and to check
+whether cited premises are in a correct scope.
+
+The free variable stack is necessary because the Let and New commands
+introduce new variables, which must not be free in the proof already.
+
+The subproofs and free variables are stored in stacks that can be 
+popped when an assumption is discharged and a subproof is closed.
+
+The subproof stack and free variable stack are included in each step
+so they can be restored easily when steps are deleted.  (Otherwise it
+would be necessary to regenerate them by re-executing the proof from
+the beginning each time a step was deleted.)
+
+
+Processing a step
+
+To process each step, the check function is called with these
+arguments: the formula, the rule, and the step numbers of the
+premises.  The check function collects all the premises and the
+conclusion (the formula), checks that all premises are present and in
+proper scope.  Then the check function calls the check_rule
+function.  
+
+The check_rule function compares each premise, and finally the
+conclusion, to the patterns in the rule in the pertinent logic module,
+by calling the mismatch methods in the formula module.  As it goes,
+check_rule binds placeholders in the patterns in the rules to the
+subformulas from the premises and conclusion, storing the bound pairs
+in the subformulas dictionary used by the mistmatch methods.  This is
+discussed in more detail in formula.txt.
+
+If check_rule finds that the rule is valid, check adds it to the end
+of the proof state.  Otherwise, check issues an error message and does
+not add the step to the proof state.  Then control returns to the
+Python interpreter.  IN an interactive session, the user may issue
+another command.
+
+If an exception is thrown while processing a step, the proof state is
+not updated and control returns to the Python interpreter.  The user
+may issue another command.
+
+
+Proof automation
+
+The nd module provides rudimentary proof automation.  Instead of
+providing the formula for each step, you can provide just the rule and the
+premises (and, for some quantifier rules, a term or two).
+
+This is implemented by the rapply command (because you apply the rule
+to the premises to get the formula --- Python already has a built-in
+apply command).  The rapply function calls check, passing a special
+Apply() pseudo-formula argument.  Apply is a subclass of Formula but
+behaves as a prover command, not a formula.  Apply() commands
+check_rule to invoke the conclusion pattern's generate method instead
+of its mismatch method.  check_rule then assigns the returned
+generated formula to the global formula attribute.  The formula has to
+be a global attribute, rather than an argument, because it might be
+rebound in the body of check_rule.
+
+
+Integration, modular structure
+
+The nd module works with different logics, but imports none of them.
+A proof session does not import the nd module directly.  Instead, it
+imports a session module, which imports a config module, which imports
+nd and also one or more logic modules as well.  See design.txt for
+details.
+
+
+Alternatives
+
+Flip could be extended to support to other proof styles.
+
+Backward proof, where the proof state is a tree with the goal at the
+root and premises at the nodes, uses the same logics and inference
+rules but a different presentation and interaction style.  Interaction
+works backwards from the goal, filling in premises.  This could be be
+implemented in Flip by writing a different proof module than nd.
+
+Equational proof, where proofs are sequences of formulas related by
+equality (or other relations), uses different logics (than natural
+deduction), where most rules are axioms (rules without premises).
+Interaction usually generates the next formula by substituting into
+the previous formula.  This could be implemented in Flip by writing a
+new proof module and new logics (with lots of axioms); they could use
+the existing formula module.

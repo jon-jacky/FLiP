@@ -1,0 +1,19 @@
+Irreflexivity rule        (0)  Comment
+a < a                     (1)  Given
+F                         (2)  Irreflexivity (1)
+Irreflexivity rule, premise is not <  (0)  Comment
+a /< a                    (1)  Given
+F                         (2)  Irreflexivity (1)
+Fail: a /< a does not match v1 < v1 with {  }
+Irreflexivity rule, premise arguments differ  (0)  Comment
+a < b                     (1)  Given
+F                         (2)  Irreflexivity (1)
+Fail: a < b does not match v1 < v1 with { v1:a }
+Irreflexivity rule, conclusion is not F  (0)  Comment
+a < a                     (1)  Given
+a /< a                    (2)  Irreflexivity (1)
+Fail: a /< a does not match F with { v1:a }
+Irreflexivity rule, premise out of range  (0)  Comment
+a < b                     (1)  Given
+F                         (2)  Irreflexivity (2)
+Fail: no line 2 for premise at index 0

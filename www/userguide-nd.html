@@ -1,0 +1,667 @@
+<html>
+<head>
+<title>Using the F L i P proof checker</title>
+</head>
+<body>
+
+<h2>Using the F L i P proof checker</h2>
+
+<p>
+<a href="http://staff.washington.edu/jon/">Jonathan Jacky</a>
+
+
+<p>
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<!-- <a href="userguide-nd.html">User's guide</a> &nbsp; -->
+<a href="reference-nd.html">Reference</a> &nbsp; 
+<a href="logics.html">Logics</a> &nbsp; 
+<a href="../code">Code</a> &nbsp; 
+<a href="../test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a>
+</p>
+
+<p>
+<a href="index.html"><b>Flip</b></a> is a logical framework written in
+Python.  One Flip application is a proof checker for entering and
+editing proofs in natural deduction style.  This page is a tutorial
+and user's guide; there is also a complete <a
+href="reference-nd.html">reference</a>.  For an introduction to logic
+and proof in this style, consult a textbook such as <a
+href="http://web.mat.bham.ac.uk/R.W.Kaye/logic/">Kaye</a>, <a
+href="http://www.cs.bham.ac.uk/research/projects/lics/">Huth and
+Ryan</a>, or <a
+href="http://www.oup.com/uk/catalogue/?ci=9780198530275">Bornat</a>.
+
+<p>
+<a href="#nd">Natural deduction</a>
+<a href="#interact">Interactive proof</a>
+<a href="#save">Save and restore</a>
+<a href="#err">Err and recover</a>
+<a href="#info">Show information</a>
+<a href="#batch">Batch proof</a>
+<a href="#examples">Examples</a>
+<a href="#refs">Bibliography</a>
+</p>
+
+<hr>
+
+<h3><a name="nd">Natural deduction</h3>
+
+<p>
+The checker works with proofs expressed in natural deduction style.
+The checker can use different logics; Flip comes with several.  Here
+is a proof in first-order logic based on an example from Kaye,
+displayed by the checker's pp command:
+
+<pre>
+Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+</pre>
+
+<p>
+A proof in this style is a sequence of steps.  Each step must include
+a formula (on the left above) and a justification (on the right).  The
+justification always includes the name of an inference rule and often
+includes premises, other steps in the proof.  Premises are indicated
+by their step numbers.  Proofs begin with steps whose rule is Given or
+Assumption, which have no premises.
+
+<p>
+Making an assumption begins a subproof, indicated here by indentation
+and vertical bars.  Discharging an assumption closes the subproof.  A
+step in a subproof can only be justified by premises in the same
+subproof or in enclosing subproofs (including the main proof).
+
+<hr>
+
+<h3><a name="interact">Interactive proof</h3>
+
+<p>
+The checker supports forward proof.  We can only work on one goal at a
+time.  We can only add a step at the end of the proof, or delete steps
+from the end.  If a proffered step is invalid, the checker prints an
+error message and does not add the step to the proof.  Therefore,
+every step in the stored proof is valid and justified.
+
+<p>
+The only user interface to the checker is the Python interpreter itself.
+Formulas, inference rules, and entire proofs are Python expressions.
+Checker commands are Python functions.  You do not need to know much
+Python to use the checker, just follow the directions here.
+
+<p>
+Here we demonstrate a few prover commands to enter a proof with no
+errors.  Demonstrations of <a href="#err">error handling</a> appear
+below.  A complete list of commands (including several not shown here)
+appears in the <a href="reference-nd.html#commands">reference</a>.
+
+<p>
+To begin an interactive proof session, start the Python interpreter
+with the session file for the logic we wish to use.  The proof in this
+example uses first-order logic (fol).  Other Flip logics are discussed
+in the <a href="reference-nd.html#logics">reference</a>.
+
+<pre>
+python -i fol_session.py
+>>>
+</pre>
+
+<p>
+Python starts, runs the session file, and prints its command prompt.
+Now we can type checker commands at the prompt.
+
+<p>
+In many Python versions, we can edit in the command line with the
+right- and left-arrow keys and the backspace and delete keys.  We can 
+retrieve earlier commands to repeat or edit with the up- and down-arrow keys.
+
+<p>
+Use the <b>clear</b> command to start a new proof, or to start over.
+All command invocations are function calls, so we must
+put parentheses after the command name, even when there are no
+arguments:
+
+<pre>
+>>> clear()
+</pre>
+
+<p>
+Use the <b>checkp</b> command (check and print) to enter the next
+proof step.  The arguments to this command are the formula, the rule,
+and possibly some premises.
+
+<p>
+At this time Flip does not provide a parser. Formulas are ordinary
+Python expressions.  We must enter formulas in prefix syntax with
+operator names.  Then checkp prints the formula in infix syntax with
+operator symbols:
+
+<pre>
+>>> checkp(Not(A(x, P(x))), given)
+~Ax.P(x)                  (0)  Given
+</pre>
+
+<p>
+The variable x and the relation P are defined by running the fol_session
+module, as are all the logical operators including Not and A (for
+all).  That module defines several other variables, relations, and
+functions, and we can define more during a proof session; see the <a
+href="reference-nd.html#notation">reference</a>.
+
+<p>
+Python uses zero-based indexing, so the first proof step is always
+number 0.  We usually like to put a comment there, so the first
+formula in the proof appears in step 1.  Let's remove that step 0 and
+put in a comment instead.  Use the <b>back</b> command to remove the
+last step from the proof.
+
+<pre>
+>>> back()
+</pre>
+
+<p>
+The comment goes in the formula argument to checkp, coded like this:
+<code>Text('...')</code>.  The rule argument is <code>comment</code>.
+Once again, checkp prints the step.
+
+<pre>
+>>> checkp(Text('Kaye ex. 9.12'), comment)
+Kaye ex. 9.12             (0)  Comment
+</pre>
+
+<p>
+Use checkp to enter the first few steps
+
+<pre>
+>>> checkp(Not(A(x, P(x))), given)
+~Ax.P(x)                  (1)  Given
+>>> checkp(Not(E(x, Not(P(x)))), assume)
+|~Ex.~P(x)                (2)  Assumption
+>>> checkp(New(x), new)
+||Let x be arbitrary      (3)  New variable for subproof
+>>> checkp(Not(P(x)), assume)
+|||~P(x)                  (4)  Assumption
+</pre>
+
+
+<p>
+Then use <b>pp</b> (pretty-print) to show our progress so far:
+
+<pre>
+>>> pp()
+Kaye ex. 9.12             (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+</pre>
+
+<p>
+Use checkp to add a step with a premise.  The premise is the third
+argument.
+
+<pre>
+>>> checkp(E(x, Not(P(x))), Ei, 4)
+|||Ex.~P(x)               (5)  E-Introduction (4)
+</pre>
+
+<p>
+Some rules have more than one premise; use as many arguments as needed.
+
+<pre>
+>>> checkp(F, contra, 5, 2)
+|||F                      (6)  Contradiction (5) (2)
+</pre>
+
+<p>
+The <b>rapply</b> (rule apply) command is an alternative to checkp for
+steps that have premises.  It is usually the most convenient
+way to enter a step.  Just enter the rule and the premise numbers;
+rapply itself generates the formula.
+
+<pre>
+>>> rapply(raa,4,6)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+>>> rapply(ne,7)
+||P(x)                    (8)  Not-Elimination (7)
+>>> rapply(Ai,3,8)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+>>> rapply(contra,9,1)
+|F                       (10)  Contradiction (9) (1)
+>>> rapply(raa,2,10)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+>>> rapply(ne,11)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+</pre>
+
+<p>
+To use rapply with the Ae rule, you must also provide a term or
+variable to substitute for the bound variable, like this:
+<code>rapply(Ae, 1, x)</code>.  For the Ei rule, you must also provide
+a dictionary that shows how to replace the term in the premise with a
+bound variable.  For example, we could do step 5 (above) this way:
+
+<pre>
+>>> rapply(Ei,4,{x:x})
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+</pre>
+
+<p>
+Here the dictionary <code>{x:x}</code> commands the checker to replace
+the term <code>x</code> in step 4 with the bound variable
+<code>x</code>.
+
+<p>
+Use pp to show the finished proof:
+
+<pre>
+>> pp()
+Kaye ex. 9.12             (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+</pre>
+
+<p>
+The <b>ptree</b> (print tree) command is an alternative to pp that
+prints the proof as a tree with the conclusion at the root, where each
+premise is indented under the formula it justifies:
+
+<pre>
+>>> ptree()
+Ex.~P(x)                 (-1)  Not-Elimination (11)
+  ~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+    ~Ex.~P(x)                (2)  Assumption
+    F                       (10)  Contradiction (9) (1)
+      Ax.P(x)                  (9)  A-Introduction (3) (8)
+        Let x be arbitrary      (3)  New variable for subproof
+        P(x)                    (8)  Not-Elimination (7)
+          ~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+            ~P(x)                  (4)  Assumption
+            F                      (6)  Contradiction (5) (2)
+              Ex.~P(x)               (5)  E-Introduction (4)
+                ~P(x)                  (4)  Assumption
+              ~Ex.~P(x)                (2)  Assumption
+      ~Ax.P(x)                  (1)  Given
+</pre>
+
+<p>
+This format suggests an alternative to forward proof: backward proof
+from conclusions to premises.  However, at this time the checker does
+not support backward proof.
+
+<hr>
+
+<h3><a name="save">Save and restore</h3>
+
+<p>
+Use the <b>save</b> command to save work in progress to resume later,
+or to save a completed proof.  The save command takes one argument, a
+string, the name of the module where the proof is saved:
+
+<pre>
+>>> save('ex912')
+Saved in ex912.py
+</pre>
+
+<p>
+The save command writes the file in the current working directory,
+replacing the file if it already exists.  The saved file is a Python
+module with one attribute: the saved proof, whose name is the same as
+the module name.  The proof can be restored into a Python session by using the
+<b>import</b> statement:
+
+<pre>
+>>> from ex912 import ex912
+</pre>
+
+<p>
+To resume work on the proof, execute the <b>check_proof</b> command
+with the name (not quoted) we assigned.  The check_proof command
+checks and prints each step:
+
+<pre>
+>>> check_proof(ex912)
+Kaye ex. 9.12             (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+... <em>etc.</em> ...
+Ex.~P(x)                 (12)  Not-Elimination (11)
+>>>
+</pre>
+
+<p>
+Now we could continue editing, issuing checker commands at the prompt.
+
+<hr>
+
+<h3><a name="err">Err and recover</h3>
+
+<p>
+The preceding example is a bit unrealistic because all of the
+proffered steps are valid.  The whole purpose of a proof checker is to
+catch invalid steps and other errors.  If a proffered step is
+erroneous, the checker prints a message, and the step is not added to
+the proof.  The stored proof is still valid, so we can always recover
+by simply trying again.
+
+<h4>Invalid steps</h4>
+
+<p>
+At step 5, we might have attempted:
+
+<pre>
+>>> checkp(E(x,P(x)),Ei,4)
+|||Ex.P(x)                (5)  E-Introduction (4)
+'Fail: Ex.P(x) does not match Ev1.S1 with { S1:~P(x), v1:x }'
+</pre>
+
+<p>
+Here checkp checks its formula and premise arguments against the
+inference rule for E-introduction.  They do not match, so the step
+fails.  The message indicates that the formula contains P(x) while the
+premise contains ~P(x).  The formula should contain ~P(x) as well.
+Try again:
+
+<pre>
+>>> checkp(E(x,Not(P(x))),Ei,4)
+|||Ex.~P(x)               (5)  E-Introduction (4)
+</pre>
+
+<p>
+This step is valid; checkp accepts it and adds it to the proof.
+
+<p>
+A complete list of error messages appears in the <a
+href="reference-nd.html#errors">reference</a>.
+
+<h4>Type errors</h4>
+
+<p>
+Flip's first-order logic distinguishes two types of formulas: Formula
+(with a capital F), and Term.  Arguments of logical operators (And,
+etc.) must be Formulas, while arguments of functions or relations
+(Equal, etc.) must be Terms.  Variables are Terms, while Letters
+(Boolean variables) are Formulas.  Using a Letter where a Variable is
+expected is a type error:
+
+<pre>
+>>> checkp(E(q,Not(P(q))),Ei,4)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\jon\Documents\prover\code\fol.py", line 41, in __init__
+    Relation.__init__(self, *args)
+  File "C:\Users\jon\Documents\prover\code\formula.py", line 154, in __init__
+    check_type(self, Term, *args)
+  File "C:\Users\jon\Documents\prover\code\formula.py", line 607, in check_type
+    (self.__class__.__name__, i, a.ppf(), type(a), arg_type)
+TypeError: P argument 0, q is &lt;class 'formula.Letter'&gt;, must be &lt;class 'formula.Term'&gt;
+</pre>
+
+<p>
+The problem indicated here is that the formula uses the Letter q as the argument of the relation P, where a Variable or another Term is required.
+
+<p>
+Another kind of type error occurs when the first argument of the
+checkp command is not a formula.  For example, recall that a comment
+must be encoded this way: <code>Text('...')</code>.  If we fail to do
+this, it is a type error:
+
+<pre>
+>>> checkp('Kaye ex. 9.17 ...', comment)
+"Fail: Kaye ex. 9.17 ... is &lt;type 'str'&gt;, must be Formula"
+</pre>
+
+
+<h4>Syntax errors</h4>
+
+<p>
+Commands and formulas are just Python expressions, so syntax errors are
+signaled by the Python interpreter:
+
+<pre>
+>>> checkp(E(x,Not(P(x)))),Ei,4)
+  File "<stdin>", line 1
+    checkp(E(x,Not(P(x)))),Ei,4)
+                               ^
+SyntaxError: invalid syntax
+</pre>
+
+<p>
+The problem here is too many closing parentheses after P(x).
+
+<p>
+If we attempt to use an identifier that is not defined, Python prints
+a message like this:
+
+<pre>
+>>> checkp(E(j,Not(P(j))),Ei,4)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'j' is not defined
+</pre>
+
+<p>
+The problem here is that we tried to use j as a variable, but it is
+not defined in the fol_session module, or in the current session.
+
+<p>
+Command invocations are function calls so we must include the
+parentheses, even when there are no arguments.  If we omit them,
+Python prints a message like this:
+
+<pre>
+>>> pp
+&lt;function pp at 0x02232270&gt;
+</pre>
+
+<hr>
+
+<h3><a name="info">Show information</h3>
+
+<p>
+The <b>dir</b> command shows identifiers that are defined in
+the Python session, including all the prover commands, rules, logical
+operators, variables, functions and relations:
+
+<pre>
+>>> dir()
+['A', 'Ae', 'Ai', 'And', 'Apply', 'E', 'Ee', 'Ei', 'Equal', 'F', 'Formula', 
+... <em>etc.</em> ...
+'top', 'trans', 'u', 'v', 'v1', 'v2', 'w', 'x', 'xr', 'xx', 'y', 'z']
+</pre>
+
+<p>
+Type any identifier to print information about it:
+
+<pre>
+>>> x
+&lt;formula.Variable object at 0x02222A30&gt;
+>>> p
+&lt;formula.Letter object at 0x02222AB&gt;
+>>> P
+&lt;class 'fol.P'&gt;
+</pre>
+
+<p>
+The <b>help</b> command often prints useful information:
+
+<pre>
+>>> help(P)
+Help on class P in module fol:
+
+class P(formula.Relation)
+ |  Example of relation, used in Kaye ex 9.16, 9.17 , Huth and Ryan sect. 2.3
+ |  ... <em>etc.</em> ... 
+</pre>
+
+<p>
+The <b>help</b> command prints the arguments and other information
+about any function, including prover commands:
+
+<pre>
+>>> help(checkp)
+Help on function checkp in module nd:
+
+checkp(formula_arg, rule, *premises_etc)
+    Check step and update proof state, pretty-print step, print error
+</pre>
+
+<p>
+The <b>rules</b> command shows all the inference rules in the session.
+In each rule, the premises appear first, the conclusion appears last:
+
+<pre>
+>>> rules()
+[('comment', ['m1']),
+ ('impli', ['m1', 'm2', 'Impl(m1,m2)']),
+ ('oil', ['m2', 'Or(m1,m2)']),
+ ('raa', ['m1', 'F', 'Not(m1)']),
+ ('ai', ['m1', 'm2', 'And(m1,m2)']),
+ ... <em>etc.</em> ...
+</pre>
+
+<p>
+The <b>apropos</b> command shows the inference rules that
+involve the operator given in the argument:
+
+<pre>
+>>> apropos(Not)
+[('raa', ['m1', 'F', 'Not(m1)']),
+ ('oer', ['Or(m1,m2)', 'Not(m2)', 'm1']),
+ ('oel', ['Or(m1,m2)', 'Not(m1)', 'm2']),
+ ('ne', ['Not(Not(m1))', 'm1']),
+ ('contra', ['m1', 'Not(m1)', 'F'])]
+</pre>
+
+<p>
+The <b>rule_names</b> attribute associates each rule name with its description.
+Use <b>pprint</b> to format the output:
+
+<pre>
+>>> pprint(rule_names)
+{'Ae': 'A-Elimination',
+ 'Ai': 'A-Introduction',
+ ... <em>etc.</em> ...
+</pre>
+
+<hr>
+
+
+<h3><a name="batch">Batch proof</h3>
+
+<p>
+An entire proof can be represented by a Python expression: a list of
+tuples, where each tuple is a step.  We can use a text editor to
+create a file that contains a proof.  Here are the contents of ex912_test.py:
+
+<pre>
+from fol_session import *
+
+ex912 = \
+  [(Text('Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)'), comment),
+    (Not(A(x, P(x))), given),
+    (Not(E(x, Not(P(x)))), assume),
+    (New(x), new),
+    (Not(P(x)), assume),
+    (E(x, Not(P(x))), Ei, 4),
+    (F, contra, 5,2),
+    (Not(Not(P(x))), raa, 4,6),
+    (P(x), ne, 7),
+    (A(x, P(x)), Ai, 3,8),
+    (F, contra, 9,1),
+    (Not(Not(E(x, Not(P(x))))), raa, 2,10),
+    (E(x, Not(P(x))), ne, 11)]
+
+check_proof(ex912)
+</pre>
+
+<p>
+Run Python on the file to check the proof:
+
+<pre>
+> python ex912_test.py
+Valid A-intro, Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+... <em>etc.</em> ...
+</pre>
+
+<p>
+The check_proof function checks and prints each step.  If the
+step fails, check_proof prints an error message and exits.
+
+<hr>
+
+<h3><a name="examples">Examples</h3>
+
+<p>
+The <a href="../test">test modules</a> contain many proofs in each of
+the Flip logics.  They demonstrate every formula class and inference rule.
+Each test case is coded as a <a href="#batch">batch proof</a>.
+
+<hr>
+
+<h3><a name="refs">Bibliography</h3>
+
+<p>
+The proof format printed by the pp command resembles the one in Kaye.
+Similar formats are used by Huth and Ryan, Bornat, and many other
+logic textbooks.  Sometimes this is called Fitch style.  Other proof
+styles are discussed by Gries and Schneider.
+
+<p>
+Kaye, <em>The Mathematics of Logic</em><br>
+<a href="http://web.mat.bham.ac.uk/R.W.Kaye/logic/">
+<tt>http://web.mat.bham.ac.uk/R.W.Kaye/logic/</tt></a>
+
+<p>
+Huth and Ryan, <em>Logic in Computer Science</em><br>
+<a href="http://www.cs.bham.ac.uk/research/projects/lics/">
+<tt>http://www.cs.bham.ac.uk/research/projects/lics/</tt></a>
+
+<p>
+Bornat, <em>Proof and Disproof in Formal Logic</em><br>
+<a href="http://www.oup.com/uk/catalogue/?ci=9780198530275">
+<tt>http://www.oup.com/uk/catalogue/?ci=9780198530275</tt></a>
+
+<p>
+Gries and Schneider, <em>A Logical Approach to Discrete Math</em><br>
+<a href="http://www.cs.cornell.edu/gries/logic/LogicalApproach.html">
+<tt>http://www.cs.cornell.edu/gries/logic/LogicalApproach.html</tt></a><br>
+
+<hr>
+
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<a href="userguide-nd.html">User's guide</a> &nbsp;
+<a href="reference-nd.html">Reference</a> &nbsp;
+<a href="logics.html">Logics</a> &nbsp;
+<a href="../code">Code</a> &nbsp;
+<a href="../test">Tests</a> &nbsp;
+<a href="../notes">Notes</a>
+
+</body>
+</html>

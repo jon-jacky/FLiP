@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>She's a Witch!</title>
+</head>
+<body>
+
+<h2>She's a Witch!</h2>
+
+
+<!--
+<p>
+<a href="http://staff.washington.edu/jon/">Jonathan Jacky</a>
+-->
+
+<p>
+<a href="index.html"><b>Flip</b></a> is a logical framework written in
+Python.  One Flip application is a proof checker for entering and
+editing proofs in natural deduction style.   Here is a Pythonic example.
+
+<p>
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp; 
+<a href="userguide-nd.html">User's guide</a> &nbsp; 
+<a href="reference-nd.html">Reference</a> &nbsp; 
+<a href="logics.html">Logics</a> &nbsp; 
+<a href="../code">Code</a> &nbsp; 
+<a href="../test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a>
+</p>
+
+<hr>
+
+
+<p>
+"There are ways of telling whether she's a witch."
+
+<p>
+"What do you do with witches?"  "Burn them!"   
+
+<pre>
+Ax.(Witch(x) -> Burn(x))  (1)  Given
+</pre>
+
+<p>
+"Why do witches burn?"  "'Cause they're made of wood!"
+
+<pre>
+Ax.(Wood(x) -> Witch(x))  (2)  Given
+</pre>
+
+<p>
+"How do we tell if she's made of wood?"
+"Does wood sink in water?"  "It floats!"
+</p>
+
+<pre>
+Ax.(Floats(x) -> Wood(x))  (3)  Given
+</pre>
+
+<p>
+"What also floats in water?" "A duck!"  
+
+<pre>
+Floats(duck)              (4)  Given
+</pre>
+
+<p>
+"Exactly!  So, logically ..."<br>
+"If she weights the same as a duck, she's made of wood!"
+
+<pre>
+Ax.Ay.((Floats(x) & (weight(x) = weight(y))) -> Floats(y))  (5)  Given
+</pre>
+
+<p>
+"We shall use my largest scales. ... Remove the supports!"
+
+<pre>
+weight(duck) = weight(girl)  (6)  Given
+</pre>
+
+<pre>
+Ay.((Floats(duck) & (weight(duck) = weight(y))) -> Floats(y))  (7)  A-Elimination (5)
+(Floats(duck) & (weight(duck) = weight(girl))) -> Floats(girl)  (8)  A-Elimination (7)
+Floats(duck) & (weight(duck) = weight(girl))  (9)  And-Introduction (4) (6)
+Floats(girl)             (10)  Implication-Elimination (Modus Ponens) (8) (9)
+Floats(girl) -> Wood(girl) (11)  A-Elimination (3)
+Wood(girl)               (12)  Implication-Elimination (Modus Ponens) (11) (10)
+</pre>
+
+<p>
+"A witch!  A witch!"
+
+<pre>
+Wood(girl) -> Witch(girl) (13)  A-Elimination (2)
+Witch(girl)              (14)  Implication-Elimination (Modus Ponens) (13) (12)
+</pre>
+
+<p>
+"Burn her!  Burn!"
+
+<pre>
+Witch(girl) -> Burn(girl) (15)  A-Elimination (1)
+Burn(girl)               (16)  Implication-Elimination (Modus Ponens) (15) (14)
+</pre>
+
+
+<p>
+This is the output from the checker.  Here is
+the <a href="witch_script.html">proof script</a> 
+(more <a href="../witch">here</a>).
+
+<hr>
+
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<a href="userguide-nd.html">User's guide</a> &nbsp;
+<a href="reference-nd.html">Reference</a> &nbsp;
+<a href="logics.html">Logics</a> &nbsp;
+<a href="../code">Code</a> &nbsp;
+<a href="../test">Tests</a> &nbsp;
+<a href="../notes">Notes</a> &nbsp;
+<a href="summary.html">Summary</a> &nbsp;
+
+</body>
+</html>
+

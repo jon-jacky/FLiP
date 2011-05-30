@@ -1,0 +1,99 @@
+Relation, correct argument types
+P(x,y,z)
+
+Relation, wrong argument 1 type, Letter not Variable
+P(x,p,z)
+... caught exception ...
+
+Function, correct argument types
+f(x,y,z)
+
+Function, wrong argument 1 type, Letter not Variable
+f(x,p,z)
+... caught exception ...
+
+InfixRelation, correct argument types
+Equal(f(a,b,c),g(x,y,z))
+
+InfixRelation, wrong argument 0 and 1 types, Formulas not Terms
+Equal(Impl(p,q),Or(Not(p),q))
+... caught exception ...
+
+PrefixLogical, correct argument types
+Not(q)
+
+PrefixLogical, wrong argument type, a is Term not Formula
+Not(a)
+... caught exception ...
+
+InfixLogical, correct argument types
+And(p,q)
+
+InfixLogical, wrong argument 1 type, a is Term not Formula
+And(p,a)
+... caught exception ...
+
+Quantifer, correct argument types
+A(x, P(x))
+
+Quantifier, argument 0 is Letter not Variable
+A(q,P(q))
+... caught exception ...
+
+Quantifier, argument 0 is Function not Variable
+A(f(x),P(x))
+... caught exception ...
+
+Quantifier, argument 0 is Relation not Variable
+A(Q(x),P(x))
+... caught exception ...
+
+Quantifier, argument 1 is Term not Formula
+A(x,f(x))
+... caught exception ...
+
+New, correct argument type
+New(x)
+
+New, wrong argument type, Letter not Variable
+New(p)
+... caught exception ...
+
+New, wrong argument type, Function not Variable
+New(f(x))
+... caught exception ...
+
+Let, correct argument types
+Let(x,P(x))
+
+Let, wrong arg 0 type, Letter not Variable
+Let(q,P(q))
+... caught exception ...
+
+Let, wrong arg 0 type, Letter not Variable
+Let(q,P(q))
+... caught exception ...
+
+From subst_test, InfixLogical fails because fol_session defines a,b,c,d as vars not letters
+aanb = And(a,Not(b))
+... caught exception ...
+
+From equal_sub_test, uses x,z as variables and letters in same proof
+one_occur_ok = 
+  [(Text('Valid substitution into one of multiple occurences'),comment),
+   (Equal(x,z), given),
+   (And(Or(x,y),Impl(x,y)), given),
+   (And(Or(x,y),Impl(z,y)), sub, 1,2)]
+... caught exception ...
+
+From simple_q_test, uses x as letter and variable in same proof
+ex_src_scope_ok =   [(Text('Valid substitution, source variable whose name is bound in inner scope'),comment),
+   (Equal(x,z),given),
+   (And(Not(x),A(x,R(x,y))),given),
+   (And(Not(z),A(x,R(x,y))),sub,1,2)]
+... caught exception ...
+
+From free_test, uses same symbols as bound variables and letters
+q3l3so = A(c,A(b,A(a,Or(And(a,Not(b)),Or(c,Not(d))))))
+... caught exception ...
+

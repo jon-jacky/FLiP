@@ -1,0 +1,11 @@
+[0, 1, 2] --> [(0, 'xx', 0), (0, 'xx', 1), (0, 'xx', 2)]
+[[0]] --> [(1, 'ar', 0)]
+[[0, 1], 2] --> [(1, 'ar', 0), (1, 'xx', 1), (0, 'xx', 2)]
+[[], [0]] --> [(2, 'ar', 0)]
+[0, [1, 2], [3, 4], 5] --> [(0, 'xx', 0), (1, 'ar', 1), (1, 'xx', 2), (2, 'ar', 3), (2, 'xx', 4), (0, 'xx', 5)]
+
+assumer:      [False, True, False, False, False]
+
+assumer_case: [False, False, False, True, False]
+
+discharger:   [False, False, True, False, True]

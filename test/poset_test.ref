@@ -1,0 +1,32 @@
+Kaye ex. 4.2, p 40        (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+c < a                     (4)  Given
+a < a                     (5)  Transitivity (3) (4)
+F                         (6)  Irreflexivity (5)
+True
+Kaye ex. 4.3, p. 40       (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+c /< a                    (7)  Reductio Ad Absurdum (4) (6)
+True
+Kaye ex. 4.4, p. 41       (0)  Comment
+a < b                     (1)  Given
+|b < a                    (2)  Assumption
+|a < a                    (3)  Transitivity (1) (2)
+|F                        (4)  Irreflexivity (3)
+b /< a                    (5)  Reductio Ad Absurdum (2) (4)
+True
+Kaye ex. 4.6, p. 41       (0)  Comment
+c < b                     (1)  Given
+a /< b                    (2)  Given
+|a < c                    (3)  Assumption
+|a < b                    (4)  Transitivity (3) (1)
+|F                        (5)  Contradiction (4) (2)
+a /< c                    (6)  Reductio Ad Absurdum (3) (5)
+True

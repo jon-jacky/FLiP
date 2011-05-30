@@ -1,0 +1,53 @@
+Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))  (0)  Comment
+|q -> r                   (1)  Assumption
+||~q -> ~p                (2)  Assumption
+|||p                      (3)  Assumption
+|||~~p                    (4)  Double-negation Introduction (3)
+|||~~q                    (5)  Modus Tollens (2) (4)
+|||q                      (6)  Double-negation Elimination (5)
+|||r                      (7)  Implication-Elimination (Modus Ponens) (1) (6)
+||p -> r                  (8)  Implication-Introduction (3) (7)
+|(~q -> ~p) -> (p -> r)   (9)  Implication-Introduction (2) (8)
+(q -> r) -> ((~q -> ~p) -> (p -> r)) (10)  Implication-Introduction (1) (9)
+True
+Ex. 1.18: p & (q v r) |- (p & q) v (p & r) using Or-elim  (0)  Comment
+p & (q v r)               (1)  Given
+p                         (2)  And-Elimination (Right) (1)
+q v r                     (3)  And-Elimination (Left) (1)
+|q                        (4)  Assumption
+|p & q                    (5)  And-Introduction (2) (4)
+|(p & q) v (p & r)        (6)  Or-Introduction (Right) (5)
+|r                        (7)  Assumption (next case)
+|p & r                    (8)  And-Introduction (2) (7)
+|(p & q) v (p & r)        (9)  Or-Introduction (Left) (8)
+(p & q) v (p & r)        (10)  Or-Elimination (3) (4) (6) (7) (9)
+True
+Ex 1.24 p -> q |- ~p v q using Law of Excluded Middle  (0)  Comment
+p -> q                    (1)  Given
+p v ~p                    (2)  Excluded Middle
+|p                        (3)  Assumption
+|q                        (4)  Implication-Elimination (Modus Ponens) (1) (3)
+|~p v q                   (5)  Or-Introduction (Left) (4)
+|~p                       (6)  Assumption (next case)
+|~p v q                   (7)  Or-Introduction (Right) (6)
+~p v q                    (8)  Or-Elimination (2) (3) (5) (6) (7)
+True
+p. 20 |- p -> (q -> p) using copy  (0)  Comment
+|p                        (1)  Assumption
+||q                       (2)  Assumption
+||p                       (3)  Copy (1)
+|q -> p                   (4)  Implication-Introduction (2) (3)
+p -> (q -> p)             (5)  Implication-Introduction (1) (4)
+True
+Attempt like p. 20 |- p -> (q -> p) *without* using copy  (0)  Comment
+|p                        (1)  Assumption
+||q                       (2)  Assumption
+||q -> p                  (3)  Implication-Introduction (2) (1)
+Fail: premise at index 1, line 1 not in same scope as assumption
+False
+|- ~(p & F) using Proof By Contradiction  (0)  Comment
+|~~(p & F)                (1)  Assumption
+|p & F                    (2)  Double-negation Elimination (1)
+|F                        (3)  And-Elimination (Left) (2)
+~(p & F)                  (4)  Proof By Contradiction (1) (3)
+True

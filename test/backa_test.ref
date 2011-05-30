@@ -1,0 +1,150 @@
+-- check_proof ex. 9.16
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+|||Let b satisfy (R(a) & R(b)) & ~(a = b)  (5)  Assumption, with new variable
+|||R(a) & R(b)            (6)  And-Elimination (Right) (5)
+|||R(a)                   (7)  And-Elimination (Right) (6)
+|||R(b)                   (8)  And-Elimination (Left) (6)
+|||~(a = b)               (9)  And-Elimination (Left) (5)
+||||~P(a)                (10)  Assumption
+||||R(a) & ~P(a)         (11)  And-Introduction (7) (10)
+||||Ex.(R(x) & ~P(x))    (12)  E-Introduction (11)
+||||F                    (13)  Contradiction (12) (3)
+|||~~P(a)                (14)  Reductio Ad Absurdum (10) (13)
+|||P(a)                  (15)  Not-Elimination (14)
+||||~P(b)                (16)  Assumption
+||||R(b) & ~P(b)         (17)  And-Introduction (8) (16)
+||||Ex.(R(x) & ~P(x))    (18)  E-Introduction (17)
+||||F                    (19)  Contradiction (18) (3)
+|||~~P(b)                (20)  Reductio Ad Absurdum (16) (19)
+|||P(b)                  (21)  Not-Elimination (20)
+|||P(a) & P(b)           (22)  And-Introduction (15) (21)
+|||Ay.((P(a) & P(y)) -> (a = y)) (23)  A-Elimination (2)
+|||(P(a) & P(b)) -> (a = b) (24)  A-Elimination (23)
+|||a = b                 (25)  Implication-Elimination (Modus Ponens) (24) (22)
+|||F                     (26)  Contradiction (25) (9)
+||F                      (27)  E-Elimination (4) (5) (26)
+|F                       (28)  E-Elimination (1) (4) (27)
+~~Ex.(R(x) & ~P(x))      (29)  Reductio Ad Absurdum (3) (28)
+Ex.(R(x) & ~P(x))        (30)  Not-Elimination (29)
+
+-- backa to delete big subproof that occupies most of proof
+backa()
+Already at top level
+back(1)
+back(1)
+backa()
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+
+-- New(a) to check whether a is free at this point in proof
+|Let a be arbitrary       (3)  New variable for subproof
+
+-- start over, check_proof 9.16 again
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+|||Let b satisfy (R(a) & R(b)) & ~(a = b)  (5)  Assumption, with new variable
+|||R(a) & R(b)            (6)  And-Elimination (Right) (5)
+|||R(a)                   (7)  And-Elimination (Right) (6)
+|||R(b)                   (8)  And-Elimination (Left) (6)
+|||~(a = b)               (9)  And-Elimination (Left) (5)
+||||~P(a)                (10)  Assumption
+||||R(a) & ~P(a)         (11)  And-Introduction (7) (10)
+||||Ex.(R(x) & ~P(x))    (12)  E-Introduction (11)
+||||F                    (13)  Contradiction (12) (3)
+|||~~P(a)                (14)  Reductio Ad Absurdum (10) (13)
+|||P(a)                  (15)  Not-Elimination (14)
+||||~P(b)                (16)  Assumption
+||||R(b) & ~P(b)         (17)  And-Introduction (8) (16)
+||||Ex.(R(x) & ~P(x))    (18)  E-Introduction (17)
+||||F                    (19)  Contradiction (18) (3)
+|||~~P(b)                (20)  Reductio Ad Absurdum (16) (19)
+|||P(b)                  (21)  Not-Elimination (20)
+|||P(a) & P(b)           (22)  And-Introduction (15) (21)
+|||Ay.((P(a) & P(y)) -> (a = y)) (23)  A-Elimination (2)
+|||(P(a) & P(b)) -> (a = b) (24)  A-Elimination (23)
+|||a = b                 (25)  Implication-Elimination (Modus Ponens) (24) (22)
+|||F                     (26)  Contradiction (25) (9)
+||F                      (27)  E-Elimination (4) (5) (26)
+|F                       (28)  E-Elimination (1) (4) (27)
+~~Ex.(R(x) & ~P(x))      (29)  Reductio Ad Absurdum (3) (28)
+Ex.(R(x) & ~P(x))        (30)  Not-Elimination (29)
+
+-- back to delete many lines, end up in most deeply nested part of proof
+back(12)
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+|||Let b satisfy (R(a) & R(b)) & ~(a = b)  (5)  Assumption, with new variable
+|||R(a) & R(b)            (6)  And-Elimination (Right) (5)
+|||R(a)                   (7)  And-Elimination (Right) (6)
+|||R(b)                   (8)  And-Elimination (Left) (6)
+|||~(a = b)               (9)  And-Elimination (Left) (5)
+||||~P(a)                (10)  Assumption
+||||R(a) & ~P(a)         (11)  And-Introduction (7) (10)
+||||Ex.(R(x) & ~P(x))    (12)  E-Introduction (11)
+||||F                    (13)  Contradiction (12) (3)
+|||~~P(a)                (14)  Reductio Ad Absurdum (10) (13)
+|||P(a)                  (15)  Not-Elimination (14)
+||||~P(b)                (16)  Assumption
+||||R(b) & ~P(b)         (17)  And-Introduction (8) (16)
+||||Ex.(R(x) & ~P(x))    (18)  E-Introduction (17)
+
+-- New(a) to check whether a is free at this point in proof
+||||Let a be arbitrary   (19)  New variable for subproof
+Fail: variable a already appears free in proof among ['b', 'a']
+
+-- backa to pop this subproof
+backa()
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+|||Let b satisfy (R(a) & R(b)) & ~(a = b)  (5)  Assumption, with new variable
+|||R(a) & R(b)            (6)  And-Elimination (Right) (5)
+|||R(a)                   (7)  And-Elimination (Right) (6)
+|||R(b)                   (8)  And-Elimination (Left) (6)
+|||~(a = b)               (9)  And-Elimination (Left) (5)
+||||~P(a)                (10)  Assumption
+||||R(a) & ~P(a)         (11)  And-Introduction (7) (10)
+||||Ex.(R(x) & ~P(x))    (12)  E-Introduction (11)
+||||F                    (13)  Contradiction (12) (3)
+|||~~P(a)                (14)  Reductio Ad Absurdum (10) (13)
+|||P(a)                  (15)  Not-Elimination (14)
+
+-- New(a) to check whether a is free at this point in proof
+|||Let a be arbitrary    (16)  New variable for subproof
+Fail: variable a already appears free in proof among ['b', 'a']
+
+-- backa to pop this subproof
+backa()
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+
+-- New(a) to check whether a is free at this point in proof
+||Let a be arbitrary      (5)  New variable for subproof
+Fail: variable a already appears free in proof among ['a']
+
+-- backa to pop this subproof
+backa()
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+
+-- New(a) to check whether a is free at this point in proof
+||Let a be arbitrary      (4)  New variable for subproof
+

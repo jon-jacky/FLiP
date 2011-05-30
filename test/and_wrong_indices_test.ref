@@ -1,0 +1,60 @@
+And-Introduction          (0)  Comment
+~a                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction
+Fail: requires 2 premises, found 0
+False
+And-Elimination Right     (0)  Comment
+~a & ~b                   (1)  Given
+~a                        (2)  And-Elimination (Right)
+Fail: requires 1 premises, found 0
+False
+And-Elimination Left      (0)  Comment
+~a & ~b                   (1)  Given
+~b                        (2)  And-Elimination (Left) (0) (1)
+Fail: requires 1 premises, found 2
+False
+And-Introduction, premise indices don't match  (0)  Comment
+~a                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction (2)
+Fail: requires 2 premises, found 1
+False
+And-Introduction, left argument doesn't match  (0)  Comment
+~c                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction (0) (1) (2)
+Fail: requires 2 premises, found 3
+False
+And-Introduction, right argument doesn't match  (0)  Comment
+~a                        (1)  Given
+~c                        (2)  Given
+~a & ~b                   (3)  And-Introduction
+Fail: requires 2 premises, found 0
+False
+And-Introduction, conclusion is not And  (0)  Comment
+~a                        (1)  Given
+~c                        (2)  Given
+~a v ~b                   (3)  And-Introduction
+Fail: requires 2 premises, found 0
+False
+And-Elimination Right, argument doesn't match  (0)  Comment
+~c & ~b                   (1)  Given
+~a                        (2)  And-Elimination (Right)
+Fail: requires 1 premises, found 0
+False
+And-Elimination Left, argument doesn't match  (0)  Comment
+~a & ~c                   (1)  Given
+~b                        (2)  And-Elimination (Left)
+Fail: requires 1 premises, found 0
+False
+And-Elimination Left, premise is not And  (0)  Comment
+~a v ~b                   (1)  Given
+~b                        (2)  And-Elimination (Left)
+Fail: requires 1 premises, found 0
+False
+And-Elimination Left, premise index is for comment  (0)  Comment
+~a v ~c                   (1)  Given
+~b                        (2)  And-Elimination (Left)
+Fail: requires 1 premises, found 0
+False

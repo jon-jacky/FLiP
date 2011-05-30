@@ -1,0 +1,40 @@
+No duplicates
+Or(And(P(a),Not(Q(b))),Or(R(c),Not(S(d))))
+['a', 'b', 'c', 'd']
+
+Duplicates, at different levels
+Or(And(P(a),Not(Q(b))),Or(R(c),Not(P(a))))
+['a', 'b', 'c']
+
+Duplicates, at the same level
+Or(And(P(a),Not(Q(b))),Or(R(c),R(c)))
+['a', 'b', 'c']
+
+Quantify one of four variables
+A(a, Or(And(P(a),Not(Q(b))),Or(R(c),Not(S(d)))))
+['b', 'c', 'd']
+
+Quantify two of four variables
+A(b, A(a, Or(And(P(a),Not(Q(b))),Or(R(c),Not(S(d))))))
+['c', 'd']
+
+Quantify three of four variables
+A(c, A(b, A(a, Or(And(P(a),Not(Q(b))),Or(R(c),Not(S(d)))))))
+['d']
+
+Quantify four of four variables
+A(d, A(c, A(b, A(a, Or(And(P(a),Not(Q(b))),Or(R(c),Not(S(d))))))))
+[]
+
+Nested quantifier
+Or(And(P(a),Not(Q(b))),E(c, Or(R(c),Not(P(a)))))
+['a', 'b']
+
+Nested quantifier, bound var. same name as free var. in outer scope
+Or(And(P(a),Not(Q(b))),A(a, E(c, Or(R(c),Not(P(a))))))
+['a', 'b']
+
+Nested quantifier, inner scope
+Or(And(P(a),E(b, Not(Q(b)))),Or(R(c),Not(P(a))))
+['a', 'c']
+

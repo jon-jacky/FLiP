@@ -1,0 +1,52 @@
+Or-Introduction Left      (0)  Comment
+~a                        (1)  Given
+~b v ~a                   (2)  Or-Introduction (Left) (1)
+True
+Or-Introduction Right     (0)  Comment
+~a                        (1)  Given
+~a v ~b                   (2)  Or-Introduction (Right) (1)
+True
+Or-Elimination Left       (0)  Comment
+~b v ~a                   (1)  Given
+~~b                       (2)  Given
+~a                        (3)  Or-Elimination (Left) (1) (2)
+True
+Or-Elimination Right      (0)  Comment
+~a v ~b                   (1)  Given
+~~b                       (2)  Given
+~a                        (3)  Or-Elimination (Right) (1) (2)
+True
+Or-Introduction Left, argument doesn't match premise  (0)  Comment
+~a                        (1)  Given
+~c v ~b                   (2)  Or-Introduction (Left) (1)
+Fail: ~c v ~b does not match m1 v m2 with { m2:~a, m1:~c }
+False
+Or-Introduction Right, conclusion is not Or  (0)  Comment
+~b                        (1)  Given
+~a & ~b                   (2)  Or-Introduction (Right) (1)
+Fail: ~a & ~b does not match m1 v m2 with { m1:~b }
+False
+Or-Elimination Right, argument doesn't match  (0)  Comment
+~a v ~b                   (1)  Given
+~~c                       (2)  Given
+~a                        (3)  Or-Elimination (Right) (1) (2)
+Fail: ~~c does not match ~m2 with { m1:~a, m2:~b }
+False
+Or-Elimination Left, argument doesn't match  (0)  Comment
+~c v ~b                   (1)  Given
+~~a                       (2)  Given
+~b                        (3)  Or-Elimination (Left) (1) (2)
+Fail: ~~a does not match ~m1 with { m1:~c, m2:~b }
+False
+Or-Elimination Left, premise is not Or  (0)  Comment
+~a & ~b                   (1)  Given
+~~a                       (2)  Given
+~b                        (3)  Or-Elimination (Left) (1) (2)
+Fail: ~a & ~b does not match m1 v m2 with {  }
+False
+Or-Elimination Left, premise index is for comment  (0)  Comment
+~a v ~b                   (1)  Given
+~~a                       (2)  Given
+~b                        (3)  Or-Elimination (Left) (0) (2)
+Fail: Or-Elimination Left, premise index is for comment does not match m1 v m2 with {  }
+False

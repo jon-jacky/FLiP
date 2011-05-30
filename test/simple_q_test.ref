@@ -1,0 +1,157 @@
+E-intro from Kaye ex 9.10, not all occurrences of bound variable substituted  (0)  Comment
+x = x                     (1)  Reflexivity
+Ev.(v = x)                (2)  E-Introduction (1)
+True
+Erroneous E-intro from Kaye ex 9.10, bound variable does not match  (0)  Comment
+x = x                     (1)  Reflexivity
+Ev.(w = x)                (2)  E-Introduction (1)
+Fail: Ev.(w = x) does not match Ev1.S1 with { S1:x = x, v1:v }
+False
+A-elim from Kaye ex 9.10  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Ev.(v = w)                (2)  A-Elimination (1)
+True
+Erroneous A-elim from Kaye ex 9.10, bound variable does not match  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Ev.(w = x)                (2)  A-Elimination (1)
+Fail: Ev.(w = x) does not match P1 with { v1:x, P1:Ev.(v = x) }
+False
+P(t), Ax.(P(x) -> ~Q(x)) |- ~Q(t) using Ae from H&R p. 111  (0)  Comment
+P(t)                      (1)  Given
+Ax.(P(x) -> ~Q(x))        (2)  Given
+P(t) -> ~Q(t)             (3)  A-Elimination (2)
+~Q(t)                     (4)  Implication-Elimination (Modus Ponens) (3) (1)
+True
+Ax.P(x) -> Ex.P(x) using Ae, Ei from H&R p. 114  (0)  Comment
+Ax.P(x)                   (1)  Given
+P(x)                      (2)  A-Elimination (1)
+Ex.P(x)                   (3)  E-Introduction (2)
+True
+Valid subst. of *free* var into quantified formula, Kay ex 9.9  (0)  Comment
+t = g(y,z)                (1)  Given
+Ex.(x = f(t))             (2)  Given
+Ex.(x = f(g(y,z)))        (3)  Substitution (1) (2)
+True
+Valid subst. of *free* var into *some* occurences in quantified formula, Kay ex 9.9  (0)  Comment
+x = y                     (1)  Given
+Ez.(x = f(x,z))           (2)  Given
+Ez.(x = f(y,z))           (3)  Substitution (1) (2)
+True
+Erroneous subst. of bound var into quantified formula, Kay ex 9.9  (0)  Comment
+t = x                     (1)  Given
+Ex.(x = f(t))             (2)  Given
+Ex.(x = f(x))             (3)  Substitution (1) (2)
+Fail: replacement term x includes bound variable in ['x']
+False
+Erroneous subst. of bound var into quantified formula, Kay ex 9.9  (0)  Comment
+t = g(x,y)                (1)  Given
+Ex.(x = f(t))             (2)  Given
+Ex.(x = f(g(x,y)))        (3)  Substitution (1) (2)
+Fail: replacement term g(x,y) includes bound variable in ['x']
+False
+Erroneous use of bound var as source of subst. into quant. form  (0)  Comment
+x = y                     (1)  Given
+Ex.(x = f(x,z))           (2)  Given
+Ex.(y = f(y,z))           (3)  Substitution (1) (2)
+Fail: source term x includes bound variable in ['x']
+False
+Erroneous appearance of bound var in source of subst. into quant. form  (0)  Comment
+f(x,z) = g(y,z)           (1)  Given
+Ex.(x = f(x,z))           (2)  Given
+Ex.(x = g(y,z))           (3)  Substitution (1) (2)
+Fail: source term f(x,z) includes bound variable in ['x']
+False
+Correct A-elim similar to erroneous example H&R ex 2.11, R(x,y) is x < y  (0)  Comment
+Ax.Ey.R(x,y)              (1)  Given
+Ey.R(z,y)                 (2)  A-Elimination (1)
+True
+Erroneous A-elim similar to H&R ex 2.11, R(x,y), wrong variable substituted  (0)  Comment
+Ax.Ey.R(x,y)              (1)  Given
+Ey.R(x,z)                 (2)  A-Elimination (1)
+Fail: Ey.R(x,z) does not match P1 with { v1:x, P1:Ey.R(x,y) }
+False
+Erroneous A-elim similar to H&R ex 2.11, R(x,y), variable order reversed  (0)  Comment
+Ax.Ey.R(x,y)              (1)  Given
+Ey.R(y,z)                 (2)  A-Elimination (1)
+Fail: replacement term y includes bound variable in ['y']
+False
+Erroneous A-elim with subst of bound variable into nested quantified formula, H&R ex 2.11  (0)  Comment
+Ax.Ey.R(x,y)              (1)  Given
+Ey.R(y,y)                 (2)  A-Elimination (1)
+Fail: replacement term y includes bound variable in ['y']
+False
+Erroneous E-intro with subst of bound variable into nested quantified formula, similar to H&R ex 2.11  (0)  Comment
+Ay.R(y,z)                 (1)  Given
+Ex.Ay.R(x,z)              (2)  E-Introduction (1)
+Fail: source term y includes bound variable in ['v1', 'y']
+False
+Valid substitution, source variable whose name is bound in inner scope  (0)  Comment
+x = z                     (1)  Given
+~P(x) & Ax.R(x,y)         (2)  Given
+~P(z) & Ax.R(x,y)         (3)  Substitution (1) (2)
+True
+Erroneous substitution, source variable whose name is bound in inner scope  (0)  Comment
+x = z                     (1)  Given
+~P(x) & Ax.R(x,y)         (2)  Given
+~P(x) & Ax.R(z,y)         (3)  Substitution (1) (2)
+Fail: source term x includes bound variable in ['x']
+False
+Valid substitution, replacements variable whose name is bound in inner scope  (0)  Comment
+x = z                     (1)  Given
+~P(x) & Az.R(x,z)         (2)  Given
+~P(z) & Az.R(x,z)         (3)  Substitution (1) (2)
+True
+Erroneous substitution, replacement variable whose name is bound in inner scope  (0)  Comment
+x = z                     (1)  Given
+~P(x) & Az.R(x,z)         (2)  Given
+~P(x) & Az.R(z,z)         (3)  Substitution (1) (2)
+Fail: replacement term z includes bound variable in ['z']
+False
+Erroneous E-intro where replacement term includes bound variable  (0)  Comment
+Ey.Ex.R(x,y,z)            (1)  Given
+Ex.Ey.Ex.R(x,y,x)         (2)  E-Introduction (1)
+Fail: replacement term x includes bound variable in ['v1', 'y', 'x']
+False
+Erroneous A-elim where source term includes bound variable  (0)  Comment
+Ax.Ey.Ex.R(x,y)           (1)  Given
+Ey.Ex.R(t,y)              (2)  A-Elimination (1)
+Fail: source term x includes bound variable in ['y', 'x']
+False
+Valid A-elim where all occurences of bound var are replaced with same term  (0)  Comment
+x = u                     (1)  Given
+t = v                     (2)  Given
+~(u = v)                  (3)  Given
+Ax.(x = x)                (4)  Given
+t = t                     (5)  A-Elimination (4)
+True
+Valid A-elim where all occurences of bound var are replaced with bound var name  (0)  Comment
+x = u                     (1)  Given
+t = v                     (2)  Given
+~(u = v)                  (3)  Given
+Ax.(x = x)                (4)  Given
+x = x                     (5)  A-Elimination (4)
+True
+Erroneous A-elim where not all occurences of bound var are replaced  (0)  Comment
+x = u                     (1)  Given
+t = v                     (2)  Given
+~(u = v)                  (3)  Given
+Ax.(x = x)                (4)  Given
+x = t                     (5)  A-Elimination (4)
+Fail: Not all occurrences substituted the same way { (x, t) }
+False
+Erroneous A-elim where different occurences of bound var are replaced differently  (0)  Comment
+y = u                     (1)  Given
+t = v                     (2)  Given
+~(u = v)                  (3)  Given
+Ax.(x = x)                (4)  Given
+y = t                     (5)  A-Elimination (4)
+Fail: Not all occurrences substituted the same way { (x, y), (x, t) }
+False
+Valid A-elim where bound variable does not occur in body  (0)  Comment
+Ay.(x = x)                (1)  Given
+x = x                     (2)  A-Elimination (1)
+True
+Valid A-elim where bound variable does not occur in body  (0)  Comment
+x = x                     (1)  Given
+Ey.(x = x)                (2)  E-Introduction (1)
+True

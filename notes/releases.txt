@@ -1,0 +1,7 @@
+
+FLiP release history
+
+May 2009  Version not numbered, initial unpublicized release
+Jul 2009  Version 1.0, initial release, posting on comp.lang.python.announce
+Feb 2010  add Monty Python witch example to website but not to flip-1.0.tar etc.
+May 2011  Version 1.1, add setup.py, README.rst, MANIFEST.in etc. for distutils, include witch example

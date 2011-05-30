@@ -1,0 +1,104 @@
+import ex69ref
+Example 6.9  a & b |- ~(~a v ~b)  (0)  Comment
+a & b                     (1)  Given
+a                         (2)  And-Elimination (Right) (1)
+b                         (3)  And-Elimination (Left) (1)
+|~a v ~b                  (4)  Assumption
+||~a                      (5)  Assumption
+||F                       (6)  Contradiction (2) (5)
+|~~a                      (7)  Reductio Ad Absurdum (5) (6)
+|~b                       (8)  Or-Elimination (Left) (4) (7)
+|F                        (9)  Contradiction (3) (8)
+~(~a v ~b)               (10)  Reductio Ad Absurdum (4) (9)
+True
+state()
+(0, 'xr', (), ((),), "Text('Example 6.9  a & b |- ~(~a v ~b)')", 'comment')
+(1, 'xr', (), ((),), 'And(a,b)', 'given')
+(2, 'xr', (), ((),), 'a', 'aer', 1)
+(3, 'xr', (), ((),), 'b', 'ael', 1)
+(4, 'ar', (4,), ((), ()), 'Or(Not(a),Not(b))', 'assume')
+(5, 'ar', (5, 4), ((), (), ()), 'Not(a)', 'assume')
+(6, 'xr', (5, 4), ((), (), ()), 'F', 'contra', 2, 5)
+(7, 'dr', (4,), ((), ()), 'Not(Not(a))', 'raa', 5, 6)
+(8, 'xr', (4,), ((), ()), 'Not(b)', 'oel', 4, 7)
+(9, 'xr', (4,), ((), ()), 'F', 'contra', 3, 8)
+(10, 'dr', (), ((),), 'Not(Or(Not(a),Not(b)))', 'raa', 4, 9)
+save('ex69')
+Saved in ex69.py
+clear()
+from ex69 import ex69
+check_proof(ex69)
+Example 6.9  a & b |- ~(~a v ~b)  (0)  Comment
+a & b                     (1)  Given
+a                         (2)  And-Elimination (Right) (1)
+b                         (3)  And-Elimination (Left) (1)
+|~a v ~b                  (4)  Assumption
+||~a                      (5)  Assumption
+||F                       (6)  Contradiction (2) (5)
+|~~a                      (7)  Reductio Ad Absurdum (5) (6)
+|~b                       (8)  Or-Elimination (Left) (4) (7)
+|F                        (9)  Contradiction (3) (8)
+~(~a v ~b)               (10)  Reductio Ad Absurdum (4) (9)
+state()
+(0, 'xr', (), ((),), "Text('Example 6.9  a & b |- ~(~a v ~b)')", 'comment')
+(1, 'xr', (), ((),), 'And(a,b)', 'given')
+(2, 'xr', (), ((),), 'a', 'aer', 1)
+(3, 'xr', (), ((),), 'b', 'ael', 1)
+(4, 'ar', (4,), ((), ()), 'Or(Not(a),Not(b))', 'assume')
+(5, 'ar', (5, 4), ((), (), ()), 'Not(a)', 'assume')
+(6, 'xr', (5, 4), ((), (), ()), 'F', 'contra', 2, 5)
+(7, 'dr', (4,), ((), ()), 'Not(Not(a))', 'raa', 5, 6)
+(8, 'xr', (4,), ((), ()), 'Not(b)', 'oel', 4, 7)
+(9, 'xr', (4,), ((), ()), 'F', 'contra', 3, 8)
+(10, 'dr', (), ((),), 'Not(Or(Not(a),Not(b)))', 'raa', 4, 9)
+Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))  (0)  Comment
+|q -> r                   (1)  Assumption
+||~q -> ~p                (2)  Assumption
+|||p                      (3)  Assumption
+|||~~p                    (4)  Double-negation Introduction (3)
+|||~~q                    (5)  Modus Tollens (2) (4)
+|||q                      (6)  Double-negation Elimination (5)
+|||r                      (7)  Implication-Elimination (Modus Ponens) (1) (6)
+||p -> r                  (8)  Implication-Introduction (3) (7)
+|(~q -> ~p) -> (p -> r)   (9)  Implication-Introduction (2) (8)
+(q -> r) -> ((~q -> ~p) -> (p -> r)) (10)  Implication-Introduction (1) (9)
+state()
+(0, 'xr', (), ((),), "Text('Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))')", 'comment')
+(1, 'ar', (1,), ((), ()), 'Impl(q,r)', 'assume')
+(2, 'ar', (2, 1), ((), (), ()), 'Impl(Not(q),Not(p))', 'assume')
+(3, 'ar', (3, 2, 1), ((), (), (), ()), 'p', 'assume')
+(4, 'xr', (3, 2, 1), ((), (), (), ()), 'Not(Not(p))', 'nni', 3)
+(5, 'xr', (3, 2, 1), ((), (), (), ()), 'Not(Not(q))', 'mt', 2, 4)
+(6, 'xr', (3, 2, 1), ((), (), (), ()), 'q', 'nne', 5)
+(7, 'xr', (3, 2, 1), ((), (), (), ()), 'r', 'imple', 1, 6)
+(8, 'dr', (2, 1), ((), (), ()), 'Impl(p,r)', 'impli', 3, 7)
+(9, 'dr', (1,), ((), ()), 'Impl(Impl(Not(q),Not(p)),Impl(p,r))', 'impli', 2, 8)
+(10, 'dr', (), ((),), 'Impl(Impl(q,r),Impl(Impl(Not(q),Not(p)),Impl(p,r)))', 'impli', 1, 9)
+save('ex111')
+Saved in ex111.py
+clear()
+from ex111 import ex111
+check_proof(ex111)
+Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))  (0)  Comment
+|q -> r                   (1)  Assumption
+||~q -> ~p                (2)  Assumption
+|||p                      (3)  Assumption
+|||~~p                    (4)  Double-negation Introduction (3)
+|||~~q                    (5)  Modus Tollens (2) (4)
+|||q                      (6)  Double-negation Elimination (5)
+|||r                      (7)  Implication-Elimination (Modus Ponens) (1) (6)
+||p -> r                  (8)  Implication-Introduction (3) (7)
+|(~q -> ~p) -> (p -> r)   (9)  Implication-Introduction (2) (8)
+(q -> r) -> ((~q -> ~p) -> (p -> r)) (10)  Implication-Introduction (1) (9)
+state()
+(0, 'xr', (), ((),), "Text('Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))')", 'comment')
+(1, 'ar', (1,), ((), ()), 'Impl(q,r)', 'assume')
+(2, 'ar', (2, 1), ((), (), ()), 'Impl(Not(q),Not(p))', 'assume')
+(3, 'ar', (3, 2, 1), ((), (), (), ()), 'p', 'assume')
+(4, 'xr', (3, 2, 1), ((), (), (), ()), 'Not(Not(p))', 'nni', 3)
+(5, 'xr', (3, 2, 1), ((), (), (), ()), 'Not(Not(q))', 'mt', 2, 4)
+(6, 'xr', (3, 2, 1), ((), (), (), ()), 'q', 'nne', 5)
+(7, 'xr', (3, 2, 1), ((), (), (), ()), 'r', 'imple', 1, 6)
+(8, 'dr', (2, 1), ((), (), ()), 'Impl(p,r)', 'impli', 3, 7)
+(9, 'dr', (1,), ((), ()), 'Impl(Impl(Not(q),Not(p)),Impl(p,r))', 'impli', 2, 8)
+(10, 'dr', (), ((),), 'Impl(Impl(q,r),Impl(Impl(Not(q),Not(p)),Impl(p,r)))', 'impli', 1, 9)

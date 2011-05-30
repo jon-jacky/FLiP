@@ -1,0 +1,19 @@
+Not-Elimination           (0)  Comment
+~~(a v b)                 (1)  Given
+a v b                     (2)  Not-Elimination (1)
+True
+Not-Elimination, outer operator not Not  (0)  Comment
+~~a v b                   (1)  Given
+~a                        (2)  Not-Elimination (1)
+Fail: ~~a v b does not match ~~m1 with {  }
+False
+Not-Elimination, inner operator not Not  (0)  Comment
+~(~a v b)                 (1)  Given
+~a                        (2)  Not-Elimination (1)
+Fail: ~(~a v b) does not match ~~m1 with {  }
+False
+Not-Elimination, conclusion is not formula in premise  (0)  Comment
+~~(a v b)                 (1)  Given
+a & b                     (2)  Not-Elimination (1)
+Fail: a & b does not match m1 with { m1:a v b }
+False

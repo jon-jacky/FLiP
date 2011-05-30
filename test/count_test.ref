@@ -1,0 +1,78 @@
+Relation, no count check
+P()
+P(x)
+P(x,y)
+P(x,y,z)
+
+Function, no count check
+f()
+f(x)
+f(x,y)
+f(x,y,z)
+
+InfixRelation, correct count 2
+Equal(x,y)
+
+InfixRelation, wrong count, 3 not 2
+Equal(x,y,z)
+... caught exception ...
+
+InfixRelation, wrong count, 1 not 2
+Equal(x)
+... caught exception ...
+
+InfixRelation, wrong count, 0 not 2
+Equal()
+... caught exception ...
+
+PrefixLogical, correct count 1
+Not(p)
+
+PrefixLogical, wrong count 0 not 1
+Not()
+... caught exception ...
+
+PrefixLogical, wrong count 2 not 1
+Not(p,q)
+... caught exception ...
+
+InfixLogical, correct count 2
+And(p,q)
+
+InfixLogical, wrong count, 3 not 2
+And(p,q,r)
+... caught exception ...
+
+InfixLogical, wrong count, 1 not 2
+And(p)
+... caught exception ...
+
+InfixLogical, wrong count, 0 not 2
+And()
+... caught exception ...
+
+Quantifer, correct count 2
+A(x, P(x))
+
+Quantifier, wrong count, 3 not 2
+A(x,y,P(x,y))
+... caught exception ...
+
+Quantifier, wrong count, 1 not 2
+A(x)
+... caught exception ...
+
+New, correct count 1
+New(x)
+
+New, wrong count 2 not 1
+New(x,y)
+... caught exception ...
+
+Let, correct count 2
+Let(x,P(x))
+
+Let, wrong count, 3 not 2
+Let(x,y,P(x,y))
+... caught exception ...
+

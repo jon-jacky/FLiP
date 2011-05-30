@@ -1,0 +1,45 @@
+
+"She's a witch!" from Monty Python and the Holy Grail
+
+Timings from excerpt at
+
+ http://www.youtube.com/watch?v=zrzMhU_4m-g
+
+1:33 "There are ways of telling whether she's a witch" 
+
+1:44 "What do you do with witches?"  "Burn them!"
+
+Witch(x) => Burn(x)
+
+2:00 "Why do witches burn?"  "'Cause they're made of wood!"
+
+Wood(x) => Witch(x)
+
+2:08 "How do we tell if she's made of wood?"
+ 
+2:23 "Does wood sink in water?"  "It floats!"
+
+Floats(x) => Wood(x)
+
+2:29 "What also floats in water?" ... "A duck!"  2:38
+
+Floats(duck)
+
+2:55 "Exactly! So, logically, .... " "If she weighs the same as a duck, she's
+made of wood"
+
+ weight(x) = weight(duck)  => Wood(x)
+
+[ from  weight(x) = weight(duck) => Floats(x) and Floats(x) = Wood(x) ]
+   
+3:00 "And therefore..."  "A witch!"
+
+3:28 "Remove the supports!"
+
+ weight(x) = weight(duck)
+
+3:35  "A witch! Burn her!"
+
+       ...
+
+      "Who are you who are so wise in the ways of science?"

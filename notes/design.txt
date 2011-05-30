@@ -1,0 +1,129 @@
+Notes on the design of Flip
+
+Introduction
+Modules
+Modular structure and design rules
+Adding a logic
+
+Introduction
+
+This document discusses the design of the Flip logical framework.
+Before reading this, it would be helpful to look over the Flip web
+pages.
+
+
+Modules
+
+The nd module provides proof checking and editing.  It manages proof
+state, provides prover commands, print/display, and save. (Saved
+proofs can be reloaded by the Python import command).
+
+The nd module supports proofs expressed in natural deduction style.
+It is possible to write other proof modules to support proofs in other
+styles, for example equational style.  It is possible to write proof
+modules that provide a graphical user interface, as an alternative to
+the Python interpreter.
+
+The logic modules define logics.  Each logic module defines the
+language and inference rules of its logic.  (Axioms are just inference
+rules without premises.)  The nd module can use any of these logics.
+
+The formula module provides formula representation, matching, and
+substitution.  It also provides formula generation for proof
+automation.  This module defines the base classes for formulas, terms,
+and variables that are used by the logic modules.
+
+The config modules configure the nd module and logic modules to work
+together (explained in a following section).
+
+The session modules are preludes for interactive or non-interacive
+sessions with their various logics.  To prepare to edit or check proofs
+in a logic, just import its session module into a Python session.
+
+The test modules contain test cases.  They are self contained; each
+test module imports the session module it needs to run its test cases.
+
+
+Modular structure, design rules
+
+Flip is a logical framework, where you can add a logic by a writing a
+module.  In order for this to work, the nd module (which manages proof
+state) and the formula module (which manages matching and
+substitution) cannot depend on any logic modules; especially, they
+cannot mention any particular rules.  In Python, this means that the
+nd and formula modules cannot import any logic modules.
+
+The nd module has attributes and function arguments named "formula"
+and "rule", but cannot refer to particular logical operators or rules.
+Likewise, the formula module knows that formulas are composed of
+symbols and subformulas, but cannot refer to particular operators
+or to any other elements of the logic languages.  
+
+Some of the comments in the formula and nd modules mention particular
+rules, but those are only intended as examples; the code itself does
+not depend on or even mention those rules.
+
+The nd module does distinguish a few *kinds* of rules: assumers (which
+make assumptions and start subproofs), dischargers (which discharge
+assumptions and close subproofs) and others.  The nd module itself
+classifies rules into these categories by checking the form of
+each rule.  There is no code anywhere that explicitly says that a
+particular rule belongs to a particular category.
+
+The nd module does not import any logic modules, but it uses the rules
+defined in the logic modules.  This is accomplished with the help of
+the config modules.  Each config module imports one or more logic
+modules and the nd module.  The config module then updates an
+attribute (named rules) in the nd module with the contents of all the
+rules in all the logic modules it imports.  In this way, the rules in
+all the logics imported by the config module are made available to the
+nd module *at run time*.  However the rules are not available to the
+nd module when it is imported by the config module, so the nd module
+cannot mention any particular rules.  Moreover, the formulas that
+appear in proofs are passed as arguments to functions in the nd
+module, but the nd module cannot refer to particular logical operators
+or any other elements of the logic languages.
+
+The session modules are preludes for interactive or non-interacive
+sessions with their various logics.  To prepare to edit or check
+proofs in a logic, just import its session module into a Python
+session; it is not necessary to import the config module or any logic
+modules.  
+
+The session modules are preludes for sessions with their various
+logics.  There are one or more session modules for each config module.
+The session module imports identifiers from all the logic modules
+imported by its config module.  This makes the logical operators and
+inference rules for those logics available in the Python session.  The
+session module imports its config module, which has the effect of
+importing the nd module and making the rules in the logic modules
+available to nd.  The session module imports identifiers from the nd
+module, to make its prover commands available in the Python session.
+Finally, the session module may import or define additional items
+which might be useful in a proof session.  You can define a customized
+prelude for your proof sessions by writing a session module.
+
+Most config modules import more than one logic module.  There are
+several smaller logic modules, rather than a few larger ones, so that
+they can be merged in different combinations by config modules.  For
+example, prop_config configures classical propositional logic by
+importing both prop_common and prop_classic; prop_constructive
+configures a constructive propositional logic by importing prop_common
+and prop_constructive.
+
+Logic modules do not depend on each other; a logic module does not
+import any others.  For example, the fol (first order logic) module
+does not import any of the prop (propositional logic) modules.  Instead,
+logics which are used together are all imported by a config module,
+which combines them when it updates the rules attribute in the nd
+module.
+
+Adding a logic
+
+To add a logic, write one or more logic modules that define its
+language and inference rules, see flip-logics.html.  Then write one or more
+config modules that combine the logic modules in various combinations
+with each other and with the logic modules already provided.  Then
+write one or more session modules that each import one config module,
+and import the needed identifiers from the logic modules and the nd
+module, and also provide any other facilities that would be helpful.

@@ -1,0 +1,18 @@
+Mismatch example from formula.txt
+f1  c & (b v c)
+f2  a & ~b
+f1.mismatch(f2,...) { (c, a), (b v c, ~b) }
+
+Substitution example from formula.txt, except f3 not f2
+The mismatches and subst methods are inverses (sort of)
+f1  c & (b v c)
+substitutions  { c:a, b v c:~b }
+f3 = f1.subst(substitutions)  a & ~b
+m_mismatches = f3.mismatch(f1, ...)  { (a, c), (~b, b v c) }
+Now the pairs in the m_mismatches list are 
+ just the inverses of the pairs in the substitutions dictionary
+This are just the pairs we need 
+ to substitute into f3 to get the original f1 back
+f1_ = f3.subst(... m_mismatches...)  c & (b v c)
+f1_.mismatch(f1, ...)  []
+not f1_.mismatch(f1, ...)  True

@@ -1,0 +1,4 @@
+source tree_all_test
+source poset_all_test
+source prop_all_test
+source fol_all_test

@@ -1,0 +1,61 @@
+<html><head><title>She's a Witch!</title>
+</head>
+<body bgcolor="#000000">
+
+<!---
+<p>
+in the format of the 
+<a href="http://www.cs.ru.nl/~freek/digimath/indexx.html">Digital Math</a>
+pages compiled by
+<a href="http://www.cs.ru.nl/~freek/">Freek Wiedijk</a>.
+--->
+
+<center><table border=0 cellspacing=0 cellpadding=0 width=448><tr><td>
+
+<blockquote><font face="monaco,courier" color="#6699ff"><pre>
+<font color="#999999">""" 
+"She's a witch!" from Monty Python and the Holy Grail, for the <a href="http://staff.washington.edu/jon/flip/www/"><font color="#cccccc">FLiP proof checker</font></a>.
+excerpt at http://www.youtube.com/watch?v=zrzMhU_4m-g
+transcript at http://www.sacred-texts.com/neu/mphg/mphg.htm
+"""</font>
+
+from fol_session import *
+from villagers import *
+
+<font color="999999"># "There are ways of telling whether she's a witch."</font>
+ 
+witch_axioms = \
+  [(Text("She's a witch!"), comment),
+   <font color="999999"># "What do you do with witches?"  "Burn them!"</font>   
+   (A(x, Impl(Witch(x),Burn(x))), given),
+   <font color="999999"># "Why do witches burn?"  "'Cause they're made of wood!"</font>
+   (A(x, Impl(Wood(x),Witch(x))), given),
+   <font color="999999"># "How do we tell if she's made of wood?"
+   # "Does wood sink in water?"  "It floats!"</font>
+   (A(x, Impl(Floats(x),Wood(x))), given),
+   <font color="999999"># "What also floats in water?" "A duck!"</font>
+   (Floats(duck), given),
+   <font color="999999"># "Exactly!  So, logically ..."
+   # "If she weights the same as a duck, she's made of wood!"</font>
+   (A(x, A(y, Impl(And(Floats(x),Equal(weight(x),weight(y))),Floats(y)))), given),
+   <font color="999999"># "We shall use my largest scales. ... Remove the supports!"</font>
+   (Equal(weight(duck),weight(girl)), given)]
+
+check_proof(witch_axioms)
+rapply(Ae,5,duck)
+rapply(Ae,7,girl)
+rapply(ai,4,6)
+rapply(imple,8,9)
+rapply(Ae,3,girl)
+rapply(imple,11,10)
+rapply(Ae,2,girl)
+rapply(imple,13,12)
+rapply(Ae,1,girl)
+rapply(imple,15,14)
+
+<font color="ff0000"># "A witch!  A witch! Burn her!  Burn!"</font>
+</pre></font></blockquote>
+
+</td></tr></table></center>
+
+</body></html>

@@ -1,0 +1,46 @@
+Contradiction rule        (0)  Comment
+a & b                     (1)  Given
+~(a & b)                  (2)  Given
+F                         (3)  Contradiction (1) (2)
+True
+Contradiction rule, reversed premise order, indices also  (0)  Comment
+~(a & b)                  (1)  Given
+a & b                     (2)  Given
+F                         (3)  Contradiction (2) (1)
+True
+Contradiction rule, reverse premise order but not indices  (0)  Comment
+~(a & b)                  (1)  Given
+a & b                     (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a & b does not match ~m1 with { m1:~(a & b) }
+False
+Contradiction, first premise not negation of second  (0)  Comment
+a & b                     (1)  Given
+~(a v b)                  (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: ~(a v b) does not match ~m1 with { m1:a & b }
+False
+Contradiction, second premise not Not  (0)  Comment
+a & b                     (1)  Given
+a v b                     (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a v b does not match ~m1 with { m1:a & b }
+False
+Contradiction, conclusion not F  (0)  Comment
+a & b                     (1)  Given
+~(a & b)                  (2)  Given
+T                         (3)  Contradiction (1) (2)
+Fail: T does not match F with { m1:a & b }
+False
+Contradiction, left arguments don't match  (0)  Comment
+a & b                     (1)  Given
+~(c & b)                  (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: ~(c & b) does not match ~m1 with { m1:a & b }
+False
+Contradiction, right  arguments don't match  (0)  Comment
+a & b                     (1)  Given
+~(a & c)                  (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: ~(a & c) does not match ~m1 with { m1:a & b }
+False

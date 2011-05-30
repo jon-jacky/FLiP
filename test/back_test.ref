@@ -1,0 +1,73 @@
+Test0                     (0)  Comment
+back(3)
+Proof has 1 steps, none removed
+back(1)
+back(1)
+Proof has 0 steps, none removed
+Test1                     (0)  Comment
+x = x                     (1)  Given
+y = y                     (2)  Given
+Let y be arbitrary        (3)  New variable for subproof
+Fail: variable y already appears free in proof among ['x', 'y']
+back(1)
+|Let y be arbitrary       (2)  New variable for subproof
+
+Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))  (0)  Comment
+Ex.Ey.((R(x) & R(y)) & ~(x = y))  (1)  Given
+Ax.Ay.((P(x) & P(y)) -> (x = y))  (2)  Given
+|~Ex.(R(x) & ~P(x))       (3)  Assumption
+||Let a satisfy Ey.((R(a) & R(y)) & ~(a = y))  (4)  Assumption, with new variable
+|||Let b satisfy (R(a) & R(b)) & ~(a = b)  (5)  Assumption, with new variable
+|||R(a) & R(b)            (6)  And-Elimination (Right) (5)
+|||R(a)                   (7)  And-Elimination (Right) (6)
+|||R(b)                   (8)  And-Elimination (Left) (6)
+|||~(a = b)               (9)  And-Elimination (Left) (5)
+||||~P(a)                (10)  Assumption
+||||R(a) & ~P(a)         (11)  And-Introduction (7) (10)
+||||Ex.(R(x) & ~P(x))    (12)  E-Introduction (11)
+||||F                    (13)  Contradiction (12) (3)
+|||~~P(a)                (14)  Reductio Ad Absurdum (10) (13)
+|||P(a)                  (15)  Not-Elimination (14)
+||||~P(b)                (16)  Assumption
+||||R(b) & ~P(b)         (17)  And-Introduction (8) (16)
+||||Ex.(R(x) & ~P(x))    (18)  E-Introduction (17)
+||||F                    (19)  Contradiction (18) (3)
+|||~~P(b)                (20)  Reductio Ad Absurdum (16) (19)
+|||P(b)                  (21)  Not-Elimination (20)
+|||P(a) & P(b)           (22)  And-Introduction (15) (21)
+|||Ay.((P(a) & P(y)) -> (a = y)) (23)  A-Elimination (2)
+|||(P(a) & P(b)) -> (a = b) (24)  A-Elimination (23)
+|||a = b                 (25)  Implication-Elimination (Modus Ponens) (24) (22)
+|||F                     (26)  Contradiction (25) (9)
+||F                      (27)  E-Elimination (4) (5) (26)
+|F                       (28)  E-Elimination (1) (4) (27)
+~~Ex.(R(x) & ~P(x))      (29)  Reductio Ad Absurdum (3) (28)
+Ex.(R(x) & ~P(x))        (30)  Not-Elimination (29)
+back(1)
+|Let a be arbitrary      (30)  New variable for subproof
+back(2)
+||Let a be arbitrary     (29)  New variable for subproof
+back(2)
+||Let a be arbitrary     (28)  New variable for subproof
+Fail: variable a already appears free in proof among ['a']
+|||Let b be arbitrary    (28)  New variable for subproof
+back(2)
+|||Let b be arbitrary    (27)  New variable for subproof
+Fail: variable b already appears free in proof among ['b', 'a']
+back(9)
+||||Let b be arbitrary   (18)  New variable for subproof
+Fail: variable b already appears free in proof among ['b', 'a']
+Ex 6.4                    (0)  Comment
+|a & ~b                   (1)  Assumption
+|~b                       (2)  And-Elimination (Left) (1)
+(0, 'xr', (), ((),), "Text('Ex 6.4')", 'comment')
+(1, 'ar', (1,), ((), ()), 'And(a,Not(b))', 'assume')
+(2, 'xr', (1,), ((), ()), 'Not(b)', 'ael', 1)
+back(1)
+(0, 'xr', (), ((),), "Text('Ex 6.4')", 'comment')
+(1, 'ar', (1,), ((), ()), 'And(a,Not(b))', 'assume')
+|a                        (2)  And-Elimination (Right) (1)
+(0, 'xr', (), ((),), "Text('Ex 6.4')", 'comment')
+(1, 'ar', (1,), ((), ()), 'And(a,Not(b))', 'assume')
+(2, 'xr', (1,), ((), ()), 'a', 'aer', 1)
+

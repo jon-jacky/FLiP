@@ -1,0 +1,68 @@
+From example 9.17         (0)  Comment
+~R(a)                     (1)  Given
+a = x                     (2)  Given
+~R(x)                     (3)  Substitution (2) (1)
+True
+From example 9.18         (0)  Comment
+S(f(a))                   (1)  Given
+f(a) = a                  (2)  Given
+S(a)                      (3)  Substitution (2) (1)
+True
+Premise does not match equation  (0)  Comment
+S(f(b))                   (1)  Given
+f(a) = a                  (2)  Given
+S(a)                      (3)  Substitution (2) (1)
+Fail: S(a) does not match S1 with { t1:f(a), s1:a, S1:S(f(b)) }
+False
+Conclusion does not match equation  (0)  Comment
+S(f(a))                   (1)  Given
+f(a) = a                  (2)  Given
+S(b)                      (3)  Substitution (2) (1)
+Fail: S(b) does not match S1 with { t1:f(a), s1:a, S1:S(f(a)) }
+False
+Equation reversed         (0)  Comment
+S(f(a))                   (1)  Given
+a = f(a)                  (2)  Given
+S(a)                      (3)  Substitution (2) (1)
+Fail: S(a) does not match S1 with { t1:a, s1:f(a), S1:S(f(a)) }
+False
+Premises reversed         (0)  Comment
+S(f(a))                   (1)  Given
+f(a) = a                  (2)  Given
+S(a)                      (3)  Substitution (1) (2)
+Fail: S(f(a)) does not match t1 = s1 with {  }
+False
+No equation premise number  (0)  Comment
+S(f(a))                   (1)  Given
+f(a) = a                  (2)  Given
+S(a)                      (3)  Substitution (1)
+Fail: requires 2 premises, found 1
+False
+No premise formula number  (0)  Comment
+S(f(a))                   (1)  Given
+f(a) = a                  (2)  Given
+S(a)                      (3)  Substitution (2)
+Fail: requires 2 premises, found 1
+False
+Valid substitution into one of multiple occurences  (0)  Comment
+x = z                     (1)  Given
+P(x,y) & Q(x,y)           (2)  Given
+P(x,y) & Q(z,y)           (3)  Substitution (1) (2)
+True
+Valid substitution into all of multiple occurences  (0)  Comment
+x = z                     (1)  Given
+P(x,y) & Q(x,y)           (2)  Given
+P(z,y) & Q(z,y)           (3)  Substitution (1) (2)
+True
+Erroneous substitution into one of multiple occurences, other occurence ok  (0)  Comment
+x = z                     (1)  Given
+P(x,y) & Q(x,y)           (2)  Given
+P(z,y) & Q(u,y)           (3)  Substitution (1) (2)
+Fail: P(z,y) & Q(u,y) does not match S1 with { t1:x, s1:z, S1:P(x,y) & Q(x,y) }
+False
+Erroneous substitution into one of multiple occurences, other occurence ok, reverse order  (0)  Comment
+x = z                     (1)  Given
+P(x,y) & Q(x,y)           (2)  Given
+P(u,y) & Q(z,y)           (3)  Substitution (1) (2)
+Fail: P(u,y) & Q(z,y) does not match S1 with { t1:x, s1:z, S1:P(x,y) & Q(x,y) }
+False

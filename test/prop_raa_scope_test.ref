@@ -1,0 +1,82 @@
+Valid a |- ~~a from inner subproof of ex 6.9  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+True
+Invalid |- ~~a with subproof too deeply nested  (0)  Comment
+|a                        (1)  Assumption
+||~a                      (2)  Assumption
+||F                       (3)  Contradiction (1) (2)
+|~~a                      (4)  Reductio Ad Absurdum (2) (3)
+|~~a                      (5)  Reductio Ad Absurdum (2) (3)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+False
+From example 6.7 invalid a v b |- b, subproof too deeply nested  (0)  Comment
+a v b                     (1)  Given
+|~b                       (2)  Assumption
+||~a                      (3)  Assumption
+||b                       (4)  Or-Elimination (Left) (1) (3)
+||F                       (5)  Contradiction (4) (2)
+||~~b                     (6)  Reductio Ad Absurdum (2) (5)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+False
+Valid |- ~F using assumption, raa  (0)  Comment
+|F                        (1)  Assumption
+~F                        (2)  Reductio Ad Absurdum (1) (1)
+True
+Valid |- ~(a & F) using assumption, raa  (0)  Comment
+|a & F                    (1)  Assumption
+|F                        (2)  And-Elimination (Left) (1)
+~(a & F)                  (3)  Reductio Ad Absurdum (1) (2)
+True
+Reductio Ad Absurdum (RAA), duplicate subproofs, cite premises in correct scope  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+|~a                       (5)  Assumption
+|F                        (6)  Contradiction (1) (5)
+~~a                       (7)  Reductio Ad Absurdum (5) (6)
+True
+Reductio Ad Absurdum (RAA), duplicate subproofs, cite premises in wrong scope  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+|~a                       (5)  Assumption
+|F                        (6)  Contradiction (1) (2)
+Fail: premise at index 1, line 2 not in scope
+False
+Erroneous a |- ~a  using scope error  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+~a                        (5)  Reductio Ad Absurdum (1) (3)
+Fail: assumption at index 0, line 1 not in scope for discharging rule
+False
+Invalid a |- ~~a with subproof too deeply nested  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+~~a                       (5)  Reductio Ad Absurdum (2) (3)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+False
+Invalid |- ~a using assumption, raa, should fail  (0)  Comment
+|a & F                    (1)  Assumption
+|a                        (2)  And-Elimination (Right) (1)
+|F                        (3)  And-Elimination (Left) (1)
+|~a                       (4)  Reductio Ad Absurdum (2) (3)
+Fail: premise at index 0, line 2 not an assumption
+False
+Valid Reductio Ad Absurdum (RAA), duplicate subproofs, discharge non-adjacent subproof, should pass  (0)  Comment
+a                         (1)  Given
+|~a                       (2)  Assumption
+|F                        (3)  Contradiction (1) (2)
+~~a                       (4)  Reductio Ad Absurdum (2) (3)
+|~a                       (5)  Assumption
+|F                        (6)  Contradiction (1) (5)
+~~a                       (7)  Reductio Ad Absurdum (2) (3)
+True

@@ -1,0 +1,178 @@
+Valid A-intro, Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+True
+Erroneous A-intro, ex. 9.12, New variable already in use  (0)  Comment
+x = b                     (1)  Given
+~Ax.P(x)                  (2)  Given
+|~Ex.~P(x)                (3)  Assumption
+|Let x be arbitrary       (4)  New variable for subproof
+Fail: variable x already appears free in proof among ['x', 'b']
+False
+Erroneous A-intro, ex. 9.12, New variable not used in conclusion  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+||Ay.P(y)                 (9)  A-Introduction (3) (8)
+Fail: Ay.P(y) does not match Av1.P1 with { v1:x, P1:P(x) }
+False
+Erroenous A-intro, ex. 9.12, New variable not used in subproof  (0)  Comment
+x = b                     (1)  Given
+~Ax.P(x)                  (2)  Given
+|~Ex.~P(x)                (3)  Assumption
+||Let y be arbitrary      (4)  New variable for subproof
+|||~P(x)                  (5)  Assumption
+|||Ex.~P(x)               (6)  E-Introduction (5)
+|||F                      (7)  Contradiction (6) (3)
+||~~P(x)                  (8)  Reductio Ad Absurdum (5) (7)
+||P(x)                    (9)  Not-Elimination (8)
+||Ax.P(x)                (10)  A-Introduction (4) (9)
+Fail: Ax.P(x) does not match Av1.P1 with { v1:y, P1:P(x) }
+False
+Erroneous A-intro, ex. 9.12, subproof assumption is not New  (0)  Comment
+x = b                     (1)  Given
+~Ax.P(x)                  (2)  Given
+|~Ex.~P(x)                (3)  Assumption
+||x = x                   (4)  Assumption
+|||~P(x)                  (5)  Assumption
+|||Ex.~P(x)               (6)  E-Introduction (5)
+|||F                      (7)  Contradiction (6) (3)
+||~~P(x)                  (8)  Reductio Ad Absurdum (5) (7)
+||P(x)                    (9)  Not-Elimination (8)
+||Ax.P(x)                (10)  A-Introduction (4) (9)
+Fail: x = x does not match Let v1 be arbitrary with {  }
+False
+Erroneous A-intro, ex. 9.12, wrong predicate in conclusion  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+||Ax.Q(x)                 (9)  A-Introduction (3) (8)
+Fail: Ax.Q(x) does not match Av1.P1 with { v1:x, P1:P(x) }
+False
+Erroneous A-intro, ex. 9.12, wrong bound variable in conclusion after quantifier  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+||Ay.P(x)                 (9)  A-Introduction (3) (8)
+Fail: Ay.P(x) does not match Av1.P1 with { v1:x, P1:P(x) }
+False
+Erroneous A-intro, ex. 9.12, wrong bound variable in conclusion body  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+||Ax.P(y)                 (9)  A-Introduction (3) (8)
+Fail: Ax.P(y) does not match Av1.P1 with { v1:x, P1:P(x) }
+False
+Valid E-elim, Kaye ex. 9.14, Ax.~P(x) |- ~Ex.P(x)  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+|F                        (6)  E-Elimination (2) (3) (5)
+~Ex.P(x)                  (7)  Reductio Ad Absurdum (2) (6)
+True
+Erroneous E-elim, ex. 9.14, Let variable already in use  (0)  Comment
+x = a                     (1)  Given
+Ax.~P(x)                  (2)  Given
+|Ex.P(x)                  (3)  Assumption
+|Let a satisfy P(a)       (4)  Assumption, with new variable
+Fail: variable a already appears free in proof among ['x', 'a']
+False
+Erroneous E-elim, ex. 9.14, wrong predicate in Let statement  (0)  Comment
+Ax.~Q(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy Q(a)      (3)  Assumption, with new variable
+||~Q(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+||F                       (6)  E-Elimination (2) (3) (5)
+Fail: Let a satisfy Q(a) does not match Let v2 satisfy P1 with { v1:x, P1:P(x), v2:a }
+False
+Erroneous E-elim, ex. 9.14, wrong source variable in Let statement body  (0)  Comment
+Ay.~P(x,y)                (1)  Given
+|Ex.P(x,y)                (2)  Assumption
+||Let a satisfy P(x,a)    (3)  Assumption, with new variable
+||~P(x,a)                 (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+||F                       (6)  E-Elimination (2) (3) (5)
+Fail: Let a satisfy P(x,a) does not match Let v2 satisfy P1 with { v1:x, P1:P(x,y), v2:a }
+False
+Erroneous E-elim, ex. 9.14, wrong replacement variable in Let statement body  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(b)      (3)  Assumption, with new variable
+||~P(b)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+||F                       (6)  E-Elimination (2) (3) (5)
+Fail: Let a satisfy P(b) does not match Let v2 satisfy P1 with { v1:x, P1:P(x), v2:a }
+False
+Erroneous E-elim, ex. 9.14, subproof assumption is not Let  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||P(a)                    (3)  Assumption
+||~P(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+||F                       (6)  E-Elimination (2) (3) (5)
+Fail: P(a) does not match Let v2 satisfy P1 with { v1:x, P1:P(x) }
+False
+Erroneous E-elim, ex. 9.14, Rule conclusion is not subproof conclusion  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+||~q                      (6)  E-Elimination (2) (3) (5)
+Fail: ~q does not match Q1 with { v1:x, P1:P(x), v2:a, Q1:F }
+False
+Erroneous E-elim, Let variable is used in conclusion  (0)  Comment
+Ex.(P(x) & (P(x) -> Q(x)))  (1)  Given
+|Let a satisfy P(a) & (P(a) -> Q(a))  (2)  Assumption, with new variable
+|P(a)                     (3)  And-Elimination (Right) (2)
+|P(a) -> Q(a)             (4)  And-Elimination (Left) (2)
+|Q(a)                     (5)  Implication-Elimination (Modus Ponens) (4) (3)
+|Q(a)                     (6)  E-Elimination (1) (2) (5)
+Fail: variable a appears free in formula among ['a']
+False
+Erroneous A-intro, new variable a not used in subproof  (0)  Comment
+(x = y) & (x = z)         (1)  Given
+|Let a be arbitrary       (2)  New variable for subproof
+|x = y                    (3)  And-Elimination (Right) (1)
+|Ax.(x = y)               (4)  A-Introduction (2) (3)
+Fail: Ax.(x = y) does not match Av1.P1 with { v1:a, P1:x = y }
+False
+Vacuous A-intro, new variable a does not occur in conclusion body  (0)  Comment
+(x = y) & (x = z)         (1)  Given
+|Let a be arbitrary       (2)  New variable for subproof
+|x = y                    (3)  And-Elimination (Right) (1)
+Aa.(x = y)                (4)  A-Introduction (2) (3)
+True

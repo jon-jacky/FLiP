@@ -1,0 +1,53 @@
+Kaye ex. 4.3, p. 40       (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+c /< a                    (7)  Reductio Ad Absurdum (4) (6)
+Kaye ex. 4.3, p. 40 but discharge is not F  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|a /< a                   (6)  Given
+|c /< a                   (7)  Reductio Ad Absurdum (4) (6)
+Fail: a /< a does not match F with { v1:c, v2:a }
+Kaye ex. 4.3, p. 40, but raa is not negation of assumption  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+|c < a                    (7)  Reductio Ad Absurdum (4) (6)
+Fail: c < a does not match v1 /< v2 with { v1:c, v2:a }
+Kaye ex. 4.3, p. 40, but raa left arg does not match assumption  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+|b /< a                   (7)  Reductio Ad Absurdum (4) (6)
+Fail: b /< a does not match v1 /< v2 with { v1:c, v2:a }
+Kaye ex. 4.3, p. 40, but raa right arg does not match assumption  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+|c /< d                   (7)  Reductio Ad Absurdum (4) (6)
+Fail: c /< d does not match v1 /< v2 with { v1:c, v2:a }
+Kaye ex. 4.3, p. 40, missing assumption  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+c /< a                    (4)  Reductio Ad Absurdum (4) (6)
+Fail: no line 4 for premise at index 0
+One-line erroneous proof with no comment line
+c /< a                    (0)  Reductio Ad Absurdum
+Fail: requires 2 premises, found 0

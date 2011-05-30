@@ -1,0 +1,82 @@
+Equal, Reflexivity        (0)  Comment
+a = a                     (1)  Reflexivity
+True
+Equal, Reflexivity        (0)  Comment
+f(a) = f(a)               (1)  Reflexivity
+True
+Equal, Reflexivity        (0)  Comment
+g(x,f(a,b)) = g(x,f(a,b))  (1)  Reflexivity
+True
+Equal, Reflexivity, but arguments do not match  (0)  Comment
+a = b                     (1)  Reflexivity
+Fail: a = b does not match t1 = t1 with { t1:a }
+False
+Equal, Reflexivity, but arguments do not match  (0)  Comment
+f(a) = f(b)               (1)  Reflexivity
+Fail: f(a) = f(b) does not match t1 = t1 with { t1:f(a) }
+False
+Equal, Reflexivity, but arguments do not match  (0)  Comment
+g(x,f(a,b)) = g(x,f(a,c))  (1)  Reflexivity
+Fail: g(x,f(a,b)) = g(x,f(a,c)) does not match t1 = t1 with { t1:g(x,f(a,b)) }
+False
+Equal, Symmetry           (0)  Comment
+a = b                     (1)  Given
+b = a                     (2)  Symmetry (1)
+True
+Equal, Symmetry           (0)  Comment
+f(a) = f(b)               (1)  Given
+f(b) = f(a)               (2)  Symmetry (1)
+True
+Equal, Symmetry           (0)  Comment
+g(x,f(a,b)) = g(x,f(b,c))  (1)  Given
+g(x,f(b,c)) = g(x,f(a,b))  (2)  Symmetry (1)
+True
+Equal, Symmetry           (0)  Comment
+a = b                     (1)  Given
+b = c                     (2)  Symmetry (1)
+Fail: b = c does not match s1 = t1 with { t1:a, s1:b }
+False
+Equal, Symmetry, but arguments do not match  (0)  Comment
+f(a) = f(b)               (1)  Given
+f(b) = f(c)               (2)  Symmetry (1)
+Fail: f(b) = f(c) does not match s1 = t1 with { t1:f(a), s1:f(b) }
+False
+Equal, Symmetry, but arguments do not match  (0)  Comment
+g(x,f(a,b)) = g(x,f(b,c))  (1)  Given
+g(x,f(b,c)) = g(x,f(b,a))  (2)  Symmetry (1)
+Fail: g(x,f(b,c)) = g(x,f(b,a)) does not match s1 = t1 with { t1:g(x,f(a,b)), s1:g(x,f(b,c)) }
+False
+Transitive rule           (0)  Comment
+a = b                     (1)  Given
+b = c                     (2)  Given
+a = c                     (3)  Transitivity (1) (2)
+Transitive rule, premise 0 is not Equal  (0)  Comment
+P(a,b)                    (1)  Given
+b = c                     (2)  Given
+a = c                     (3)  Transitivity (1) (2)
+Fail: P(a,b) does not match t1 = s1 with {  }
+Transitive rule, premise 2 is not Equal  (0)  Comment
+a = b                     (1)  Given
+P(b,c)                    (2)  Given
+a = c                     (3)  Transitivity (1) (2)
+Fail: P(b,c) does not match s1 = t2 with { t1:a, s1:b }
+Transitive rule, formula is not Equal  (0)  Comment
+a = b                     (1)  Given
+b = c                     (2)  Given
+P(a,c)                    (3)  Transitivity (1) (2)
+Fail: P(a,c) does not match t1 = t2 with { t1:a, s1:b, t2:c }
+Transitive rule, variables in premises do not match  (0)  Comment
+a = b                     (1)  Given
+x = c                     (2)  Given
+a = c                     (3)  Transitivity (1) (2)
+Fail: x = c does not match s1 = t2 with { t1:a, s1:b, t2:c }
+Transitive rule, formula variable does not match premise 0  (0)  Comment
+a = b                     (1)  Given
+b = c                     (2)  Given
+x = c                     (3)  Transitivity (1) (2)
+Fail: x = c does not match t1 = t2 with { t1:a, s1:b, t2:c }
+Transitive rule, formula variable does not match premise 1  (0)  Comment
+a = b                     (1)  Given
+b = c                     (2)  Given
+a = x                     (3)  Transitivity (1) (2)
+Fail: a = x does not match t1 = t2 with { t1:a, s1:b, t2:c }

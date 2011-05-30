@@ -1,0 +1,34 @@
+Kaye ex. 4.3, p. 40       (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+c /< a                    (7)  Reductio Ad Absurdum (4) (6)
+True
+Kaye ex. 4.3, p. 40, duplicate subproofs, cite premises in correct scope  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+c /< a                    (7)  Reductio Ad Absurdum (4) (6)
+|c < a                    (8)  Assumption
+|a < a                    (9)  Transitivity (3) (8)
+|F                       (10)  Irreflexivity (9)
+c /< a                   (11)  Reductio Ad Absurdum (8) (10)
+True
+Kaye ex. 4.3, p. 40, duplicate subproofs, cite premises in wrong scope  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+|c < a                    (4)  Assumption
+|a < a                    (5)  Transitivity (3) (4)
+|F                        (6)  Irreflexivity (5)
+c /< a                    (7)  Reductio Ad Absurdum (4) (6)
+|c < a                    (8)  Assumption
+|a < a                    (9)  Transitivity (3) (4)
+Fail: premise at index 1, line 4 not in scope
+False

@@ -1,0 +1,55 @@
+import ex914ref
+Valid E-elim, Kaye ex. 9.14, Ax.~P(x) |- ~Ex.P(x)  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+|F                        (6)  E-Elimination (2) (3) (5)
+~Ex.P(x)                  (7)  Reductio Ad Absurdum (2) (6)
+True
+save('ex914')
+Saved in ex914.py
+clear()
+from ex914 import ex914
+check_proof(ex914)
+Valid E-elim, Kaye ex. 9.14, Ax.~P(x) |- ~Ex.P(x)  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(a)                   (4)  A-Elimination (1)
+||F                       (5)  Contradiction (3) (4)
+|F                        (6)  E-Elimination (2) (3) (5)
+~Ex.P(x)                  (7)  Reductio Ad Absurdum (2) (6)
+
+Valid A-intro, Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8), with x
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+save('ex912')
+Saved in ex912.py
+clear()
+from ex912 import ex912
+check_proof(ex912)
+Valid A-intro, Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)

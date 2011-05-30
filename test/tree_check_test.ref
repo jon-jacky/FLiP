@@ -1,0 +1,16 @@
+Path, wrong argument count
+Path('1001','0101')
+... caught exception ...
+
+Path, argument not string
+Path(x)
+... caught exception ...
+
+Path, argument not just 0,1
+Path('1010102')
+... caught exception ...
+
+Proof step contains string, not formula
+check_proof([('101010',given)])
+Fail: 101010 is <type 'str'>, must be Formula
+False

@@ -1,0 +1,44 @@
+Fig. 5.1(a), Constructive e v f, ~f |- e  (0)  Comment
+e v f                     (1)  Given
+~f                        (2)  Given
+|e                        (3)  Assumption
+|f                        (4)  Assumption (next case)
+|F                        (5)  Contradiction (4) (2)
+|e                        (6)  Contradiction (constructive) (5)
+e                         (7)  Or-Elimination (1) (3) (3) (4) (6)
+True
+Fig. 5.1(b), Classical e v f, ~f |- e  (0)  Comment
+e v f                     (1)  Given
+~f                        (2)  Given
+|e                        (3)  Assumption
+|f                        (4)  Assumption (next case)
+||~e                      (5)  Assumption
+||F                       (6)  Contradiction (4) (2)
+|e                        (7)  Contradiction (classical) (5) (6)
+e                         (8)  Or-Elimination (1) (3) (3) (4) (7)
+True
+Fig. 5.10, classical proof of ~(~e & ~f) |- e v f  (0)  Comment
+~(~e & ~f)                (1)  Given
+|~(e v f)                 (2)  Assumption
+||e                       (3)  Assumption
+||e v f                   (4)  Or-Introduction (Right) (3)
+||F                       (5)  Contradiction (4) (2)
+|~e                       (6)  Reductio Ad Absurdum (3) (5)
+||f                       (7)  Assumption
+||e v f                   (8)  Or-Introduction (Left) (7)
+||F                       (9)  Contradiction (8) (2)
+|~f                      (10)  Reductio Ad Absurdum (7) (9)
+|~e & ~f                 (11)  And-Introduction (6) (10)
+|F                       (12)  Contradiction (11) (1)
+e v f                    (13)  Contradiction (classical) (2) (12)
+True
+Fig. 5.11, classical proof of e v ~e  (0)  Comment
+|~(e v ~e)                (1)  Assumption
+||e                       (2)  Assumption
+||e v ~e                  (3)  Or-Introduction (Right) (2)
+||F                       (4)  Contradiction (3) (1)
+|~e                       (5)  Reductio Ad Absurdum (2) (4)
+|e v ~e                   (6)  Or-Introduction (Left) (5)
+|F                        (7)  Contradiction (6) (1)
+e v ~e                    (8)  Contradiction (classical) (1) (7)
+True

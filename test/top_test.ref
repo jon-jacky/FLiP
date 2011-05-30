@@ -1,0 +1,7 @@
+Top rule                  (0)  Comment
+T                         (1)  Top rule
+True
+Top rule, formula is not T  (0)  Comment
+F                         (1)  Top rule
+Fail: F does not match T with {  }
+False

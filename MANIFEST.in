@@ -1,0 +1,6 @@
+include *.txt *.html *.rst *.in
+recursive-include flip *.py
+recursive-include test *.py *.ref all_test all_test.bat cpath cpath.bat plogdiff plogdiff.bat
+recursive-include witch *.py *.txt cpath cpath.bat
+recursive-include notes *.txt
+recursive-include www *.html

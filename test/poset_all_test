@@ -1,0 +1,6 @@
+source plogdiff poset_test
+source plogdiff contra_test
+source plogdiff irref_test
+source plogdiff raa_test
+source plogdiff trans_test
+source plogdiff raa_scope_test

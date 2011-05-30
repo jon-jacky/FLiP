@@ -1,0 +1,148 @@
+One occurence of a at level 1, substitute {a:b} should work
+Not(a)
+{ a:b }
+Not(b)
+substitution differs
+
+Formula contains only a, substitute {x:b} should fail
+Not(a)
+{ x:b }
+Not(a)
+no difference
+
+One a at level 1, one b at level 2, subst {a:b}, {b:d} should  both work
+
+And(a,Not(b))
+{ a:c }
+And(c,Not(b))
+substitution differs
+
+And(a,Not(b))
+{ b:d }
+And(a,Not(d))
+substitution differs
+
+And(a,Not(b))
+{ x:d }
+And(a,Not(b))
+no difference
+
+Not just Symbol:Symbol, but  Symbol:Compound
+And(a,Not(b))
+{ a:~b }
+And(Not(b),Not(b))
+substitution differs
+
+Not just Symbol:Symbol, but Compound:Symbol
+And(a,Not(b))
+{ ~b:d }
+And(a,d)
+substitution differs
+
+Not just Symbol:Symbol, but Compound:Compound
+And(a,Not(b))
+{ ~b:b v c }
+And(a,Or(b,c))
+substitution differs
+
+Compound that doesn't match at its own level 1
+And(a,Not(b))
+{ ~x:d }
+And(a,Not(b))
+no difference
+
+Level 3 with single occurrences
+
+Symbol that matches, deep level
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ a:b }
+Or(And(b,Not(b)),Or(c,Not(d)))
+substitution differs
+
+Symbol that matches, deeper level
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ b:d }
+Or(And(a,Not(d)),Or(c,Not(d)))
+substitution differs
+
+Compound that matches
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ ~b:b v c }
+Or(And(a,Or(b,c)),Or(c,Not(d)))
+substitution differs
+
+Compound that matches
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ c v ~d:a v ~b }
+Or(And(a,Not(b)),Or(a,Not(b)))
+substitution differs
+
+Compound whose argument (deep) does not match
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ c v ~a:a v ~b }
+Or(And(a,Not(b)),Or(c,Not(d)))
+no difference
+
+Compound whose constructor does not match, but whose arguments do
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ c & ~d:a v ~b }
+Or(And(a,Not(b)),Or(c,Not(d)))
+no difference
+
+Compound that doesn't match at its own level 1
+Or(And(a,Not(b)),Or(c,Not(d)))
+{ ~x:d }
+Or(And(a,Not(b)),Or(c,Not(d)))
+no difference
+
+Level 3 with multiple occurrences at different levels
+Or(And(a,Not(b)),Or(c,Not(a)))
+{ a:b }
+Or(And(b,Not(b)),Or(c,Not(b)))
+substitution differs
+
+Level 3 with multiple occurrences at the same level
+Or(And(a,Not(b)),Or(c,c))
+{ c:d }
+Or(And(a,Not(b)),Or(d,d))
+substitution differs
+
+Test case no_premise_match from equal_sub_test
+S(f(b))
+{ f(a):a }
+S(f(b))
+no difference
+
+Multiple substitution
+And(a,Not(b))
+{ a:c, ~b:b v c }
+And(c,Or(b,c))
+substitution differs
+
+Two single substitutions in sequence
+P(x,y)
+{ x:y }
+P(y,y)
+{ y:x }
+P(x,x)
+
+With multiple substitution, simultaneous substitution should swap x,y
+ but sequential substitution would have the same result as above
+P(x,y)
+{ x:y, y:x }
+P(y,x)
+
+Source keys appear in replacement formulas, check for runaway recursion
+And(p,q)
+{ p:~p, q:p v q }
+And(Not(p),Or(p,q))
+
+Placeholders used as keys in substitutions work like any other symbols
+Not(m1)
+{ m1:q }
+Not(q)
+
+And(m1,m2)
+{ m1:p, m2:q }
+And(p,q)
+

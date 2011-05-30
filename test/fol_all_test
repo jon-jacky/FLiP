@@ -1,0 +1,15 @@
+source plogdiff subst_test
+source plogdiff equal_sub_test
+source plogdiff equal_equiv_test
+source plogdiff simple_q_test
+source plogdiff free_test
+source plogdiff mismatch_test
+source plogdiff subproof_q_test
+source plogdiff kaye_ch9_test
+source plogdiff hr_ch2_test
+source plogdiff back_test
+source plogdiff backa_test
+source plogdiff count_test
+source plogdiff type_test
+source plogdiff fol_apply_test
+source plogdiff fol_save_test

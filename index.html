@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>F L i P : Logical Framework in Python</title>
+</head>
+<body>
+
+<h2>F L i P : Logical Framework in Python</h2>
+
+<p>
+<a href="http://staff.washington.edu/jon/">Jonathan Jacky</a>
+
+<p>
+<!-- <a href="www/index.html">F L i P Home</a> &nbsp; -->
+<a href="www/download.html">Download</a> &nbsp; 
+<a href="www/userguide-nd.html">User's guide</a> &nbsp; 
+<a href="www/reference-nd.html">Reference</a> &nbsp; 
+<a href="www/logics.html">Logics</a> &nbsp; 
+<a href="code">Code</a> &nbsp; 
+<a href="test">Tests</a> &nbsp; 
+<a href="notes">Notes</a>
+</p>
+
+<hr>
+
+<p>
+<b>Flip</b> is a logical framework written in Python.  A logical
+framework is a library for defining logics and writing applications
+such as theorem provers.  One Flip application is a proof checker for
+entering and editing proofs in natural deduction style:
+
+<pre>
+Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4)
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+</pre>
+
+<p>
+This is the output from the checker.  Here is
+the <a href="www/summary.html">proof script</a>.
+Here is a <a href="www/witch.html">more Pythonic example</a>.
+
+<p>
+The checker can use different logics; Flip comes with several.  You
+can <a href="www/logics.html">add another logic</a>, or add axioms
+and derived rules, by writing a module in Python.  Python is both the
+object language and the metalanguage.  Formulas, inference rules, and
+entire proofs are Python expressions.  Prover commands are Python
+functions.  The Python interpreter itself is the only user interface
+to the proof checker application.  (It is not necessary to know much
+Python to <a href="www/userguide-nd.html">use the checker</a>.)
+</p>
+
+<p>
+Flip was undertaken as a Python programming exercise.  It is not
+intended to compete with industrial-strength theorem provers such as
+<a href="http://www.cl.cam.ac.uk/research/hvg/HOL/history.html">HOL</a>,
+nor with nicely-designed educational provers such as 
+<a href="http://users.comlab.ox.ac.uk/bernard.sufrin/jape.html">Jape</a>, 
+<a href="http://www.cs.ru.nl/~freek/digimath/">etc.</a>
+That said, the checker is quite capable of working the examples and
+exercises in university-level textbooks on logic for computer science or
+mathematics, such as
+<a href="http://web.mat.bham.ac.uk/R.W.Kaye/logic/">Kaye</a>,
+<a href="http://www.cs.bham.ac.uk/research/projects/lics/">Huth and Ryan</a>,
+and
+<a href="http://www.oup.com/uk/catalogue/?ci=9780198530275">Bornat</a>.
+</p>
+
+<p>
+<em>Always demand proof, proof is the elementary courtesy that is 
+anyone's due.</em>  &nbsp; &nbsp; &mdash; Val&eacute;ry
+</p>
+
+<!-- Valery quote from his Monsieur Teste is the epigraph to Joseph
+Epstein's essay The Intimate Abstraction of Paul Valery, in his book
+In A Cardboard Belt!  -->
+
+<hr>
+
+
+<a href="www/index.html">F L i P Home</a> &nbsp;
+<a href="www/download.html">Download</a> &nbsp;
+<a href="www/userguide-nd.html">User's guide</a> &nbsp;
+<a href="www/reference-nd.html">Reference</a> &nbsp;
+<a href="www/logics.html">Logics</a> &nbsp;
+<a href="code">Code</a> &nbsp;
+<a href="test">Tests</a> &nbsp;
+<a href="notes">Notes</a> &nbsp;
+
+</body>
+</html>
+

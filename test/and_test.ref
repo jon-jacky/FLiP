@@ -1,0 +1,57 @@
+And-Introduction          (0)  Comment
+~a                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction (1) (2)
+True
+And-Elimination Right     (0)  Comment
+~a & ~b                   (1)  Given
+~a                        (2)  And-Elimination (Right) (1)
+True
+And-Elimination Left      (0)  Comment
+~a & ~b                   (1)  Given
+~b                        (2)  And-Elimination (Left) (1)
+True
+And-Introduction, premise indices don't match  (0)  Comment
+~a                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction (2) (1)
+Fail: ~a & ~b does not match m1 & m2 with { m1:~b, m2:~a }
+False
+And-Introduction, left argument doesn't match  (0)  Comment
+~c                        (1)  Given
+~b                        (2)  Given
+~a & ~b                   (3)  And-Introduction (1) (2)
+Fail: ~a & ~b does not match m1 & m2 with { m1:~c, m2:~b }
+False
+And-Introduction, right argument doesn't match  (0)  Comment
+~a                        (1)  Given
+~c                        (2)  Given
+~a & ~b                   (3)  And-Introduction (1) (2)
+Fail: ~a & ~b does not match m1 & m2 with { m1:~a, m2:~c }
+False
+And-Introduction, conclusion is not And  (0)  Comment
+~a                        (1)  Given
+~c                        (2)  Given
+~a v ~b                   (3)  And-Introduction (1) (2)
+Fail: ~a v ~b does not match m1 & m2 with { m1:~a, m2:~c }
+False
+And-Elimination Right, argument doesn't match  (0)  Comment
+~c & ~b                   (1)  Given
+~a                        (2)  And-Elimination (Right) (1)
+Fail: ~a does not match m1 with { m1:~c, m2:~b }
+False
+And-Elimination Left, argument doesn't match  (0)  Comment
+~a & ~c                   (1)  Given
+~b                        (2)  And-Elimination (Left) (1)
+Fail: ~b does not match m2 with { m1:~a, m2:~c }
+False
+And-Elimination Left, premise is not And  (0)  Comment
+~a v ~b                   (1)  Given
+~b                        (2)  And-Elimination (Left) (1)
+Fail: ~a v ~b does not match m1 & m2 with {  }
+False
+And-Elimination Left, premise index is for comment  (0)  Comment
+~a v ~c                   (1)  Given
+~b                        (2)  And-Elimination (Left) (0)
+Fail: And-Elimination Left, premise index is for comment does not match m1 & m2 with {  }
+False

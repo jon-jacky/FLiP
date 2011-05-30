@@ -1,0 +1,6 @@
+The index.html is duplicated here as well as under www/ to avoid
+broken links.  I put a placeholder index.html in this directory back
+in March 2009 and Google has been indexing it since then.
+
+The two index.html are not exact duplicates.  In the version here,
+the links point to pages under www/ not to the same directory.

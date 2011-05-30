@@ -1,0 +1,16 @@
+source plogdiff and_or_lr_reversed_test
+source plogdiff and_test
+source plogdiff and_wrong_indices_test
+source plogdiff not_test
+source plogdiff or_test
+source plogdiff prop_contra_test
+source plogdiff prop_raa_test
+source plogdiff prop_test
+source plogdiff top_test
+source plogdiff prop_raa_scope_test
+source plogdiff prop_f_or_scope_test
+source plogdiff prop_constructive_test
+source plogdiff prop_ore_scope_test
+source plogdiff prop_derived_test
+source plogdiff prop_apply_test
+source plogdiff prop_save_test

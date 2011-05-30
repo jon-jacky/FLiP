@@ -1,0 +1,45 @@
+Kaye 3.1, p. 25           (0)  Comment
+00                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (1) (2)
+True
+Kaye 3.1, p. 25           (0)  Comment
+00                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (1) (2)
+00                        (4)  Lengthening, 0 (3)
+001                       (5)  Lengthening, 1 (4)
+0010                      (6)  Lengthening, 0 (5)
+00100                     (7)  Lengthening, 0 (6)
+True
+Premise out-of-bounds     (0)  Comment
+00                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (1) (3)
+Fail: no line 3 for premise at index 1
+False
+Shorten, premise indices reversed  (0)  Comment
+00                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (2) (1)
+Fail: 00 does not match at y1 with { y0:01 }
+False
+Shorten, first premise doesn't match  (0)  Comment
+10                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (1) (2)
+Fail: 01 does not match at y1 with { y0:10 }
+False
+Shorten, second premise doesn't match  (0)  Comment
+00                        (1)  Given
+11                        (2)  Given
+0                         (3)  Shortening (1) (2)
+Fail: 11 does not match at y1 with { y0:00 }
+False
+Lengthen, premise doesn't match  (0)  Comment
+00                        (1)  Given
+01                        (2)  Given
+0                         (3)  Shortening (1) (2)
+10                        (4)  Lengthening, 0 (3)
+Fail: 10 does not match at x0 with { x:0 }
+False

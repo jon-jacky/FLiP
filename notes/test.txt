@@ -1,0 +1,174 @@
+Notes on the test modules
+
+Quick Start
+Introduction
+Test modules and other files
+Running tests
+Interpreting test output
+
+
+Quick Start
+
+To run all the tests, change to the test directory, then type this command:
+
+ cpath
+
+Then type this command:
+
+ all_test
+ ...
+ ... test output ...
+ ...
+
+On Unix-like systems, you may have to type:  source cpath, source all_test
+
+You may see some messages about differences.  These are probably benign,
+see the explanation of test output in the last section of this document.
+
+
+Introduction
+
+This document discusses the test modules in the Flip logical
+framework.  The test modules contain many proofs in each of the Flip
+logics.  They demonstrate every formula class and inference rule.
+They are useful as examples, in addition to testing for errors.
+
+Before reading this, it would be helpful to look over the Flip web pages.
+
+
+Test modules and other files
+
+The test directory contains all the test modules and other files that
+support testing:
+
+*_test.py - Test module, contains test cases coded in Python.
+
+command_wrapper.py - helper imported by *_save_test, back*_test, *_apply_test
+
+ex*ref.py - helpers imported by *save_test.py, back*_test.py
+
+*_test.log - Output from running the corresponding test module.  
+              Not included in the Flip distribution.  They are generated 
+               by running plogdiff (see below)
+
+*_test.ref - Like .log, but renamed .ref to serve as reference for plogdiff
+
+cpath - Shell script that puts the Flip code directory on PYTHONPATH so test
+         modules can be run from the test directory
+
+plogdiff - Shell script that runs a test module, saves its output in a 
+            .log file, and compares that to the .ref file.  
+ 
+*_all_test - Shell script that runs plogdiff on several test modules, 
+               
+all_test - Shell script that runs all *_all_test scripts
+
+The shell scripts are for Unix-like systems, including Linux and Mac OS X.
+
+The batch command files cpath.bat, plogdiff.bat, *_all_test.bat, and
+all_test.bat are like the shell scripts, but for Windows systems.
+
+
+
+Running tests
+
+To prepare to run tests, change to the test directory and run the command
+to put the Flip code directory on the path:
+
+ > cpath
+
+You only need to do this once in a terminal session.
+
+To run a single test module and show its output, run Python with the
+test module file name argument, including the .py suffix:
+
+ > python subproof_q_test.py
+ ...
+ ... test output ...
+ ...
+
+To run a single test module and compare its output to the saved output
+in the .ref file, run plogdiff with the test module argument, without
+the .py suffix:
+
+ > plogdiff subproof_q_test
+ Comparing files subproof_q_test.log and SUBPROOF_Q_TEST.REF
+ FC: no differences encountered
+
+To run several tests, or all the tests, just issue the command without
+arguments:
+
+ > fol_all_test
+ ...
+
+ > all_test
+ ...
+
+The same commands work on both Unix-like and Windows systems.  The
+system command interpreter selects the shell script or the batch
+command, as appropriate.
+
+
+Interpreting test output
+
+A test module produces a lot of output.  It contains several proofs;
+each proof is a test case.  Running the module checks and prints each
+proof.  After each valid proof, the module prints True.  After the
+first invalid step in a proof, the module prints an error message that
+begins 'Fail: ....', then prints False.  Then the module goes on to
+the next proof.
+
+Many test cases are invalid proofs.  This is intended.  Error messages
+and False in the test output do not mean that the checker has
+failed; they show that the checker has detected the invalid proofs.
+
+The checker indicates most errors by printing an error message, but it
+indicates errors in the number or types of formula constructor
+arguments by raising an exception.  Test modules are coded to catch
+these exceptions, then print a message: "... caught exception ..."
+After catching an exception, a test module can continue executing
+test cases.
+
+Test modules should not raise exceptions.  If a test module prints a
+traceback with a message about an uncaught exception, that test case
+has failed.  A test module exits after the first uncaught exception,
+but a script or batch file that invokes several test modules may
+continue executing after an exception.
+
+Errors are detected by comparing the test output to reference output
+in a .ref file.  The contents of each .ref file are the expected
+(correct) output from its test module.  The plogdiff command performs
+the comparison.  This plogdiff commands is invoked repeatedly by the
+*_all_test commands.
+
+Usually a successful test is indicated when plogdiff reports no
+differences.  Differences usually indicate errors.  However, some
+kinds of differences are expected; they do not indicated errors.
+
+The order of key/value pairs in printed dictionaries may differ
+between runs.  This is expected and does not indicate an error:
+
+Comparing files subproof_q_test.log and SUBPROOF_Q_TEST.REF
+***** subproof_q_test.log
+||~q                      (6)  E-Elimination (2) (3) (5)
+Fail: ~q does not match Q1 with { v1:x, P1:P(x), Q1:F, v2:a }
+False
+***** SUBPROOF_Q_TEST.REF
+||~q                      (6)  E-Elimination (2) (3) (5)
+Fail: ~q does not match Q1 with { v1:x, P1:P(x), v2:a, Q1:F }
+False
+*****
+
+Memory addresses may differ between runs.  This is expected and does
+not indicate and error:
+
+Comparing files fol_apply_test.log and FOL_APPLY_TEST.REF
+***** fol_apply_test.log
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1), with {<fol.f object at 0x01AB9FB0>: 1}
+Fail: apply command requires argument: {term:variable}
+***** FOL_APPLY_TEST.REF
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1), with {<fol.f object at 0x01B19FB0>: 1}
+Fail: apply command requires argument: {term:variable}
+*****

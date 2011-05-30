@@ -1,0 +1,112 @@
+Ex 6.4, ~a v b |- ~(a & ~b)  (0)  Comment
+|a & ~b                   (1)  Assumption
+|a                        (2)  And-Elimination (Right) (1)
+||~a                      (3)  Assumption
+||F                       (4)  Contradiction (2) (3)
+|~~a                      (5)  Reductio Ad Absurdum (3) (4)
+|~b                       (6)  And-Elimination (Left) (1)
+|~a v b                   (7)  Given
+|b                        (8)  Or-Elimination (Left) (7) (5)
+|F                        (9)  Contradiction (8) (6)
+~(a & ~b)                (10)  Reductio Ad Absurdum (1) (9)
+state()
+(0, 'xr', (), ((),), "Text('Ex 6.4, ~a v b |- ~(a & ~b)')", 'comment')
+(1, 'ar', (1,), ((), ()), 'And(a,Not(b))', 'assume')
+(2, 'xr', (1,), ((), ()), 'a', 'aer', 1)
+(3, 'ar', (3, 1), ((), (), ()), 'Not(a)', 'assume')
+(4, 'xr', (3, 1), ((), (), ()), 'F', 'contra', 2, 3)
+(5, 'dr', (1,), ((), ()), 'Not(Not(a))', 'raa', 3, 4)
+(6, 'xr', (1,), ((), ()), 'Not(b)', 'ael', 1)
+(7, 'xr', (1,), ((), ()), 'Or(Not(a),b)', 'given')
+(8, 'xr', (1,), ((), ()), 'b', 'oel', 7, 5)
+(9, 'xr', (1,), ((), ()), 'F', 'contra', 8, 6)
+(10, 'dr', (), ((),), 'Not(And(a,Not(b)))', 'raa', 1, 9)
+
+Erroneous Ex 6.4, use ael not aer in step 2 so apply contra fails in 4  (0)  Comment
+|a & ~b                   (1)  Assumption
+|~b                       (2)  And-Elimination (Left) (1)
+||~a                      (3)  Assumption
+||Apply()                 (4)  Contradiction (2) (3)
+Fail: ~a does not match ~m1 with { m1:~b }
+state()
+(0, 'xr', (), ((),), "Text('Erroneous Ex 6.4, use ael not aer in step 2 so apply contra fails in 4')", 'comment')
+(1, 'ar', (1,), ((), ()), 'And(a,Not(b))', 'assume')
+(2, 'xr', (1,), ((), ()), 'Not(b)', 'ael', 1)
+(3, 'ar', (3, 1), ((), (), ()), 'Not(a)', 'assume')
+
+Fig. 5.1(a), Constructive e v f, ~f |- e  (0)  Comment
+e v f                     (1)  Given
+~f                        (2)  Given
+|e                        (3)  Assumption
+|f                        (4)  Assumption (next case)
+|F                        (5)  Contradiction (4) (2)
+|e                        (6)  Contradiction (constructive) (5)
+e                         (7)  Or-Elimination (1) (3) (3) (4) (6)
+
+Erroneous Fig. 5.1(a), attempt to use Apply with contra_con  (0)  Comment
+e v f                     (1)  Given
+~f                        (2)  Given
+|e                        (3)  Assumption
+|f                        (4)  Assumption (next case)
+|F                        (5)  Contradiction (4) (2)
+|Apply()                  (6)  Contradiction (constructive) (5)
+Fail: cannot apply Contradiction (constructive) rule, must provide formula
+|Apply()                  (6)  Or-Elimination (1) (3) (3) (4) (6)
+Fail: no line 6 for premise at index 4
+
+Erroneous Fig. 5.1(a), scramble subproof premises  (0)  Comment
+e v f                     (1)  Given
+~f                        (2)  Given
+|e                        (3)  Assumption
+|f                        (4)  Assumption (next case)
+|F                        (5)  Contradiction (4) (2)
+|e                        (6)  Contradiction (constructive) (5)
+|Apply()                  (7)  Or-Elimination (1) (3) (6) (4) (3)
+Fail: premise at index 2, line 6 not in same scope as assumption
+
+Failed attempt at a v b |- a, does not match rule  (0)  Comment
+a v b                     (1)  Given
+|a                        (2)  Assumption
+|b                        (3)  Assumption (next case)
+|Apply()                  (4)  Or-Elimination (1) (2) (2) (3) (3)
+Fail: b does not match m3 with { m1:a, m2:b, m3:a }
+
+Invalid a v b |- a, using invalid premise/subproof citations  (0)  Comment
+a v b                     (1)  Given
+|a                        (2)  Assumption
+|b                        (3)  Assumption (next case)
+|Apply()                  (4)  Or-Elimination (1) (2) (2) (3) (2)
+Fail: premise at index 4, line 2 not in same scope as assumption
+
+Invalid a v b |- a, discharge ore from wrong scope  (0)  Comment
+a v b                     (1)  Given
+|a                        (2)  Assumption
+|a                        (3)  Assumption (next case)
+||b                       (4)  Assumption
+||b & a                   (5)  And-Introduction (4) (3)
+||a                       (6)  And-Elimination (Left) (5)
+||Apply()                 (7)  Or-Elimination (1) (2) (2) (4) (6)
+Fail: assumption at index 1, line 2 not in scope for discharging rule
+
+Invalid a v b |- a, discharge ore cites wrong scope  (0)  Comment
+a v b                     (1)  Given
+|a                        (2)  Assumption
+|a                        (3)  Assumption (next case)
+||b                       (4)  Assumption
+||b & a                   (5)  And-Introduction (4) (3)
+||a                       (6)  And-Elimination (Left) (5)
+|b -> a                   (7)  Implication-Introduction (4) (6)
+|Apply()                  (8)  Or-Elimination (1) (2) (2) (4) (6)
+Fail: assumption at index 3, line 4 not in scope for discharging rule
+
+Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))  (0)  Comment
+|q -> r                   (1)  Assumption
+||~q -> ~p                (2)  Assumption
+|||p                      (3)  Assumption
+|||~~p                    (4)  Double-negation Introduction (3)
+|||~~q                    (5)  Modus Tollens (2) (4)
+|||q                      (6)  Double-negation Elimination (5)
+|||r                      (7)  Implication-Elimination (Modus Ponens) (1) (6)
+||p -> r                  (8)  Implication-Introduction (3) (7)
+|(~q -> ~p) -> (p -> r)   (9)  Implication-Introduction (2) (8)
+(q -> r) -> ((~q -> ~p) -> (p -> r)) (10)  Implication-Introduction (1) (9)

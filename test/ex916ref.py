@@ -1,0 +1,36 @@
+# gets 4 subproofs deep - import this for back() and backa() tests
+
+from fol_session import *
+
+ex916 = \
+  [(Text('Kaye ex. 9.16: Ex.Ey.(R(x) & R(y) & ~(x = y)), Ax.Ay.(P(x) & P(y) -> (x = y)) |- Ex.(R(x) & ~P(x))'), comment),
+    (E(x, E(y, And(And(R(x),R(y)),Not(Equal(x,y))))), given),
+    (A(x, A(y, Impl(And(P(x),P(y)),Equal(x,y)))), given),
+    (Not(E(x, And(R(x),Not(P(x))))), assume),
+    (Let(a,E(y, And(And(R(a),R(y)),Not(Equal(a,y))))), let),
+    (Let(b,And(And(R(a),R(b)),Not(Equal(a,b)))), let),
+    (And(R(a),R(b)), aer, 5),
+    (R(a), aer, 6),
+    (R(b), ael, 6),
+    (Not(Equal(a,b)), ael, 5),
+    (Not(P(a)), assume),
+    (And(R(a),Not(P(a))), ai, 7,10),
+    (E(x, And(R(x),Not(P(x)))), Ei, 11),
+    (F, contra, 12,3),
+    (Not(Not(P(a))), raa, 10,13),
+    (P(a), ne, 14),
+    (Not(P(b)), assume),
+    (And(R(b),Not(P(b))), ai, 8,16),
+    (E(x, And(R(x),Not(P(x)))), Ei, 17),
+    (F, contra, 18,3),
+    (Not(Not(P(b))), raa, 16,19),
+    (P(b), ne, 20),
+    (And(P(a),P(b)), ai, 15,21),
+    (A(y, Impl(And(P(a),P(y)),Equal(a,y))), Ae, 2),
+    (Impl(And(P(a),P(b)),Equal(a,b)), Ae, 23),
+    (Equal(a,b), imple, 24,22),
+    (F, contra, 25,9),
+    (F, Ee, 4,5,26),
+    (F, Ee, 1,4,27),
+    (Not(Not(E(x, And(R(x),Not(P(x)))))), raa, 3,28),
+    (E(x, And(R(x),Not(P(x)))), ne, 29)]

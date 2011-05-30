@@ -1,0 +1,39 @@
+Transitive rule           (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+Transitive rule, premise 0 isn't lt  (0)  Comment
+a /< b                    (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+Fail: a /< b does not match v1 < v2 with {  }
+Transitive rule, premise 2 isn't lt  (0)  Comment
+a < b                     (1)  Given
+b /< c                    (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+Fail: b /< c does not match v2 < v3 with { v1:a, v2:b }
+Transitive rule, formula isn't lt  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a /< c                    (3)  Transitivity (1) (2)
+Fail: a /< c does not match v1 < v3 with { v1:a, v2:b, v3:c }
+Transitive rule, variables in premises don't match  (0)  Comment
+a < b                     (1)  Given
+d < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (2)
+Fail: d < c does not match v2 < v3 with { v1:a, v2:b, v3:c }
+Transitive rule, formula variable doesn't match premise 0  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+d < c                     (3)  Transitivity (1) (2)
+Fail: d < c does not match v1 < v3 with { v1:a, v2:b, v3:c }
+Transitive rule, formula variable doesn't match premise 1  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < d                     (3)  Transitivity (1) (2)
+Fail: a < d does not match v1 < v3 with { v1:a, v2:b, v3:c }
+Transitive rule, premise out of range  (0)  Comment
+a < b                     (1)  Given
+b < c                     (2)  Given
+a < c                     (3)  Transitivity (1) (3)
+Fail: no line 3 for premise at index 1

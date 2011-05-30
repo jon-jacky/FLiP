@@ -1,0 +1,327 @@
+Notes on the formula module
+
+Contents
+
+Introduction
+Classes
+Matching
+Patterns, placeholders, and inference rules
+Checking side conditions
+Substitution
+Substitution patterns
+Generating formulas
+
+Introduction
+
+This document discusses the formula module in the Flip logical
+framework.  Before reading this, it would be helpful to look over the
+Flip web pages and the overall design document.
+
+The formula module defines base classes that represent the prefix
+syntax for formulas and terms.  It also provides methods for matching
+and substitution.  The matching methods also check side conditions
+involving bound and free variables.  The formula module also provides
+methods for generating formulas, used in proof automation.
+
+
+Classes
+
+Each kind of syntax that can occur in a formula is defined by a class.
+Each occurence of that kind of syntax is an instance of that class; in
+particular, it is a constructor expression for that class (a call to
+its __init__ method).
+
+For example, consider the formula And(p,Or(q,r)).  Here And is a
+class.  This whole formula is an instance of the And class; in fact,
+it is the constructor expression for that instance.  Here also, Or is
+a class, Or(q,r) is an instance of the Or class, and p, q, and r are
+instances of the Letter class.
+
+The formula module defines base classes for each kind of syntax.  Each
+logic module defines subclasses for its logic.  For example, the
+formula module defines an InfixLogical class, and the prop_commmon
+module defines its subclasses And and Or.
+
+The base class for all syntax elements with no arguments (such as p,q,
+and r above) is Symbol.  The base class for all elements with
+arguments (such as And and Or above) is Compound.  
+
+The first order logic defined in the fol module distinguishes between
+Formulas and Terms.  A Formula is a boolean expression, while a Term
+is a non-boolean expression.  So Formula and Term are types in the
+programming language sense.
+
+In our documentation we use the word small-f formula for any formula,
+and use capital-F Formula for the Formula type.  So a small-f formula
+might be a Term, but a capital-F Formula is never a Term.
+
+The top-level formula in a proof step must be a Formula.
+And(Equal(x,f(y)),p) is a Formula.  The arguments of logical operators
+must be Formulas. Relations and letters are Formulas.  Here Equal is a
+relation and p is a letter (a boolean variable).  The arguments of
+relations and functions must be Terms.  Functions and variables are
+terms.  Here f is a function and x and y are variables.
+
+The formula module defines marker classes Formula and Term.  A marker
+class provides no attributes, it just acts as a marker for the
+purpose of type checking.  The Variable class inherits Symbol and
+Term, while the Letter class inherits Symbol and Formula.  The
+Function class inherits Compound and Term, while the Relation class
+inherits Compound and Formula.
+
+The constructor of each formula class checks the number and types of
+its arguments, and raises an exception when an error is found.
+
+
+Matching
+
+Each class that represents a kind of formula (including symbols) has a
+mismatch method, which compares self (a formula) to its formula
+argument (a different formula).  Its signature is:
+
+  def mismatch(self, formula, subformulas, bound, free, other_errors,rule_type)
+    ...
+
+The mismatch method returns mismatches, a list associating the
+(sub)formulas which differ.
+
+Mismatch example:
+
+  f1 = And(c,Or(b,c)
+  f2 = And(a,Not(b))
+  mismatches = f1.mismatch(f2,{},[],[],[],'') # never mind other args for now
+
+  Now mismatches is { (c,a,[]), (Or(b,c),Not(b),[]) }
+
+Mismatches is a list of tuples. The first two items in each tuple are
+the subformula from self and from the formula argument, respectively.
+(The third item is a list of bound variables, discussed below).  We
+use a list of tuples, not a map, because different occurrences of the
+same key (subformulas in self) may be associated with different
+mismatched values (subformulas in the formula argument).  The method
+is named mismatch (not match) because it returns an empty list (Python
+interprets as False) when the two formulas *do* match, and returns a
+list of mismatches (Python interprets as True) when they *don't*
+match.  So success (a perfect match) is indicated by returning an
+empty list (which means False).
+
+Instead of a list (non-empty or empty), the mismatch method might also
+return False (see discussion of other_errors below).
+
+Having a mismatch method in each class is an alternative to having a
+single mismatch function with a case analysis on the formula type.
+
+
+Patterns, placeholders, and inference rules
+
+An important use of matching is to compare a group of premises and a
+conclusion that appears in a proof against an inference rule.
+(Inference rules appear in the logic modules, not the formula module.)
+
+The mismatch methods can compare two formulas, or a pattern and a
+formula.  Patterns occur in inference rules.  An inference rule is a
+list of patterns that might match formulas that might appear in a
+proof.  Premises appear first; the conclusion appears last; rules are
+read and processed from left to right.  For example here is the trans
+(Transitivity) rule in the fol module.  This rule has three patterns.
+
+ trans: [ Equal(t1,s1), Equal(s1,t2), Equal(t1,t2) ],    
+
+A pattern is a formula that contains placeholders.  Here t1, s1, and
+t2 are placeholders.  Each placeholder may have a formula bound to it.
+When mismatch checks a pattern against a formula, each placeholder in
+the pattern is checked against the subformula at that location in the
+formula.  When the check is made, the placeholder may have no
+subformula bound to it.  In that case, the check succeeds and the
+placeholder is bound to the subformula, where it can be used in
+subsequent checks.  Alternatively, when the check is made, a
+placeholder may already have a subformula already bound to it.  In
+that case, the subformula bound to the placeholder is compared to the
+subformula at that location in the formula.
+
+When mismatch compares two formulas that have no placeholders, all
+subformulas must match exactly.
+
+The bindings of placeholders to subformulas are stored in a
+dictionary, the subformulas parameter of all the mismatch methods.  If
+m1 appears in the pattern but the key m1 is not (yet) present in the
+subformulas dictionary, the match is considered successful, and the
+mismatch method updates the dictionary with the new key m1 and its
+matching subformula.  If m1 is already a key in subformulas, then
+mismatch checks subformulas[m1] against the subformula at that
+location in the formula.
+
+Each statement in a proof is checked against its inference rule.  Its
+premises (formulas that precede the statement) and the conclusion (the
+statement formula itself) are checked in turn against the patterns in
+the inference rule, working from left to right (premises first,
+conclusion last).  The checking is done by calling each pattern's
+mismatch method, with the corresonding formula as the first argument,
+and the subformulas dictionary as the second argument.  Subformulas
+are bound to placeholders in the patterns where they are first
+reached, and then checked in later patterns.  In the trans rule above,
+the placeholders t1 and s1 are bound to the subformulas in the first
+premise.  In the second premise, s1 is checked and t2 is bound.  The
+placeholders t1 and t2 in the last pattern are checked in the
+conclusion.  If all the formulas (premises and conclusion) match all
+the patterns (return an empty mismatches list), the step succeeds: the
+conclusion is added to the proof.  Otherwise, the step fails and the
+proof state is not changed.  (Before the formulas are checked against
+the rule, the prover checks that the expected premises were found in
+the correct scopes.)
+
+The caller of the mismatch methods and builder of the subformulas
+dictionary is the check_rule method in the nd module.  See also
+Processing a Step in nd.txt.
+
+
+Checking side conditions
+
+Some inference rules have side conditions involving bound and free
+variables.  The mismatch methods also check these.
+
+The bound argument of the mismatch method (the argument named 'bound')
+is the list of variables that are bound in the scope of self where
+mismatch is called.  Then, if self is a quantified formula, its bound
+variable is appended to the list in the body of the mismatch method.
+The (possibly expanded) list of bound variables is passed in turn to
+any recursive calls to mismatch in the body.  In this way the list of
+bound variables is maintained.
+
+The free argument of the mismatch method (that is, the argument named
+'free') is the list of variables that is free in the proof preceding
+(up to but not including) the step where mismatch is called.  The
+top-level caller of mismatch passes in this list and it is passed in
+turn to all recursive calls.
+
+The bodies of some mismatch methods check side conditions involving
+bound and free variables.  Violations of these side conditions are
+indicated in a different way than mismatches.  The mismatch methods
+have an argument other_errors, a list of error messages (strings).
+The caller passes in an empty list.  To indicate an other_error,
+mismatch returns False (not the empty list) and appends the error
+messages (strings) to other_errors.  When mismatch returns, the caller
+can test other_errors and, if it is non-empty, process the error
+message. Mismatch never returns non-empty mismatches and assigns
+non-empty other_errors in the same call.  mismatch always returns
+False when it assigns other_errors to a non-empty value.  At this
+writing other_errors never contains more than one error message.
+
+This list of bound variables (which may be updated in the bodies of
+the mismatch methods) is returned in the triples in the returned
+mismatches, if any are found.  Recall (above) that each mismatch
+method returns a list of three-element tuples, where the first item in
+each tuple is a subformula of self, and the second item is the
+mismatching subformula of the formula argument.  The third item in the
+tuple is a list of bound variables.  It is the list of the variables
+that are bound in the scope where the subformula from self (the first
+item in the tuple) was found.  In this way the caller can determine
+which variables were bound in the scope where the mismatch occured.
+This is needed to check some side conditions.
+
+Substitution
+
+Some formula classes define a subst method that substitutes
+subformulas in a formula, according to substitutions, a dictionary.
+The subst method returns a deep copy with each subformula k replaced
+by substitutions[k].  Subformula k might be the whole formula,
+sustitutions[k] replaces everything.  Subformula k might be nested
+anywhere in the formula; the subst method searches for it.  If no keys
+in substitutions are found at any depth in the formula, no
+substitution is performed.  This is not an error, subst just returns
+a deep copy of original formula.  
+
+The substitutions dictionary can have multiple items.  The subst
+methods achieve the effect of multiple simultaneous subtitutions, so
+P(x,y).subst({ x:y, y:x }) returns P(y,x), not P(x,x) as would be the
+case with sequential substitution.  None of the example proofs from
+Kaye, Huth&Ryan, or Bornat use multiple substititions; they
+substitute just one item in a proof step.  However, multiple
+simultaneous substitutions are needed for equational logics.
+
+The substitution methods themselves make no checks for free or bound
+variables, so any substitutions made in a proof should then be checked
+for that.  This is done in the mismatch methods.
+
+The mismatches and subst methods are inverses (sort of):
+
+Substitution example:
+
+  f2 = f1.subst(substitutions)
+  mismatches = f2.mismatch(f1,{},[],[]) # empty subformulas, no placeholders
+ 
+Now the pairs in the mismatches list are the inverses of the pairs in
+the substitutions dictionary.  These are just the pairs we need to
+substitute into f2 to get the original f1 back:
+
+  f1_ = f2.subst(dict([(s,r) for (s,r,b) in mismatches]))
+  not f1_.mismatch(f1,{},[],[]) # True
+
+
+Substitution placeholders 
+
+The formula module defines some special classes for placeholders that
+appear in rules that involve substitution.  For example here is the
+sub (Substitution) rule in the fol logic module:
+
+ sub :  [ Equal(t1,s1), S1(t1), S1({t1:s1}) ],
+
+Here S1({t1:s1}) is an instance of the placeholder class S1 defined in
+the fol module, which is a subclass of the Subst class is defined in
+the formula module.
+ 
+Here t1 and s1 are placeholders bound to the terms in the equation
+(the first premise) and S1(t1) is a substitution placeholder instance
+bound to the second premise (the entire formula).  Here S1({t1:s1})
+represents the conclusion.  This pattern means that the actual
+conclusion formula in the proof should match the formula bound to S1,
+but with the term bound to t1 replaced by the term bound to s1.  The
+Subst class defines a mismatch method which checks for this.
+
+In Subst, the mismatch method does not require that *all* occurrences
+are substituted.  This is sufficient for the sub and Ei rules, other
+rules must use SubstAll.
+
+There is also a SubstAll subclass of Subst.  Its mismatch method here
+does check that *all* occurrences are substituted.  This is needed for
+Ae, Ai, Ee rules.
+
+The SubstAll mismatch method uses the subst method, but Subst does not
+use subst.
+
+There is a NotIn placeholder used to check the side condition that a
+formula does not contain a particular variable.  Where Q1 is a
+subclass of NotIn, Q1({v2:None}) means that the variable bound to the
+placeholder v2 must not appear free in the formula bound to the
+placeholder Q1.  It is used in the Ee rule.
+
+
+Generating formulas
+
+The classes defined in the formula module provide a method for
+generating formula instances, used in proof automation.  This method
+is used implement the rapply command.  The method signature is:
+
+  def generate(self, subformulas, otherdata, other_errors)
+
+Here self is a pattern (a formula with placeholders) and subformulas
+is a dictionary associating placeholder keys with formula values, as
+in the mismatch method.  
+
+In most classes, the generate method just returns the pattern with its
+placeholders substituted according to subformulas:
+
+    return self.subst(subformulas)
+
+The Quantifier and Subst class generate methods use the otherdata
+argument to provide additional information not provided in
+subformulas.  For the Ae and Ai rules, otherdata is a term which
+replaces or is replaced by the bound variable in the subformulas
+dictionary.  For the Ei rule, otherdata is a dictionary with a term
+key (target) and variable value (replacement).  
+
+The other_errors argument is a list of error messages (strings), just
+as in the mismatch methods.  At this time there is never more than one
+message in the list.  It is updated when a generate method detects an
+error.  At this time the only generate errors that are reported occur
+when otherdata is needed but is missing, or has the wrong type.

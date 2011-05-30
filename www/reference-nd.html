@@ -1,0 +1,370 @@
+<html>
+<head>
+<title>F L i P proof checker reference</title>
+</head>
+<body>
+
+<h2>F L i P proof checker reference</h2>
+
+<p>
+<a href="http://staff.washington.edu/jon/">Jonathan Jacky</a>
+
+<p>
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<a href="userguide-nd.html">User's guide</a> &nbsp; 
+<!-- <a href="reference-nd.html">Reference</a> &nbsp;   -->
+<a href="logics.html">Logics</a> &nbsp; 
+<a href="../code">Code</a> &nbsp; 
+<a href="../test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a>
+</p>
+
+<p>
+<a href="index.html"><b>Flip</b></a> is a
+logical framework written in Python.  One Flip application is
+a natural deduction proof checker.  This is its reference manual;
+there is also a <a href="userguide-nd.html">user's guide</a>.
+
+<p>
+<a href="#logics">Logics</a>
+<a href="#notation">Notation</a>
+<a href="#commands">Commands</a>
+<a href="#errors">Error messages</a>
+<a href="#refs">Bibliography</a>
+</p>
+
+<hr>
+
+<h3><a name="logics">Logics</h3>
+
+<p>
+The checker can use different logics; Flip comes with several, and you can 
+<a href="logics.html">define more</a>.  To use
+a logic, run its session module in the Python session, for example:
+
+<pre>
+python -i fol_session.py
+>>>
+</pre>
+
+<p>
+These session modules are included with Flip:
+
+<p>
+<table>
+<tr>
+<td>tree_session</td>
+<td>Tree logic from Kaye chapter 3</td?>
+</tr>
+<tr>
+<td>poset_session</td>
+<td>Poset logic from Kaye chapter 4</td>
+</tr>
+<tr>
+<td>prop_session</td>
+<td>Propositional logic from Kaye chapter 6</td>
+</tr>
+<tr>
+<td>prop_constructive_session &nbsp; &nbsp;</td>
+<td>Constructive propositional logic from Bornat chapter 3</td>
+</tr>
+<tr>
+<td>prop_derived_session</td>
+<td>Propositional logic with derived rules from Huth and Ryan chapter 1</td>
+</tr>
+<tr>
+<td>fol_session</td>
+<td>First-order logic from Kaye chapter 9 (includes propositional rules)</td>
+</tr>
+<tr>
+<td>fol_derived_session</td>
+<td>First-order logic from Huth and Ryan chapter 2 (includes prop_derived rules)</>
+</tr>
+</table>
+
+<p>
+The <b>rules</b> command prints all the inference rules available in a
+session.  The <b>rule_names</b> attribute is a dictionary that
+associates each rule with its description.
+
+<hr>
+
+<h3><a name="notation">Notation</h3>
+
+<p>
+Flip only uses characters found on a standard (Roman) keyboard; it
+does not use mathematical symbols.  For example, for <em>and</em> and
+<em>or</em> Flip prints & and v rather than symbols that look like /\
+and \/.
+
+<p>
+At this writing Flip does not provide a parser.   Flip reads
+formulas in a prefix constructor syntax that differs from its printed
+syntax.  For example, we write And(p,q) instead of p & q.
+
+<p>
+The following tables show how to notate formulas in the Flip logics.
+
+
+<p>
+All logics:
+
+<p>
+<table>
+<tr><td>Input</td><td>Print</td><td>Notes</td></tr>
+<tr><td>Text('Any text') &nbsp;&nbsp;</td><td>Any text &nbsp;&nbsp;</td>
+<td>Comment text, usually in step 0</td></tr>
+</table>
+
+
+<p>
+Tree logic:
+
+<p>
+<table>
+<tr><td>Path('01') &nbsp;&nbsp;</td><td>01 &nbsp;&nbsp;</td><td>any sequence of 0 or 1</td></tr>
+</table>
+
+<p>
+Poset logic:
+
+<p>
+<table>
+<tr><td>F</td><td>F</td><td>Bottom</td></tr>
+<tr><td>lt(a,b)</td><td>a &lt; b</td></tr>
+<tr><td>nlt(b,a) &nbsp;&nbsp;</td><td>b /&lt; a &nbsp;&nbsp;</td></tr>
+</table>
+
+<p>
+Poset elements a, b, c, d are defined.  To define another: e = Variable('e')
+
+<p>
+Propositional logics:
+
+<p>
+<table>
+<tr><td>F</td><td>F</td><td>Bottom, false</td></tr>
+<tr><td>T</td><td>T</td><td>Top, true</td></tr>
+<tr><td>Not(p)</td><td>~p</td><td>not p</td></tr>
+<tr><td>And(p,q)</td><td>p & q</td><td>p and q</td></tr>
+<tr><td>Or(p,q)</td><td>p v q</td><td>p or q</td></tr>
+<tr><td>Impl(p,q) &nbsp;&nbsp;</td><td>p -> q &nbsp;&nbsp;</td><td>p implies q</td></tr>
+</table>
+
+<p>
+Propositional letters (Boolean variables) a, b, c, d, e, f, p, q, r, t are
+defined.  To define another: s = Letter('s')
+
+<p>
+First order logics (also include propositional logic formulas):
+
+<p>
+<table>
+<tr><td>Equal(x,y)</td><td>x = y</td><td>x equals y</td></tr>
+<tr><td>A(x,P(x))</td><td>Ax.P(x)</td>
+     <td>universal quantifier: for all x, P(x)</td></tr>
+<tr><td>E(x,P(x))</td><td>Ex.P(x)</td>
+     <td>existential quantifier: there exists x, such that P(x)</td></tr>
+<tr><td>New(x)</td><td>Let x be arbitrary</td><td>new variable for subproof</td></tr>
+<tr><td>Let(x,P(x)) &nbsp;&nbsp;</td><td>Let x satisfy P(x) &nbsp;&nbsp;</td><td>assumption, with new variable</td></tr>
+</table>
+
+<p>
+Propositional letters e, p, q, r and variables a, b, c, d, t, u, v, w,
+x, y, z are defined.  To define another, f = Letter('f') or s =
+Variable('s').  Variables and Letters can be any length; they need not
+be limited to one character.
+
+<p>
+Functions f, g, h and relations P, Q, R, S are defined.  They can take
+any number of arguments.  To add another, we must define a new class
+that inherits Function or Relation.
+
+<p>
+The <b>dir</b> command prints identifiers available in a session,
+including all the operators, letters, variables, functions and relations.
+
+<hr>
+
+<h3><a name="commands">Commands</h3>
+
+<p>
+These are the functions intended to be used as prover commands.
+Some built-in Python functions are helpful as well:
+<code>dir</code>, <code>help</code>, <code>pprint</code>,
+<code>import</code>.
+
+<dl>
+<dt><code>check_proof(script=[])</code></dt>
+<dd>
+    Check steps in proof script (not a file but an expression).  
+    Pretty-print each step as it is checked.
+    If invalid step found, print error message and return False.
+    If no invalid steps, after last step print nothing more and return True.
+</dd>
+
+<dt><code>checkp(formula_arg, rule, *premises_etc)</code></dt>
+  <dd>
+  Check step and update proof state, pretty-print step, print error
+  </dd>
+
+<dt><code>rapply(rule, *premises_etc)</code></dt>
+<dd>
+  Like checkp but no formula argument. Prover generates formula from rule, premises.
+  For the Ae rule, must also provide a term or variable to substitute for the bound variable: <code>rapply(Ae, 1, x)</code>.
+  For the Ei rule, must also provide a dictionary that shows how to replace the term (key) with the bound variable (value):
+  <code>rapply(Ei, 1, {x:v})</code> 
+</dd>
+
+<dt><code>back(n=1)</code></dt>
+  <dd>
+  Back up: delete last n proof steps, just print warning if n bigger than proof
+  </dd>
+
+<dt><code>backa()</code></dt>
+  <dd>
+  Back up past assumption: delete proof steps back through latest assumption
+  </dd>
+
+<dt><code>clear()</code></dt>
+  <dd>
+  Start over, remove all proof steps
+  </dd>
+
+<dt><code>rules()</code></dt>
+  <dd>
+  Print all rules: short name, premises, and conclusion.
+  Does not show subproof structure of rules.
+  </dd>
+
+<dt><code>apropos(op)</code></dt>
+  <dd>
+  Print rules where op (operator) is main connective in premise or conclusion.
+  Does not show subproof structure.
+  </dd>
+
+<dt><code>state()</code></dt> 
+  <dd>
+  Print entire proof state, list of steps as tuples
+  </dd>
+
+<dt><code>pp()</code></dt>
+  <dd>
+  Print proof in Kaye's format ("pretty print")
+  </dd>
+
+<dt><code>ptree(index=len(steps)-1, indent=0)</code></dt>
+  <dd>
+  Print proof steps as tree with conclusion at top, premises indented below.
+  Root of tree is step at index, start with given indent (n of spaces).
+  Default prints whole proof.
+  </dd>
+
+<dt><code>save(name)</code></dt>
+  <dd>
+  Save current proof state in file. name is module name, not file name.
+  </dd
+
+</dl>
+
+</pre>
+
+
+<p>
+The <b>dir</b> command prints identifiers available in a session,
+including all the command names.
+
+<hr>
+
+<h3><a name="errors">Error messages</h3>
+
+<p>
+These are the error messages printed by the checker.  Syntax error
+messages are printed by the the Python interpreter.
+
+<p>
+Errors in formula constructor arguments:
+
+<pre>
+argument %s is not a string
+%s requires %d arguments, found %d
+%s argument %d, %s is %s, must be %s
+path %s does not match [01]*$
+</pre>
+
+<p>
+Errors in command arguments:
+
+<pre>
+%s is %s, must be Formula
+cannot apply %s rule, must provide formula
+apply command requires argument: term or variable
+apply command requires argument: {term:variable}
+</pre>
+
+<p>
+Errors in premises:
+
+<pre>
+requires %d premises, found %d
+no line %d for premise at index %d
+premise at index %d, line %d not in scope
+premise at index %d, line %d not an assumption
+premise at index %d, line %d not in same scope as assumption
+assumption at index %d, line %d not in scope for discharging rule
+</pre>
+
+<p>
+Errors in free or bound variables:
+
+<pre>
+%s term %s includes bound variable in %s
+variable %s already appears free in proof among %s
+</pre>
+
+<p>
+Errors matching premises and formula to inference rule:
+
+<pre>
+%s does not match %s with %s
+not all occurrences substituted the same way %s
+</pre>
+
+<hr>
+
+
+<h3><a name="refs">Bibliography</h3>
+
+<p>
+The Flip logics are based on logics in these books:
+
+<p>
+Kaye, <em>The Mathematics of Logic</em><br>
+<a href="http://web.mat.bham.ac.uk/R.W.Kaye/logic/">
+<tt>http://web.mat.bham.ac.uk/R.W.Kaye/logic/</tt></a>
+
+<p>
+Huth and Ryan, <em>Logic in Computer Science</em><br>
+<a href="http://www.cs.bham.ac.uk/research/projects/lics/">
+<tt>http://www.cs.bham.ac.uk/research/projects/lics/</tt></a>
+
+<p>
+Bornat, <em>Proof and Disproof in Formal Logic</em><br>
+<a href="http://www.oup.com/uk/catalogue/?ci=9780198530275">
+<tt>http://www.oup.com/uk/catalogue/?ci=9780198530275</tt></a>
+
+
+<hr>
+
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<a href="userguide-nd.html">User's guide</a> &nbsp;
+<a href="reference-nd.html">Reference</a> &nbsp;
+<a href="logics.html">Logics</a> &nbsp;
+<a href="../code">Code</a> &nbsp;
+<a href="../test">Tests</a> &nbsp;
+<a href="../notes">Notes</a>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<html>
+<head>
+<title>Defining logics in F L i P</title>
+</head>
+
+<h2>Defining logics in F L i P</h2>
+
+<p>
+<a href="http://staff.washington.edu/jon/">Jonathan Jacky</a>
+
+<p>
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp; 
+<a href="userguide-nd.html">User's guide</a> &nbsp; 
+<a href="reference-nd.html">Reference</a> &nbsp; 
+<!-- <a href="logics.html">Logics</a> &nbsp; --> 
+<a href="../code">Code</a> &nbsp; 
+<a href="../test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a>
+</p>
+
+<p>
+<a href="index.html"><b>Flip</b></a> is a
+logical framework written in Python.  Flip is called a framework
+because it supports different logics and is extensible.  We can add
+another logic to Flip, or add axioms and derived rules, by writing a
+module in Python.  It is not necessary to know a great deal about
+Python to add a logic to Flip.  Just follow the directions here and
+imitate the logics already provided.
+
+<p>
+The logics included with Flip are listed in the <a
+href="reference-nd.html#logics">reference</a>.  The <a
+href="userguide-nd.html">user's guide</a> shows how a logic can be 
+used in proof.
+
+<p>
+A logic module defines a language for writing formulas, and
+inference rules for deriving new formulas from given formulas.  
+Other modules integrate the logic with the proof checker.
+
+<p>
+<a href="#language">Language</a>
+<a href="#rules">Inference rules</a>
+<a href="#modules">Modular structure</a>
+</p>
+
+<hr>
+
+<h3><a name="language">Language</h3>
+
+<p>
+A logic module can define a language for writing formulas.  
+
+<p>
+To define operators or other formula types, define formula classes in
+the module.
+
+<p>
+In Flip, every formula and subformula is an instance of a class. In
+particular, there is a class for each logical operator.  For example,
+consider the formula And(p,Or(q,r)).  Here And is a class.  This whole
+formula is an instance of the And class; in fact, it is the
+constructor expression for that instance.  Here also, Or is a class,
+the subformula Or(q,r) is an instance of the Or class, and p, q, and r
+are instances of the Letter class.
+
+<p>
+We define a language for a logic by defining a class for each kind of
+formula or subformula that can occur.  For example, here is the 
+definition of the class And:
+
+<pre>
+class And(InfixLogical):
+  """
+  And(a,b) means a & b in Kaye. Capitalize And, distinguish from Python keyword
+  """
+  def __init__(self, *args):
+    InfixLogical.__init__(self, *args)
+    self.symbol = '&'
+</pre>
+
+<p>
+This is the entire class definition.  Most of its work is done in the
+base class InfixLogical.  We usually define classes by subclassing
+base classes from the formula module, especially these:
+
+<p>
+Function, Relation, InfixRelation, PrefixLogical, InfixLogical, Quantifier
+
+<hr>
+
+<h3><a name="rules">Inference rules</h3>
+
+<p>
+A logic module can define inference rules for deriving new formulas
+from given formulas.  
+
+<p>
+To define rules, put a dictionary named _rules in the module.  Each rule
+is an entry in this dictionary, where the key is the rule name and the
+value is the rule itself.
+
+<p>
+In Flip, every inference rule is a list of formulas, with the premises
+first and the conclusion last.  The formulas in an inference rule may
+contain placeholders that can be matched against formulas from a
+proof.  For example, here is the dictionary entry for a simple
+inference rule, And-Introduction (which we abbreviate ai):
+
+<p>
+<pre>
+  ai :  [ m1, m2, And(m1,m2) ]
+</pre>
+
+<p>
+This rule says that from premises m1 and m2, we can conclude
+And(m1,m2).  The premises m1 and m2 are placeholders that match any
+formula, and the conclusion And(m1,m2) uses these placeholders.  When
+a proof is checked, m1 and m2 are bound to the actual premises cited
+in the proof, and the conclusion in the proof is checked against And(m1,m2)
+with those bindings for m1 and m2 substituted in their places.
+
+<p>
+An axiom is just an inference rule with no premises.  For example,
+Reflexivity (of Equality, refl) is an axiom:
+
+<pre>
+  refl :  [ Equal(t1,t1) ]
+</pre>
+
+<p>
+Here is a rule that uses a subproof. Implication-Introduction (impli):
+
+<pre>
+  impli :  [[ m1, m2], Impl(m1,m2) ]
+</pre>
+
+<p>
+This rule says we need a subproof with premise m1 and conclusion m2.
+From that subproof, we can conclude the implication Impl(m1,m2).
+Notice how the subproof is indicated by a nested list.
+
+<p>
+Here is a rule that illustrates substitution, named Substitution (sub):
+
+<pre>
+  sub :  [ Equal(t1,s1), S1(t1), S1({t1:s1}) ]
+</pre>
+
+<p>
+From the premise Equal(t1,s1), and from another premise S1 possibly
+containing the term t1, we can conclude S1 where zero or more
+occurrences of t1 have been replaced by the term s1.  The placeholder
+S1 indicates a formula where optional substitutions may be performed.
+The substitution is described here by a Python dictionary with a
+single key t1 (the source of the substitution) associated with value
+s1 (the replacement).
+
+<p>
+Here is a rule that has a subproof with
+substitutions. Exists-Elimination (Ee):
+
+<pre>
+  Ee :  [ E(v1, P1(v1)), [Let(v2,P1({v1:v2})), Q1({v2:None})], Q1({v2:None}) ]
+</pre>
+
+<p>
+This rule describes how to eliminate the existential quantifier that
+appears in E(v1, P1(v1)).  We need a subproof that begins with the
+formula P1 from the body of the quantifier, where all occurrences of
+the bound variable v1 are replaced by the new free variable v2.  The
+Let formula introduces the new variable, and the placeholder P1
+indicates a formula where the substitution must be performed on every
+occurrence.  The subproof concludes with the placeholder
+Q1({v2:None}), which indicates a formula where the variable v2 does
+not occur free.  From this subproof, we can conclude the formula Q1.
+
+<p>
+Much of the information in the inference rules is carried by the
+placeholders.  Flip defines these placeholders.  Each placeholder (on
+the left) matches an instance of the class (on the right) that
+satisfies the given condition.
+
+<p>
+<table>
+<tr><td>m1, m2</td><td>Formula</td></tr>
+<tr><td>v1, v2</td><td>Variable</td></tr> 
+<tr><td>t1, t2, s1</td><td>Term (including Variable)</td></tr> 
+<tr><td>S1(t1)</td><td>Formula, may contain term t1</td></tr>
+<tr><td>S1({t1:s1})</td> <td>Formula, where
+ <em>some</em> (zero or more) occurrences of t1 <em>may</em> be replaced by term s1</td></tr>
+<tr><td>P1(t1)</td><td>Formula, may contain t1</td></tr>
+<tr><td>P1({t1:s1})</td><td>Formula, where 
+  <em>all</em> occurrences of t1 <em>must</em> be replaced by s1</td></tr>
+<tr><td>Q1({v2:None}) &nbsp;&nbsp;</td><td>Formula, where 
+   variable v2 does <em>not</em> occur free</td></tr> 
+</table>
+
+<p>
+In the S1 and P1 patterns, the source, replacement, or both can be
+restricted to variables by {v1:t1}, {t1:v1}, or {v1:v2}.  Flip checks
+side conditions on substitution: neither the source nor the
+replacement can contain a variable that is bound in the scope where the
+substitution occurs.
+
+<p>
+Flip checks additional side conditions when variable placeholders
+occur in these formulas:
+
+<p>
+<table>
+<tr><td>New(v1)</td>
+  <td>Variable v1 must not already appear free in the proof <td></td><tr>
+<tr><td>Let(v1, P1(v1)) &nbsp;&nbsp;</td>
+   <td>v1 must not already appear free<td></td><tr>
+</table>
+
+<hr>
+
+<h3><a name="modules">Modular structure</h3>
+
+<p>
+A logic module is a Python module that contains formula class
+definitions and/or inference rules.  To use a logic in proofs,
+we must also provide a configuration module that loads the logic into
+the checker, and a session module that makes its identifiers available
+in a proof session.
+
+<p>
+Imitate existing modules.  Compare fol_session, prop_session, and
+prop_constructive_session.  Then compare the configuration modules
+they import.
+
+<p>
+The classes and rules used in a single proof session are usually
+divided among several logic modules.  This allows different logics to
+be configured without duplication.  For example, prop_session imports
+from prop_classic and prop_common, while prop_constructive_session
+imports from prop_constructive and prop_common.  The fol_session
+module imports from fol, prop_classic, and prop_common.
+
+<p>
+Some logic modules define inference rules but no formula classes; they
+just use operators defined elsewhere.  This is the usual way to add
+axioms and derived rules.  For example, prop_classic,
+prop_constructive, and prop_derived each define different inference
+rules, but they all use the operators defined in prop_common.
+
+<hr>
+
+<a href="index.html">F L i P Home</a> &nbsp;
+<a href="download.html">Download</a> &nbsp;
+<a href="userguide-nd.html">User's guide</a> &nbsp;
+<a href="reference-nd.html">Reference</a> &nbsp;
+<a href="logics.html">Logics</a> &nbsp;
+<a href="../code">Code</a> &nbsp;
+<a href="../test">Tests</a> &nbsp;
+<a href="../notes">Notes</a>
+
+</body>
+</html>

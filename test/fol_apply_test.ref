@@ -1,0 +1,239 @@
+From example 9.17         (0)  Comment
+~R(a)                     (1)  Given
+a = x                     (2)  Given
+Apply()                   (3)  Substitution (2) (1)
+True
+
+From example 9.17         (0)  Comment
+~R(a)                     (1)  Given
+a = x                     (2)  Given
+~R(x)                     (3)  Substitution (2) (1)
+
+Like ex, 9.17 but substitution term is more complex  (0)  Comment
+~R(a)                     (1)  Given
+a = f(x,g(x,y))           (2)  Given
+~R(f(x,g(x,y)))           (3)  Substitution (2) (1)
+
+like ex. 9.17, but eqn does not match premise, so no substitution  (0)  Comment
+~R(a)                     (1)  Given
+b = x                     (2)  Given
+~R(a)                     (3)  Substitution (2) (1)
+
+Valid E-elim, Kaye ex. 9.14, Ax.~P(x) |- ~Ex.P(x)  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(a)                   (4)  A-Elimination (1), with a
+||F                       (5)  Contradiction (3) (4)
+|F                        (6)  E-Elimination (2) (3) (5)
+~Ex.P(x)                  (7)  Reductio Ad Absurdum (2) (6)
+
+Erroneous ex. 9.14, fail at A-elim, omit term  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||Apply()                 (4)  A-Elimination (1)
+Fail: apply command requires argument: term or variable
+||Apply()                 (4)  Contradiction (3) (4)
+Fail: no line 4 for premise at index 1
+||Apply()                 (4)  E-Elimination (2) (3) (5)
+Fail: no line 5 for premise at index 2
+||Apply()                 (4)  Reductio Ad Absurdum (2) (6)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+
+Erroneous 9.14, wrong term in Ae, fail at contra  (0)  Comment
+Ax.~P(x)                  (1)  Given
+|Ex.P(x)                  (2)  Assumption
+||Let a satisfy P(a)      (3)  Assumption, with new variable
+||~P(b)                   (4)  A-Elimination (1), with b
+||Apply()                 (5)  Contradiction (3) (4)
+Fail: ~P(b) does not match ~m1 with { m1:Let a satisfy P(a) }
+||Apply()                 (5)  E-Elimination (2) (3) (5)
+Fail: no line 5 for premise at index 2
+||Apply()                 (5)  Reductio Ad Absurdum (2) (6)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+
+A-elim from Kaye ex 9.10  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Ev.(v = w)                (2)  A-Elimination (1), with w
+
+A-elim like Kaye ex 9.10, but same term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Ev.(v = x)                (2)  A-Elimination (1), with x
+
+A-elim like Kaye ex 9.10, but more complicated term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Ev.(v = f(x,g(x,y)))      (2)  A-Elimination (1), with f(x,g(x,y))
+
+A-elim like Kaye ex 9.10, but missing term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Apply()                   (2)  A-Elimination (1)
+Fail: apply command requires argument: term or variable
+
+A-elim like Kaye ex 9.10, but number instead of term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Apply()                   (2)  A-Elimination (1) (2)
+Fail: requires 1 premises, found 2
+
+A-elim like Kaye ex 9.10, but string instead of term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Apply()                   (2)  A-Elimination (1), with w
+Fail: apply command requires argument: term or variable
+
+A-elim like Kaye ex 9.10, but dictionary instead of term  (0)  Comment
+Ax.Ev.(v = x)             (1)  Given
+Apply()                   (2)  A-Elimination (1), with { x:v }
+Fail: apply command requires argument: term or variable
+
+P(t), Ax.(P(x) -> ~Q(x)) |- ~Q(t) using Ae from H&R p. 111  (0)  Comment
+P(t)                      (1)  Given
+Ax.(P(x) -> ~Q(x))        (2)  Given
+P(t) -> ~Q(t)             (3)  A-Elimination (2), with t
+~Q(t)                     (4)  Implication-Elimination (Modus Ponens) (3) (1)
+
+P(x), Ax.(P(x) -> ~Q(x)) |- ~Q(x) same term  (0)  Comment
+P(x)                      (1)  Given
+Ax.(P(x) -> ~Q(x))        (2)  Given
+P(x) -> ~Q(x)             (3)  A-Elimination (2), with x
+~Q(x)                     (4)  Implication-Elimination (Modus Ponens) (3) (1)
+
+P(...), Ax.(P(x) -> ~Q(x)) |- ~Q(...) more complex term  (0)  Comment
+P(f(x,g(x,y)))            (1)  Given
+Ax.(P(x) -> ~Q(x))        (2)  Given
+P(f(x,g(x,y))) -> ~Q(f(x,g(x,y)))  (3)  A-Elimination (2), with f(x,g(x,y))
+~Q(f(x,g(x,y)))           (4)  Implication-Elimination (Modus Ponens) (3) (1)
+
+Ax.P(x) -> Ex.P(x) using Ae, Ei from H&R p. 114  (0)  Comment
+Ax.P(x)                   (1)  Given
+P(x)                      (2)  A-Elimination (1), with x
+Ex.P(x)                   (3)  E-Introduction (2), with { x:x }
+
+Ax.P(x) -> Ey.P(y) but with more complicated intermediate term  (0)  Comment
+Ax.P(x)                   (1)  Given
+P(f(x,g(x,y)))            (2)  A-Elimination (1), with f(x,g(x,y))
+Ey.P(y)                   (3)  E-Introduction (2), with { f(x,g(x,y)):y }
+
+E-intro, Kaye ex 9.10, except here substitute all occurrences of bound variable  (0)  Comment
+x = x                     (1)  Reflexivity
+Ev.(v = v)                (2)  E-Introduction (1), with { x:v }
+
+E-intro, Kaye ex 9.10, except here substitute with more complicated term  (0)  Comment
+f(x,g(x,y)) = z           (1)  Given
+Ev.(v = z)                (2)  E-Introduction (1), with { f(x,g(x,y)):v }
+
+Erroneous E-intro, like Kaye ex 9.10, term not dict given  (0)  Comment
+x = x                     (1)  Reflexivity
+Apply()                   (2)  E-Introduction (1), with x
+Fail: apply command requires argument: {term:variable}
+
+Erroneous E-intro, like Kaye ex 9.10, term and variable reversed  (0)  Comment
+x = x                     (1)  Reflexivity
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1), with { v:f(x,g(x,y)) }
+Fail: apply command requires argument: {term:variable}
+
+Erroneous E-intro, like Kaye ex 9.10, number not variable given  (0)  Comment
+x = x                     (1)  Reflexivity
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1), with {<fol.f object at 0x01B19FB0>: 1}
+Fail: apply command requires argument: {term:variable}
+
+Erroneous E-intro, like Kaye ex 9.10, string not variable given  (0)  Comment
+x = x                     (1)  Reflexivity
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1), with {<fol.f object at 0x01B19FB0>: 'v'}
+Fail: apply command requires argument: {term:variable}
+
+Valid A-intro, Kaye ex. 9.12, ~Ax.P(x) |- Ex.~P(x)  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8)
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+
+Erroneous Kaye ex. 9.12, replace contra rule with ai, fail at following raa  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||Ex.~P(x) & ~Ex.~P(x)   (6)  And-Introduction (5) (2)
+|||Apply()                (7)  Reductio Ad Absurdum (4) (6)
+Fail: Ex.~P(x) & ~Ex.~P(x) does not match F with { m1:~P(x) }
+|||Apply()                (7)  Not-Elimination (7)
+Fail: no line 7 for premise at index 0
+|||Apply()                (7)  A-Introduction (3) (8)
+Fail: assumption at index 0, line 3 not in scope for discharging rule
+|||Apply()                (7)  Contradiction (9) (1)
+Fail: no line 9 for premise at index 0
+|||Apply()                (7)  Reductio Ad Absurdum (2) (10)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+|||Apply()                (7)  Not-Elimination (11)
+Fail: no line 11 for premise at index 0
+
+Erroneous Kaye ex. 9.12, replace contra rule with ael, takes 1 not 2 premises  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||Apply()                (6)  And-Elimination (Left) (5) (2)
+Fail: requires 1 premises, found 2
+|||Apply()                (6)  Reductio Ad Absurdum (4) (6)
+Fail: no line 6 for premise at index 1
+|||Apply()                (6)  Not-Elimination (7)
+Fail: no line 7 for premise at index 0
+|||Apply()                (6)  A-Introduction (3) (8)
+Fail: assumption at index 0, line 3 not in scope for discharging rule
+|||Apply()                (6)  Contradiction (9) (1)
+Fail: no line 9 for premise at index 0
+|||Apply()                (6)  Reductio Ad Absurdum (2) (10)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+|||Apply()                (6)  Not-Elimination (11)
+Fail: no line 11 for premise at index 0
+
+Erroneous Kaye ex. 9.12, replace Ai rule with Ae, change to 1 not 2 premises  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+||Apply()                 (9)  A-Elimination (3)
+Fail: Let x be arbitrary does not match Av1.P1 with {  }
+||Apply()                 (9)  Contradiction (9) (1)
+Fail: no line 9 for premise at index 0
+||Apply()                 (9)  Reductio Ad Absurdum (2) (10)
+Fail: assumption at index 0, line 2 not in scope for discharging rule
+||Apply()                 (9)  Not-Elimination (11)
+Fail: no line 11 for premise at index 0
+
+Kaye ex. 9.12 but with unnecessary otherdata x in Ai step  (0)  Comment
+~Ax.P(x)                  (1)  Given
+|~Ex.~P(x)                (2)  Assumption
+||Let x be arbitrary      (3)  New variable for subproof
+|||~P(x)                  (4)  Assumption
+|||Ex.~P(x)               (5)  E-Introduction (4), with { x:x }
+|||F                      (6)  Contradiction (5) (2)
+||~~P(x)                  (7)  Reductio Ad Absurdum (4) (6)
+||P(x)                    (8)  Not-Elimination (7)
+|Ax.P(x)                  (9)  A-Introduction (3) (8), with x
+|F                       (10)  Contradiction (9) (1)
+~~Ex.~P(x)               (11)  Reductio Ad Absurdum (2) (10)
+Ex.~P(x)                 (12)  Not-Elimination (11)
+
+Erroneous E-intro, like Kaye ex 9.10, missing {t1:v1}  (0)  Comment
+x = x                     (1)  Reflexivity
+f(x,g(x,y)) = z           (2)  Given
+Apply()                   (3)  E-Introduction (1)
+Fail: apply command requires argument: {term:variable}
+
