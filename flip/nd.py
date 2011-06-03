@@ -172,6 +172,22 @@ def check_rule(rule, premises, rule_type, otherdata):  # formula is global
       return other_errors[0] # for now there is just one string in list
   return '' # success
 
+# Utilities for adding rules etc. from logic modules, called by session modules
+
+def add_rule_names(*rule_names):
+    for ns in rule_names:
+        logic.rule_names.update(ns)
+
+def add_rules(*rules):
+    for rs in rules:
+        logic.rules.update(rs)
+    logic.frules = dict([(n, flotten(r)) for (n,r) in logic.rules.items()])
+
+# used by save function
+
+def add_imports(*imports):
+    for ims in imports:
+        logic.imports += "\n%s" % ims
 
 # Utilities for proof state, rule representation
 
