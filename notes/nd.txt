@@ -149,10 +149,9 @@ rebound in the body of check_rule.
 Integration, modular structure
 
 The nd module works with different logics, but imports none of them.
-A proof session does not import the nd module directly.  Instead, it
-imports a session module, which imports a config module, which imports
-nd and also one or more logic modules as well.  See design.txt for
-details.
+A proof session does not execute the nd module directly.  Instead, it
+executes a session module, which imports nd and also one or more logic
+modules as well.  See design.txt for details.
 
 
 Alternatives
