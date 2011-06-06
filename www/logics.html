@@ -222,14 +222,13 @@ occur in these formulas:
 
 <p>
 A logic module is a Python module that contains formula class
-definitions and/or inference rules.  To use a logic in proofs,
-we must also provide a configuration module that loads the logic into
-the checker, and a session module that makes its identifiers available
-in a proof session.
+definitions and/or inference rules.  To use a logic in proofs, we must
+also provide a session module that loads the logic into the checker
+and makes its identifiers available in a proof session.
 
 <p>
 Imitate existing modules.  Compare fol_session, prop_session, and
-prop_constructive_session.  Then compare the configuration modules
+prop_constructive_session.  Then compare the session modules
 they import.
 
 <p>
