@@ -51,6 +51,10 @@ one or more logic modules.  In order for this to work, the nd module
 matching and substitution) cannot depend on any logic modules;
 especially, they cannot mention any particular rules.  In Python, this
 means that the nd and formula modules cannot import any logic modules.
+Instead, we provide session modules (one for each logic) which import
+the nd module and also import the logic modules.  The session module
+passes the rules from the logic modules to the nd module by calling a
+function add_rules provided by the session module.
 
 The nd module has attributes and function arguments named "formula"
 and "rule", but cannot refer to particular logical operators or rules.
