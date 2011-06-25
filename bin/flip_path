@@ -1,0 +1,3 @@
+# Possibly change FLIP_DIR
+export FLIP_DIR=~/FLiP-1.1
+export PYTHONPATH=$FLIP_DIR/flip/logic:$FLIP_DIR/flip/test:$FLIP_DIR/flip/witch:$PYTHONPATH
