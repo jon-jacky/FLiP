@@ -3,7 +3,7 @@ Vocabulary used by villagers
 in "She's a witch!" from Monty Pyton and the Holy Grail
 """
 
-from formula import Variable, Function, Relation
+from flip.logic.formula import Variable, Function, Relation
 
 # variables
 
