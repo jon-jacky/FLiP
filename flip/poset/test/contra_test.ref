@@ -1,0 +1,46 @@
+Contradiction rule        (0)  Comment
+a < b                     (1)  Given
+a /< b                    (2)  Given
+F                         (3)  Contradiction (1) (2)
+True
+Contradiction rule, reversed premise order, indices also  (0)  Comment
+a /< b                    (1)  Given
+a < b                     (2)  Given
+F                         (3)  Contradiction (2) (1)
+True
+Contradiction rule, reversed premise order, but not indices  (0)  Comment
+a /< b                    (1)  Given
+a < b                     (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a /< b does not match v1 < v2 with {  }
+False
+Contradiction, first premise not <  (0)  Comment
+a /< b                    (1)  Given
+a /< b                    (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a /< b does not match v1 < v2 with {  }
+False
+Contradiction, second premise not /<  (0)  Comment
+a < b                     (1)  Given
+a < b                     (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a < b does not match v1 /< v2 with { v1:a, v2:b }
+False
+Contradiction, conclusion not F  (0)  Comment
+a < b                     (1)  Given
+a /< b                    (2)  Given
+c < d                     (3)  Contradiction (1) (2)
+Fail: c < d does not match F with { v1:a, v2:b }
+False
+Contradiction, left arguments don't match  (0)  Comment
+a < b                     (1)  Given
+c /< b                    (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: c /< b does not match v1 /< v2 with { v1:a, v2:b }
+False
+Contradiction, right  arguments don't match  (0)  Comment
+a < b                     (1)  Given
+a /< c                    (2)  Given
+F                         (3)  Contradiction (1) (2)
+Fail: a /< c does not match v1 /< v2 with { v1:a, v2:b }
+False
