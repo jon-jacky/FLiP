@@ -1,1 +1,0 @@
-set PYTHONPATH=..\flip;%PYTHONPATH%
