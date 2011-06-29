@@ -1,1 +1,1 @@
-export PYTHONPATH=../flip:$PYTHONPATH
+export PYTHONPATH=../logic:$PYTHONPATH

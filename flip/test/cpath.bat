@@ -1,1 +1,1 @@
-set PYTHONPATH=..\flip;%PYTHONPATH%
+set PYTHONPATH=..\logic;%PYTHONPATH%
