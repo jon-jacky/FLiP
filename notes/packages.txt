@@ -1,0 +1,16 @@
+FLiP package organization
+
+FLiP 1.2 organizes the modules (.py source files) into Python packages
+(directories that contain an __init__.py file).  Previous versions did
+not use packages.  Packages provide several advantages.  They make it
+convenient to use FLiP from outside its own development directories,
+and add case studies and logics outside those directories.  This makes
+it convenient to install FLiP in the usual installation directories
+(site-packages or dist-packages or ...), rather then run it right out
+of the unpacked distribution.  Packages (along with installation)
+remove or very much reduce the need to manipulate PYTHONPATH in order
+to use FLiP.  Packages also encourage simpler module names (session.py
+and contradiction.py instead of poset_session.py and contra_test.py.
+
+...
+

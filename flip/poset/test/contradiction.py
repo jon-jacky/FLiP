@@ -1,4 +1,4 @@
-from poset.poset_session import *  
+from poset.session import *  
 
 
 contra_ok1 = \

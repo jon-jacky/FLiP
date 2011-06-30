@@ -1,2 +1,3 @@
-source plogdiff poset_test
-source plogdiff contra_test
+source plogdiff exercises
+source plogdiff contradiction
+
