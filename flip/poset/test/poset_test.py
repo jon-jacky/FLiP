@@ -2,7 +2,7 @@
 poset tests from Kaye ex. 4.2, 4.3 p. 40
 """
 
-from poset_session import *
+from poset.poset_session import *
 
 ex42 = \
   [(Text('Kaye ex. 4.2, p 40'), comment),

@@ -1,31 +1,42 @@
 README.txt for poset/test
 
-This directory demonstrates the recommended way to organize tests for
-new logic packages in FLiP: put the tests in a package (subdirectory
-with an __init__.py file) under the logic package to be tested.
+This directory contains tests for the FLiP poset logic.  It
+demonstrates the recommended way to organize tests for logic packages
+in FLiP.
 
-The python modules in this directory are for testing the poset
-package.  They belong to the test package, which belongs to the poset
-package.  
+Put all the tests for a given logic package in their own separate
+package (directory containing an __init__.py module).  In each test
+module, import the session module for the logic package to be tested
+using the form import <package>.<module>.  The modules here test the
+modules in the poset package.  They contain: 
+  import poset.poset_session
 
-Here are two ways to execute the test scripts in this directory:
+Then, to run the tests, put the directory containing the package to be
+tested on PYTHONPATH.  To run the tests in this directory, put the
+directory containing the poset package on PYTHONPATH.
 
-The simplest way is from the poset directory (the directory above this
-one, that contains the test package): python -m test.poset_test
+If these conditions are satisfied, the test package can go anywhere.
+It is recommended (but not necessary) that the test package go in the
+logic package to be tested (in logic package directory).  For example,
+this test directory is in the poset directory, it is poset/test.  This
+is consistent with typical Python practice for unit tests.
 
-Alternatively, to execute tests from this test directory, put the
-parent directory .. on PYTHONPATH (for example by executing the
-parent_path command, it's in FLiP/bin).  Then: python poset_test.py.
-Also: with .. on the PYTHONPATH, python -m test.poset_test works here
-too.
+To execute test modules from within this directory: python poset_test.py.  
+To execute test modules from elsewhere, use the Python -m option and
+the test package name, as long as the test package is in a directory
+on PYTHONPATH.  For example, if the test package is in the poset
+package (as it is here), in the poset package directory:
+ python -m test.poset_test
 
-To do regression testing using the plogdiff or the all_test commands
-(in the FLiP/bin directory, described in FLiP/notes/test.txt) you must
-execute the commands from this directory, and the parent directory
-.. must be on the PYTHONPATH.
+To do regression testing using the plogdiff command (in the FLiP/bin
+directory, described in FLiP/notes/test.txt) you must execute the
+test modules from this directory, because the .ref files are here.
+
+To execute several test modules with one command, invoke the all_test
+shell script in this directory.
 
 (The flip/test directory contains tests for all the logic packages
 under flip/logic.  That organization was used for logic modules and
-tests created for FLiP version 1.0 and is not recommended for new
+tests created for FLiP version 1.0.  It is not recommended for new
 logic packages and their tests. It is intended that no more tests or
 logic modules be added to those directories.)
