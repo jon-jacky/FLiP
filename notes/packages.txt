@@ -40,3 +40,49 @@ logic:
 
 Also, this package contains its own test package flip.poset.test.  
 See the README.txt files in those packages for details.
+
+This is the directory organization of FLiP-1.2.  Each directory that
+contains an __init__.py module is a package.  All of the __init__.py
+modules are empty.
+
+  FLiP-1.2/
+    README.txt
+    setup.py
+    ...
+    bin/
+      plogdiff
+      ...
+    notes/
+      packages.txt
+      ...
+    www/
+      download.html
+      ...
+    flip/
+      __init__.py
+      logic/
+         __init__.py
+         nd.py
+         formula.py
+         fol.py
+         fol_session.py
+         ...
+       test/
+         __init__.py
+         fol_test.py
+         fol_test.ref
+         ...
+       grail/
+         __init__.py
+         witch.py
+         ...
+       poset/
+         __init__.py
+         poset.py
+         session.py
+         test/
+           __init__.py
+           exercises.py
+           ...
+
+
