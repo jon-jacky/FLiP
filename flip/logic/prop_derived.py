@@ -54,4 +54,4 @@ _rules = { assume_case:  [[],[ m1 ]],  # subproof, replace top assumption
 
 # Import statement to write to save file, so it in turn can be imported 
 
-_imports = 'from prop_derived import *'
+_imports = 'from flip.logic.prop_derived import *'

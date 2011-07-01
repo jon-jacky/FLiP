@@ -109,4 +109,4 @@ _rules = { lengthen0: [  x, x0(x) ],
 
 # Import statement to write to save file, so it in turn can be imported 
 
-_imports = 'from tree import *'
+_imports = 'from flip.logic.tree import *'

@@ -98,4 +98,4 @@ _rules = { assume: [[ m1 ]],  # subproof, assumer
 a,b,c,d,e,f,p,q,r,t = map(Letter, 'abcdefpqrt')    # a.name = 'a' etc.
 
 # Import statement to write to save file, so it in turn can be imported 
-_imports = 'from prop_common import *'
+_imports = 'from flip.logic.prop_common import *'

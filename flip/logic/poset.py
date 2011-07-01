@@ -60,4 +60,4 @@ _rules = { assume: [[ m1 ]],  # subproof, assumer
 a,b,c,d = map(Variable, 'abcd')    # a.name = 'a' etc.
 
 # Import statement to write to save file, so it in turn can be imported 
-_imports = 'from poset import *'
+_imports = 'from flip.logic.poset import *'

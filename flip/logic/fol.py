@@ -157,4 +157,4 @@ e,p,q,r = map(Letter, 'epqr')
 
 # Import statement to write to save file, so it in turn can be imported 
 
-_imports = 'from fol import *'
+_imports = 'from flip.logic.fol import *'

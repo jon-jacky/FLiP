@@ -47,4 +47,4 @@ rules = {
           
 # Import statement to write to save file, so it in turn can be imported 
 
-imports = 'from common import *' 
+imports = 'from flip.logic.common import *' 

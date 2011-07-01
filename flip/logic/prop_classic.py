@@ -40,4 +40,4 @@ _rules = { oel:    [ Or(m1,m2), Not(m1), m2 ],
 
 # Import statement to write to save file, so it in turn can be imported 
 
-_imports = 'from prop_classic import *'
+_imports = 'from flip.logic.prop_classic import *'

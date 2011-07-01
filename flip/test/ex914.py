@@ -1,7 +1,7 @@
-from common import *
-from prop_common import *
-from prop_classic import *
-from fol import *
+from flip.logic.common import *
+from flip.logic.prop_common import *
+from flip.logic.prop_classic import *
+from flip.logic.fol import *
 
 ex914 = \
   [(Text('Valid E-elim, Kaye ex. 9.14, Ax.~P(x) |- ~Ex.P(x)'), comment),
