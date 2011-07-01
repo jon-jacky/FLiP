@@ -34,7 +34,7 @@ test modules from this directory, because the .ref files are here.
 
 To execute several test modules with one command, invoke the all_test
 shell script in this directory.
-  all_test
+  ./all_test
 
 (The flip/test directory contains tests for all the logic packages
 under flip/logic.  That organization was used for logic modules and

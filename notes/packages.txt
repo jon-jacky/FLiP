@@ -4,13 +4,39 @@ FLiP 1.2 organizes the modules (.py source files) into Python packages
 (directories that contain an __init__.py file).  Previous versions did
 not use packages.  Packages provide several advantages.  They make it
 convenient to use FLiP from outside its own development directories,
-and add case studies and logics outside those directories.  This makes
-it convenient to install FLiP in the usual installation directories
-(site-packages or dist-packages or ...), rather then run it right out
-of the unpacked distribution.  Packages (along with installation)
-remove or very much reduce the need to manipulate PYTHONPATH in order
-to use FLiP.  Packages also encourage simpler module names (session.py
-and contradiction.py instead of poset_session.py and contra_test.py.
+and to add case studies and define logics outside those directories.
+This makes it convenient to install FLiP in the usual installation
+directories (site-packages or dist-packages or ...), rather then run
+it right out of the unpacked distribution.  Packages (along with
+installation) remove or very much reduce the need to manipulate
+PYTHONPATH in order to use FLiP.  Packages also encourage simpler or
+clearer module names: session.py and contradiction.py instead of
+poset_session.py and contra_test.py.
 
-...
+If you have installed FLiP you can start an interactive proof session
+using first-older logic (fol) in any directory with this command:
+ 
+ python -i -m flip.logic.fol_session
 
+or, name another session module for another logic. This works if the
+directory that contains the flip package is on PYTHONPATH.  Normally,
+installing FLiP achieves this.  See www/download.html.
+
+Of course, you can still do it the old way that doesn't use packages.
+For that, you must run from the FLiP-1.2/flip/logic directory in the
+unpacked distribution and type this command:
+
+ python -i fol_session.py
+
+Most of the FLiP software, including all the logics developed so far,
+is in the flip.logic package and the tests for all of these logics
+are in the flip.test package.  It is recommended that from now on,
+each new logic get its own package.  As an example, this version
+includes a flip.poset package for the logic of Partially Ordered Sets
+from Kaye chapter 4.  To start an interactive proof session in this
+logic:
+
+ python -i -m flip.poset.session
+
+Also, this package contains its own test package flip.poset.test.  
+See the README.txt files in those packages for details.
