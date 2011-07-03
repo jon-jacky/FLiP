@@ -6,12 +6,10 @@ To create or update the FLiP page at PyPI: python setup.py register
 
 To make distribution: python setup.py sdist -v -f --formats=gztar,zip
 
-It is not necessary to install FLiP, just run it from the unpacked
-distribution directories.  In fact, python setup.py install does nothing
-(except install egg-info, text file of metadata).
+To install: python setup.py install
 
-The distribution contents are all specified in MANIFEST.in, not in setup.py
-This ensures that python setup.py install does nothing.
+Most of the distribution contents are all specified in MANIFEST.in,
+not in setup.py.
 """
 
 from distutils.core import setup
@@ -33,6 +31,9 @@ setup(
     license = 'GNU General Public License (GPL)',
 
     keywords = 'logical framework python theorem prover proof checker natural deduction',
+
+    packages = ['flip', 'flip.grail', 'flip.logic', 'flip.poset', 
+                'flip.poset.test', 'flip.test' ],
 
     # from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
