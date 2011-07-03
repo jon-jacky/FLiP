@@ -21,7 +21,7 @@ setup(
     # see http://docs.python.org/distutils/setupscript.html#meta-data
     # also http://docs.python.org/distutils/apiref.html#module-distutils.core
     name = 'FLiP',
-    version = '1.1',
+    version = '1.2',
     author = 'Jonathan Jacky',
     author_email = 'jon@u.washington.edu',
     maintainer = 'Jonathan Jacky',

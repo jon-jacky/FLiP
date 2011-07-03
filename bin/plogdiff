@@ -1,4 +1,5 @@
 #!/bin/bash
+# run regression test on any python command - compare output to saved .ref 
 python $1.py > $1.log
 echo Comparing files $1.log and $1.ref 
 diff -b $1.log $1.ref

@@ -1,4 +1,4 @@
-# change FLIP_DIR to suit
-export FLIP_DIR=~/FLiP
+# Commands to put directory containing flip package on the PYTHONPATH
+# change FLIP_DIR to suit, here it is for unpacked distribution in home dir
+export FLIP_DIR=$HOME/FLiP-1.2
 export PYTHONPATH=$FLIP_DIR:$PYTHONPATH
-
