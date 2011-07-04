@@ -1,0 +1,19 @@
+Future projects for FLiP
+
+Here are some possible future projects to extend FLiP.  These are *not*
+list in order of difficulty, importance, or urgency.
+
+- Add a parser, so we can input formulas as strings in the same format
+  as they are printed, with operator symbols, infix synax, and
+  implicity precedence (optional parentheses).  In the present
+  version, formulas must be entered as Formula constructor expressions
+  with operator names, prefix syntax, and lots of required
+  parentheses.
+
+- Make it easy to store the results of a proof as a derived rule in
+  the database of rules, so it can be used for subsequent proofs in
+  the same interactive session.  In the present version, the only way
+  to add a rule is to add code to a logic module and import it.
+
+- Make it easy to define letters (proposition symbols), variables,
+  relations and functions in an interactive session.
