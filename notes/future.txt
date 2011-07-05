@@ -1,19 +1,38 @@
-Future projects for FLiP
+The future of FLiP
 
-Here are some possible future projects to extend FLiP.  These are *not*
-list in order of difficulty, importance, or urgency.
+Here are some suggestions for projects to extend FLiP.  These are
+largely independent of each other, so the order they appear here does
+not indicate any priority or project plan.
+
+Projects that extend the core of FLiP, and apply to all logics and programs:
 
 - Add a parser, so we can input formulas as strings in the same format
-  as they are printed, with operator symbols, infix synax, and
-  implicity precedence (optional parentheses).  In the present
+  as they are now printed by nd, with operator symbols, infix synax,
+  and implicity precedence (optional parentheses).  In the present
   version, formulas must be entered as Formula constructor expressions
   with operator names, prefix syntax, and lots of required
   parentheses.
 
 - Make it easy to store the results of a proof as a derived rule in
-  the database of rules, so it can be used for subsequent proofs in
-  the same interactive session.  In the present version, the only way
-  to add a rule is to add code to a logic module and import it.
+  the database of rules, so it can be used in subsequent proofs in
+  the same session.  In the present version, the only way to add a
+  rule is to add code to a logic module and import it.
 
-- Make it easy to define letters (proposition symbols), variables,
-  relations and functions in an interactive session.
+- Make it easier to define functions and relations in a session.  In
+  the present verson, the only way to add these is to define classes
+  in a module and import it (as in the grail.villagers module, for
+  example).
+
+- Support automated proof search, or semi-automated proof with tactics.
+
+Projects that add logics or checkers:
+
+- Add more logics: Peano arithmetic including a rule for induction, 
+  sets, lists, etc.
+
+- Revise nd or add another checker to support backward proof from
+  goals to premises (proceeding in the order suggested by the proof
+  format shown by the present ptree command).
+
+- Add another checker eq for equational logic, along with logics that
+  better support this style of reasoning.
