@@ -17,8 +17,9 @@
 <a href="logics.html">Logics</a> &nbsp; 
 <a href="../code">Code</a> &nbsp; 
 <a href="../test">Tests</a> &nbsp; 
-<a href="../notes">Notes</a>
-</p>
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/1.1">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a></p>
 
 <hr>
 
@@ -28,24 +29,51 @@ Python.
 
 <p>
 Download the software and documents as a zip file or compressed tar archive: &nbsp;
-<a href="FLiP-1.1.zip">FLiP-1.1.zip</a> &nbsp; 
-<a href="FLiP-1.1.tar.gz">FLiP-1.1.tar.gz</a>
+<a href="FLiP-1.2.zip">FLiP-1.2.zip</a> &nbsp; 
+<a href="FLiP-1.2.tar.gz">FLiP-1.2.tar.gz</a>
 
 <p>
-Unpacking the archive creates a FLiP-1.1 directory with these subdirectories:
+FLiP is also available at 
+<a href="http://pypi.python.org/pypi/FLiP/1.1">PyPI</a>
+and <a href="https://github.com/jon-jacky/FLiP">GitHub</a>.
+
+<p>
+Unpacking the archive creates a FLiP-1.2 directory with these subdirectories:
 
 <p>
 <table>
-<tr><td>code</td><td>Code, except test modules</td></tr>
+<tr><td>bin</td><td>Shell scripts (and .bat files for Windows)</td></tr>
+<tr><td>flip</td><td>Python code</td></tr>
 <tr><td>notes &nbsp; </td><td>Notes on framework internals and tests</td></tr>
-<tr><td>test</td><td>Test modules, scripts, and output</td></tr>
-<td>witch</td><td>"She's a witch!" proof by Monty Python</td></tr>
 <tr><td>www</td><td>These web pages, including user's guide and reference</td></tr>
 </table>
 
 <p>
-Run Flip right out of the unpacked distribution directories.  No further
-installation is necessary.
+The flip directory is a Python package which includes these
+directories (packages):
+
+<p>
+<table>
+<tr><td>logic &nbsp;</td><td>Core programs and logic modules</td></tr>
+<tr><td>poset </td><td>Sample logic module with tests</td></tr>
+<tr><td>test</td><td>Test modules, scripts, and output</td></tr>
+<td>grail</td><td>"She's a witch!" proof from Monty Python and the Holy Grail</td></tr>
+</table>
+
+
+
+<p>
+You can run FLiP right out of the unpacked distribution directories.
+No further installation is necessary.  It is convenenent to put the
+FLiP-1.2 directory on PYTHONPATH because it contains the flip package.
+Use the flip_path script in the distribution bin directory.
+
+<p>
+Starting with version 1.2, you can also install FLiP using the
+setup.py script in the FLiP-1.2 directory: <tt>python setup.py
+install</tt>.  This usually has the effect of installing the flip
+package in some directory which is on PYTHONPATH, so you needn't do
+anything more to begin using FLiP.
  
 <p>
 To use Flip you must have <a href="http://www.python.org/">Python</a>.
@@ -60,7 +88,7 @@ Flip uses Python 2.x, not 3.x.  Flip has been tested with Python 2.3,
 Flip is covered by the 
 <a href="http://www.gnu.org/copyleft/gpl.html">
 GNU General Public License (GPL)</a>.  
-Code and documents are copyright (C) 2009 Jonathan Jacky.
+Code and documents are copyright (C) 2009, 2010, 2011 Jonathan Jacky.
 
 <hr>
 
@@ -71,7 +99,9 @@ Code and documents are copyright (C) 2009 Jonathan Jacky.
 <a href="logics.html">Logics</a> &nbsp;
 <a href="../code">Code</a> &nbsp;
 <a href="../test">Tests</a> &nbsp; 
-<a href="../notes">Notes</a>
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/1.1">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a>
 
 </body>
 </html>
