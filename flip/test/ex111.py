@@ -1,8 +1,8 @@
-from common import *
-from prop_common import *
-from prop_classic import *
-from prop_common import *
-from prop_derived import *
+from flip.logic.common import *
+from flip.logic.prop_common import *
+from flip.logic.prop_classic import *
+from flip.logic.prop_common import *
+from flip.logic.prop_derived import *
 
 ex111 = \
   [(Text('Ex. 1.11: |- (q -> r) -> ((~q -> ~p) -> (p -> r))'), comment),

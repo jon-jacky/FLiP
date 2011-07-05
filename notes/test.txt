@@ -22,9 +22,19 @@ Then type this command:
 
 On Unix-like systems, you may have to type:  source cpath, source all_test
 
-You may see some messages about differences.  These are probably benign,
-see the explanation of test output in the last section of this document.
+You may see some messages about differences, they might even say
+'Fail', like this:
 
+Comparing files equal_equiv_test.log and equal_equiv_test.ref
+37c37
+< Fail: b = c does not match s1 = t1 with { s1:b, t1:a }
+---
+> Fail: b = c does not match s1 = t1 with { t1:a, s1:b }
+
+Don't worry --- these are benign, see the explanation of test output
+in the last section of this document. The 'Fail' here is not a test
+faiure. It indicates that the checker rejected an invalid proof, as
+intended.
 
 Introduction
 
@@ -158,6 +168,14 @@ False
 Fail: ~q does not match Q1 with { v1:x, P1:P(x), v2:a, Q1:F }
 False
 *****
+
+On Unix-like systems the format of these messages is a bit different:
+
+Comparing files equal_equiv_test.log and equal_equiv_test.ref
+37c37
+< Fail: b = c does not match s1 = t1 with { s1:b, t1:a }
+---
+> Fail: b = c does not match s1 = t1 with { t1:a, s1:b }
 
 Memory addresses may differ between runs.  This is expected and does
 not indicate and error:

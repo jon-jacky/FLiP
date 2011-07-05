@@ -12,4 +12,4 @@ call plogdiff backa_test
 call plogdiff count_test
 call plogdiff type_test
 call plogdiff fol_apply_test
-call plogdiff fol_save_test
+rem call plogdiff fol_save_test

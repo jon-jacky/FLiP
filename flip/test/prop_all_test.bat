@@ -13,4 +13,4 @@ call plogdiff prop_constructive_test
 call plogdiff prop_ore_scope_test
 call plogdiff prop_derived_test
 call plogdiff prop_apply_test
-call plogdiff prop_save_test
+rem call plogdiff prop_save_test

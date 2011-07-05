@@ -1,6 +1,6 @@
-from common import *
-from prop_common import *
-from prop_classic import *
+from flip.logic.common import *
+from flip.logic.prop_common import *
+from flip.logic.prop_classic import *
 
 ex69 = \
   [(Text('Example 6.9  a & b |- ~(~a v ~b)'), comment),
