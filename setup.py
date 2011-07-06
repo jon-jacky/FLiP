@@ -6,7 +6,16 @@ To create or update the FLiP page at PyPI: python setup.py register
 
 To make distribution: python setup.py sdist -v -f --formats=gztar,zip
 
-To install: python setup.py install
+To upload distribution to PyPI: 
+ python setup.py -v -f --formats=gztar,zip upload --show-response
+
+To install from unpacked distribution: python setup.py install
+
+It is not really necessary to install, you can just run out of the
+unpacked distrbution.  It is convenient to put FLiP-1.2 on PYTHONPATH
+because it contains the flip package, use bin/flip_path.  However,
+installing might be even more convenient, because it usually puts the
+flip package in a directory which is already on PYTHONPATH.
 
 Most of the distribution contents are all specified in MANIFEST.in,
 not in setup.py.
