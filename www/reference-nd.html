@@ -15,9 +15,11 @@
 <a href="userguide-nd.html">User's guide</a> &nbsp; 
 <!-- <a href="reference-nd.html">Reference</a> &nbsp;   -->
 <a href="logics.html">Logics</a> &nbsp; 
-<a href="../code">Code</a> &nbsp; 
-<a href="../test">Tests</a> &nbsp; 
-<a href="../notes">Notes</a>
+<a href="../flip/logic">Code</a> &nbsp; 
+<a href="../flip/test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a>
 </p>
 
 <p>
@@ -44,7 +46,7 @@ The checker can use different logics; Flip comes with several, and you can
 a logic, run its session module in the Python session, for example:
 
 <pre>
-python -i fol_session.py
+python -i -m flip.logic.fol_session
 >>>
 </pre>
 
@@ -87,6 +89,18 @@ These session modules are included with Flip:
 The <b>rules</b> command prints all the inference rules available in a
 session.  The <b>rule_names</b> attribute is a dictionary that
 associates each rule with its description.
+
+<p>
+Starting with version 1.2, it is also possible to use the poset logic
+with this command:
+
+<pre>
+python -i -m flip.poset.session
+>>>
+</pre>
+
+<p>
+This will be the recommended way to use logics added after version 1.2.
 
 <hr>
 
@@ -362,9 +376,11 @@ Bornat, <em>Proof and Disproof in Formal Logic</em><br>
 <a href="userguide-nd.html">User's guide</a> &nbsp;
 <a href="reference-nd.html">Reference</a> &nbsp;
 <a href="logics.html">Logics</a> &nbsp;
-<a href="../code">Code</a> &nbsp;
-<a href="../test">Tests</a> &nbsp;
-<a href="../notes">Notes</a>
+<a href="../flip/logic">Code</a> &nbsp;
+<a href="../flip/test">Tests</a> &nbsp;
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a>
 
 </body>
 </html>

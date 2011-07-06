@@ -14,9 +14,11 @@
 <a href="userguide-nd.html">User's guide</a> &nbsp; 
 <a href="reference-nd.html">Reference</a> &nbsp; 
 <!-- <a href="logics.html">Logics</a> &nbsp; --> 
-<a href="../code">Code</a> &nbsp; 
-<a href="../test">Tests</a> &nbsp; 
-<a href="../notes">Notes</a>
+<a href="../flip/logic">Code</a> &nbsp; 
+<a href="../flip/test">Tests</a> &nbsp; 
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a>
 </p>
 
 <p>
@@ -37,12 +39,12 @@ used in proof.
 <p>
 A logic module defines a language for writing formulas, and
 inference rules for deriving new formulas from given formulas.  
-Other modules integrate the logic with the proof checker.
+A separate session module integrates the logic module with the proof checker.
 
 <p>
 <a href="#language">Language</a>
 <a href="#rules">Inference rules</a>
-<a href="#modules">Modular structure</a>
+<a href="#modules">Modules and packages</a>
 </p>
 
 <hr>
@@ -218,7 +220,7 @@ occur in these formulas:
 
 <hr>
 
-<h3><a name="modules">Modular structure</h3>
+<h3><a name="modules">Modules and packages</h3>
 
 <p>
 A logic module is a Python module that contains formula class
@@ -227,8 +229,22 @@ also provide a session module that loads the logic into the checker
 and makes its identifiers available in a proof session.
 
 <p>
-Imitate existing modules: compare fol_session, prop_session, and
-prop_constructive_session.  
+The flip/poset directory demonstrates the recommended way to organize
+the modules.  The logic and session modules should go in the same
+Python package, which is just a directory that contains those modules,
+and an __init__.py module -- so poset is a package, not just a
+directory.  The tests for poset go into a test package (subdirectory)
+in the poset package.  (Logics added before version 1.2 do not use
+this organization. All of those logic modules and session modules are
+in one flip.logic package, and all their tests are in a separate
+flip.test package.  From now on, no more modules will be added to
+those packages.)
+
+<p>
+Imitate existing modules: examine the contents of fol and fol_session,
+and the several prop (propositional) logic and session modules.  <em>But</em>
+be sure to use the package organization of the new flip.poset packge, and
+imitate the import statements in the modules in that package.
 
 <p>
 The classes and rules used in a single proof session are usually
@@ -252,9 +268,11 @@ rules, but they all use the operators defined in prop_common.
 <a href="userguide-nd.html">User's guide</a> &nbsp;
 <a href="reference-nd.html">Reference</a> &nbsp;
 <a href="logics.html">Logics</a> &nbsp;
-<a href="../code">Code</a> &nbsp;
-<a href="../test">Tests</a> &nbsp;
-<a href="../notes">Notes</a>
+<a href="../flip/logic">Code</a> &nbsp;
+<a href="../flip/test">Tests</a> &nbsp;
+<a href="../notes">Notes</a> &nbsp;
+<a href="http://pypi.python.org/pypi/FLiP/">PyPI</a> &nbsp;
+<a href="https://github.com/jon-jacky/FLiP">GitHub</a>
 
 </body>
 </html>

@@ -35,4 +35,7 @@ Projects that add logics or checkers:
   format shown by the present ptree command).
 
 - Add another checker eq for equational logic, along with logics that
-  better support this style of reasoning.
+  better support this style of reasoning.  There are many examples of
+  equational logics in Gries and Schneider, A Logical Approach to
+  Discrete Math, and Eric Hehner, A Practical Theory of Programming.
+
