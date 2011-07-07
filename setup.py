@@ -7,7 +7,7 @@ To create or update the FLiP page at PyPI: python setup.py register
 To make distribution: python setup.py sdist -v -f --formats=gztar,zip
 
 To upload distribution to PyPI: 
- python setup.py -v -f --formats=gztar,zip upload --show-response
+ python setup.py sdist -v -f --formats=gztar,zip upload --show-response
 
 To install from unpacked distribution: python setup.py install
 
