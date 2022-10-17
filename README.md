@@ -38,5 +38,5 @@ exercises in university-level textbooks on logic for computer science or
 mathematics, such as Kaye, Huth and Ryan, and Bornat.
 
 The gh-pages branch of this repository contains a 
-[web site](https://jon-jacky.github.io/PyModel/www/)
+[web site](https://jon-jacky.github.io/FLiP/www/)
 of HTML pages about FLiP.
