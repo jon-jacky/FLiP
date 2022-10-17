@@ -39,4 +39,4 @@ mathematics, such as Kaye, Huth and Ryan, and Bornat.
 
 The gh-pages branch of this repository contains a 
 [web site](https://jon-jacky.github.io/PyModel/www/)
-of HTML pages about PyModel.
+of HTML pages about FLiP.

@@ -34,6 +34,10 @@ checker.)
 Flip was undertaken as a Python programming exercise.  It is not
 intended to compete with industrial-strength theorem provers such as HOL,
 nor with nicely-designed educational provers such as Jape.
-That said, the checker is quite capable of working the examples and
+That said, the checker is quite capable of checking the examples and
 exercises in university-level textbooks on logic for computer science or
 mathematics, such as Kaye, Huth and Ryan, and Bornat.
+
+The gh-pages branch of this repository contains a 
+[web site](https://jon-jacky.github.io/PyModel/www/)
+of HTML pages about PyModel.
